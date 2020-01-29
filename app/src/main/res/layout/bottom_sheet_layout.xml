@@ -10,25 +10,31 @@
         android:id="@+id/btn_hole"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="누출확인" />
+        android:text="누출확인"
+        android:textSize="16sp"
+        android:textColor="#000"/>
 
     <Button
         android:id="@+id/btn_vacuum"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="진공배기" />
+        android:text="진공배기"
+        android:textSize="16sp"
+        android:textColor="#000"/>
 
     <Button
         android:id="@+id/btn_chargedt"
         android:layout_width="110dp"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:text="충전기한확인" />
 
     <Button
         android:id="@+id/btn_close"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:text="닫기" />
+        android:text="닫 기"
+        android:textSize="16sp"
+        android:textColor="#000"/>
 
 </LinearLayout>

@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
 
     private int REQUEST_TEST = 1;
     private static ArrayList<MainData> arrayList;
-    private static ArrayList<MainData> tempArrayList;
     private static MainAdapter mainAdapter;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
@@ -738,11 +737,19 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            boolean updateFlag = true;
+            for(int i=0;i<arrayList.size();i++){
+                if(arrayList.get(i).getTv_bottleBarCd().equals(bottleBarCd)) updateFlag = false;
+            }
             //tv_result.setText(bottleBarCd+" "+s);
-            MainData mainData = new MainData(bottleId,bottleBarCd,productNm,btn_info);
+            if(updateFlag) {
+                MainData mainData = new MainData(bottleId, bottleBarCd, productNm, btn_info);
 
-            arrayList.add(mainData);
-            mainAdapter.notifyDataSetChanged();
+                arrayList.add(mainData);
+                mainAdapter.notifyDataSetChanged();
+            }else{
+                Toast.makeText(MainActivity.this ,"등록된 바코드입니다.", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

@@ -142,11 +142,20 @@ public class ManualDialog {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            //tv_result.setText(bottleBarCd+" "+s);
-            mainData = new MainData(bottleId,bottleBarCd,productNm,null);
-            //tv_result.setText(bottleBarCd+" "+s);
-            arrayList.add(mainData);
-            mainAdapter.notifyDataSetChanged();
+            boolean updateFlag = true;
+            for(int i=0;i<arrayList.size();i++){
+                if(arrayList.get(i).getTv_bottleBarCd().equals(bottleBarCd)) updateFlag = false;
+            }
+
+            if(updateFlag) {
+                //tv_result.setText(bottleBarCd+" "+s);
+                mainData = new MainData(bottleId, bottleBarCd, productNm, null);
+                //tv_result.setText(bottleBarCd+" "+s);
+                arrayList.add(mainData);
+                mainAdapter.notifyDataSetChanged();
+            }else{
+                Toast.makeText(context ,"등록된 바코드입니다.", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
