@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+
+        <TextView
+            android:id="@+id/tv_bottleBarCd"
+            android:layout_width="140dp"
+            android:layout_height="match_parent"
+            android:text="AA315923"
+            android:paddingLeft="10dp"
+            android:textColor="#000000"
+            android:gravity="center_vertical"
+            android:textSize="20sp" />
+        <TextView
+            android:id="@+id/tv_bottleId"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:text="1"/>
+
+        <TextView
+            android:id="@+id/tv_productNm"
+            android:layout_width="160dp"
+            android:layout_height="match_parent"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            android:gravity="center_vertical"
+            android:text="리사이클뷰" />
+
+        <Button
+            android:id="@+id/btn_info"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="#000000"
+            android:text="정보보기"
+            android:gravity="right"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+    <View style="@style/Divider"/>
+
+</LinearLayout>

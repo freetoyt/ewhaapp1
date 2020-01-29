@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <Button
+        android:id="@+id/btn_hole"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="누출확인" />
+
+    <Button
+        android:id="@+id/btn_vacuum"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="진공배기" />
+
+    <Button
+        android:id="@+id/btn_chargedt"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:text="충전기한확인" />
+
+    <Button
+        android:id="@+id/btn_close"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:text="닫기" />
+
+</LinearLayout>
