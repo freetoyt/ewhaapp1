@@ -1,4 +1,4 @@
-package com.gms.app.blue03exam;
+package com.gms.app.barcode;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
-import android.os.ParcelUuid;
 
 import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;

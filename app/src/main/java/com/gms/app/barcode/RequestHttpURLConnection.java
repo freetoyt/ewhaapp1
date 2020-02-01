@@ -1,4 +1,4 @@
-package com.gms.app.blue03exam;
+package com.gms.app.barcode;
 
 import android.content.ContentValues;
 import android.util.Log;
