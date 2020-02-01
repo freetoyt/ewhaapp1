@@ -44,9 +44,9 @@ public class LoginActivity extends AppCompatActivity {
         String value = sharedPreferences.getString("id", "");
 
         if(value != null && value.length() > 0) {
-            Toast.makeText(getApplicationContext(),"로그인이 되어 있습니다,"+value,Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"로그인이 되어 있습니다,",Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-           //intent.putExtra("id",id);
+            //intent.putExtra("id",id);
             //intent.putExtra("pw", name);
             startActivity(intent);
         }
@@ -100,7 +100,10 @@ public class LoginActivity extends AppCompatActivity {
 
             try {
 
-                if(s == null || s.length() < 10) return;
+                if(s == null || s.length() < 10) {
+                    Toast.makeText(getApplicationContext(),"계정정보를 확인해주세요,",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 JSONObject jsonObject = new JSONObject(s);
                 Log.d("LoginActivity", "jsonObject ="+jsonObject.toString());
                 success = jsonObject.getBoolean("success");
@@ -133,6 +136,7 @@ public class LoginActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (UnsupportedEncodingException eu) {
+                Toast.makeText(getApplicationContext(),"서버의 상태를 확인해주세요,",Toast.LENGTH_SHORT).show();
                 eu.printStackTrace();
             }
 

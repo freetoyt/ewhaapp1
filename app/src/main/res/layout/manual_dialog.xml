@@ -31,7 +31,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#000000"/>
+        android:background="#464747"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -51,7 +51,7 @@
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="#000000" />
+            android:background="#464747" />
 
         <Button
             android:id="@+id/cancelButton"
@@ -68,5 +68,5 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#000000"/>
+        android:background="#464747"/>
 </LinearLayout>

@@ -122,8 +122,6 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
         btn_scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intent = new Intent(MainActivity.this, ScanActivity.class);
-                //startActivityForResult(intent, REQUEST_TEST);
 
                 //TODO 임시 주석
                 qrScan.setPrompt("Scanning...");
@@ -160,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                     for (int i = 0; i < arrayList.size(); i++) {
                         tempStr += arrayList.get(i).getTv_bottleId() + ",";
                     }
-                    Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
 
                     // 커스텀 다이얼로그를 호출한다.
                     // 커스텀 다이얼로그의 결과를 출력할 TextView를 매개변수로 같이 넘겨준다.
@@ -182,7 +180,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                     for (int i = 0; i < arrayList.size(); i++) {
                         tempStr += arrayList.get(i).getTv_bottleId() + ",";
                     }
-                    Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
 
                     // 커스텀 다이얼로그를 호출한다.
                     // 커스텀 다이얼로그의 결과를 출력할 TextView를 매개변수로 같이 넘겨준다.
@@ -203,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                     for (int i = 0; i < arrayList.size(); i++) {
                         tempStr += arrayList.get(i).getTv_bottleId() + ",";
                     }
-                    Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
 
                     // 커스텀 다이얼로그를 호출한다.
                     // 커스텀 다이얼로그의 결과를 출력할 TextView를 매개변수로 같이 넘겨준다.
@@ -224,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                     for (int i = 0; i < arrayList.size(); i++) {
                         tempStr += arrayList.get(i).getTv_bottleId() + ",";
                     }
-                    Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
 
                     // 커스텀 다이얼로그를 호출한다.
                     // 커스텀 다이얼로그의 결과를 출력할 TextView를 매개변수로 같이 넘겨준다.
@@ -246,7 +244,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                     for (int i = 0; i < arrayList.size(); i++) {
                         tempStr += arrayList.get(i).getTv_bottleId() + ",";
                     }
-                    Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
 
                     // 커스텀 다이얼로그를 호출한다.
                     // 커스텀 다이얼로그의 결과를 출력할 TextView를 매개변수로 같이 넘겨준다.
@@ -268,7 +266,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                     for (int i = 0; i < arrayList.size(); i++) {
                         tempStr += arrayList.get(i).getTv_bottleId() + ",";
                     }
-                    Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
 
                     // 커스텀 다이얼로그를 호출한다.
                     // 커스텀 다이얼로그의 결과를 출력할 TextView를 매개변수로 같이 넘겨준다.
@@ -289,7 +287,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                     for (int i = 0; i < arrayList.size(); i++) {
                         tempStr += arrayList.get(i).getTv_bottleId() + ",";
                     }
-                    Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
 
                     // 커스텀 다이얼로그를 호출한다.
                     // 커스텀 다이얼로그의 결과를 출력할 TextView를 매개변수로 같이 넘겨준다.
@@ -351,7 +349,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                     for (int i = 0; i < arrayList.size(); i++) {
                         tempStr += arrayList.get(i).getTv_bottleId() + ",";
                     }
-                    Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
 
                     // 하단 창 띄우기
                     BottomSheetDialog bottomSheet = new BottomSheetDialog(MainActivity.this,tempStr);
@@ -400,7 +398,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
         });
 
         //에뮬레이터 구동시 주석처리 필요
-        //CheckBluetooth();
+        CheckBluetooth();
     }
 
     @Override
@@ -498,7 +496,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                     Dialog dialog_ = (Dialog) dialog;
                     // 연결할 장치를 선택하지 않고 '취소'를 누른 경우
                     if (which == listItems.size()-1) {
-                        Toast.makeText(dialog_.getContext(), "Choose cancel", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(dialog_.getContext(), "취소를 선택했습니다", Toast.LENGTH_SHORT).show();
 
                     } else {
                         //취소가 아닌 디바이스를 선택한 경우 해당 기기에 연결
@@ -539,7 +537,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                         e.printStackTrace();
                     }
                 } else {    //연결 실패
-                    Toast.makeText(MainActivity.this ,"Please check the device", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this ,"장치를 확인해주세요", Toast.LENGTH_SHORT).show();
                     try {
                         mSocket.close();
                     } catch (IOException e) {
@@ -556,14 +554,13 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                 mRemoteDevice = getDeviceFromBondedList(selectedDeviceName);
                 //UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
                 UUID uuid = (mRemoteDevice.getUuids())[0].getUuid();
-                //final String PBAP_UUID = "0000112f-0000-1000-8000-00805f9b34fb";
+
                 Log.i("mRemoteDevice",mRemoteDevice.getName()+" type="+mRemoteDevice.getType());
 
                 try {
                     // 소켓 생성
                     mSocket = mRemoteDevice.createRfcommSocketToServiceRecord(uuid);
-                    //mSocket = mRemoteDevice.createInsecureRfcommSocketToServiceRecord(uuid);
-                    //mSocket=mRemoteDevice.createInsecureRfcommSocketToServiceRecord(ParcelUuid.fromString(PBAP_UUID).getUuid());
+
                     // RFCOMM 채널을 통한 연결, socket에 connect하는데 시간이 걸린다. 따라서 ui에 영향을 주지 않기 위해서는
                     // Thread로 연결 과정을 수행해야 한다.
 
@@ -582,8 +579,8 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
         thread.start();
     }
 
-//기기에 저장되어 있는 해당 이름을 갖는 블루투스 디바이스의 bluetoothdevice 객채를 출력하는 함수
-//bluetoothdevice객채는 기기의 맥주소뿐만 아니라 다양한 정보를 저장하고 있다.
+    //기기에 저장되어 있는 해당 이름을 갖는 블루투스 디바이스의 bluetoothdevice 객채를 출력하는 함수
+    //bluetoothdevice객채는 기기의 맥주소뿐만 아니라 다양한 정보를 저장하고 있다.
 
     BluetoothDevice getDeviceFromBondedList(String name) {
         BluetoothDevice selectedDevice = null;
@@ -676,10 +673,12 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
         //데이터 수신 thread 시작
         mWorkerThread.start();
     }
+
     static  void  clearArrayList(){
         arrayList.clear();
         mainAdapter.notifyDataSetChanged();
     }
+
     public void SendResetSignal(){
         String msg = "bs00000";
         try {
@@ -722,33 +721,38 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
             String productNm="";
             Button btn_info = findViewById(R.id.btn_info);
             try {
+
                 JSONObject jsonObject = new JSONObject(s);
                 bottleId = jsonObject.getString("bottleId");
                 bottleBarCd = jsonObject.getString("bottleBarCd");
-                productNm = jsonObject.getString("productNm");
-                Log.d("Mainctivity onPostExecute","tv_bottleBarCd="+bottleBarCd+ "productNm ="+productNm);
 
-                SharedPreferences sharedPreferences = getSharedPreferences(shared, 0);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
+                if(bottleBarCd!=null && bottleBarCd.length() > 5) {
 
-                editor.putString(bottleId,s);
-                editor.commit();
+                    productNm = jsonObject.getString("productNm");
+                    Log.d("Mainctivity onPostExecute", "tv_bottleBarCd=" + bottleBarCd + "productNm =" + productNm);
 
+                    SharedPreferences sharedPreferences = getSharedPreferences(shared, 0);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                    editor.putString(bottleId, s);
+                    editor.commit();
+
+                    boolean updateFlag = true;
+                    for(int i=0;i<arrayList.size();i++){
+                        if(arrayList.get(i).getTv_bottleBarCd().equals(bottleBarCd)) updateFlag = false;
+                    }
+
+                    if(updateFlag) {
+                        MainData mainData = new MainData(bottleId, bottleBarCd, productNm, btn_info);
+
+                        arrayList.add(mainData);
+                        mainAdapter.notifyDataSetChanged();
+                    }else{
+                        Toast.makeText(MainActivity.this ,"등록된 바코드입니다.", Toast.LENGTH_SHORT).show();
+                    }
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
-            }
-            boolean updateFlag = true;
-            for(int i=0;i<arrayList.size();i++){
-                if(arrayList.get(i).getTv_bottleBarCd().equals(bottleBarCd)) updateFlag = false;
-            }
-            //tv_result.setText(bottleBarCd+" "+s);
-            if(updateFlag) {
-                MainData mainData = new MainData(bottleId, bottleBarCd, productNm, btn_info);
-
-                arrayList.add(mainData);
-                mainAdapter.notifyDataSetChanged();
-            }else{
-                Toast.makeText(MainActivity.this ,"등록된 바코드입니다.", Toast.LENGTH_SHORT).show();
             }
         }
     }

@@ -30,10 +30,10 @@
             <ImageView
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_logo" />
+                android:src="@mipmap/ic_logo" />
             <TextView
                 android:id="@+id/main_label"
-                android:layout_width="240dp"
+                android:layout_width="@dimen/title_size"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:gravity="center_vertical"
@@ -51,15 +51,13 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center|right"
                 android:background="@drawable/bluetooth_icon" />
-            <TextView
-                android:layout_width="10dp"
-                android:layout_height="40dp"/>
+
             <Button
                 android:id="@+id/btn_logout"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center|right"
-                android:background="@drawable/ic_logout" />
+                android:background="@mipmap/gms_logout" />
 
         </LinearLayout>
         <View style="@style/Divider"/>
@@ -80,7 +78,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="전체삭제"
-        android:textSize="18sp"
+        android:textSize="@dimen/button_long_size"
         android:textColor="#000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_history"
@@ -91,7 +89,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="스캔하기"
-        android:textSize="18sp"
+        android:textSize="@dimen/button_long_size"
         android:textColor="#000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_deleteAll"
@@ -101,7 +99,7 @@
         android:id="@+id/btn_etc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="기 타"
+        android:text="기타"
         android:textSize="18sp"
         android:textColor="#000"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -112,7 +110,7 @@
         android:id="@+id/btn_rental"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="대 여"
+        android:text="대여"
         android:textSize="18sp"
         android:textColor="#000"
         app:layout_constraintBottom_toTopOf="@+id/btn_deleteAll"
@@ -123,7 +121,7 @@
         android:id="@+id/btn_sales"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="판 매"
+        android:text="판매"
         android:textSize="18sp"
         android:textColor="#000"
         app:layout_constraintBottom_toTopOf="@+id/btn_deleteAll"
@@ -134,8 +132,7 @@
         android:id="@+id/btn_manual"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="수동입력"
-        android:textSize="18sp"
+        android:text="수동입력"        android:textSize="@dimen/button_long_size"
         android:textColor="#000"
         app:layout_constraintBottom_toTopOf="@+id/btn_etc"
         app:layout_constraintEnd_toEndOf="parent"
@@ -145,7 +142,7 @@
         android:id="@+id/btn_back"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="회 수"
+        android:text="회수"
         android:textSize="18sp"
         android:textColor="#000"
         app:layout_constraintBottom_toTopOf="@+id/btn_deleteAll"
@@ -156,7 +153,7 @@
         android:id="@+id/btn_charge"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="충 전"
+        android:text="충전"
         android:textSize="18sp"
         android:textColor="#000"
         app:layout_constraintBottom_toTopOf="@+id/btn_manual"
@@ -167,7 +164,7 @@
         android:id="@+id/btn_come"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="입 고"
+        android:text="입고"
         android:textSize="18sp"
         android:textColor="#000"
         app:layout_constraintBottom_toTopOf="@+id/btn_sales"
@@ -178,7 +175,7 @@
         android:id="@+id/btn_incar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="상 차"
+        android:text="상차"
         android:textSize="18sp"
         android:textColor="#000"
         app:layout_constraintBottom_toTopOf="@+id/btn_back"
@@ -189,7 +186,7 @@
         android:id="@+id/btn_out"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="출 고"
+        android:text="출고"
         android:textSize="18sp"
         android:textColor="#000"
         app:layout_constraintBottom_toTopOf="@+id/btn_rental"
@@ -200,8 +197,8 @@
         android:id="@+id/btn_history"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="이전작업"
-        android:textSize="18sp"
+        android:text="이전목록"
+        android:textSize="@dimen/button_long_size"
         android:textColor="#000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_etc"

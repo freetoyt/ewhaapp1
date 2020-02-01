@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="title_size">260dp</dimen>
+    <dimen name="button_long_size">18sp</dimen>
+    <dimen name="item_text_size">20sp</dimen>
+    <dimen name="item_text_sizeB">18sp</dimen>
+    <dimen name="item_width0">140dp</dimen>
+    <dimen name="item_width1">160dp</dimen>
+    <dimen name="bottom_short_tsize">16sp</dimen>
+    <dimen name="bottom_long_tsize">14sp</dimen>
+    <dimen name="bottom_layout_width">100dp</dimen>
+    <dimen name="bottom_long_layout_width">110dp</dimen>
+    <dimen name="bottom_cancel_width">70dp</dimen>
+</resources>

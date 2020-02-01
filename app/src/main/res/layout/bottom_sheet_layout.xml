@@ -8,33 +8,38 @@
 
     <Button
         android:id="@+id/btn_hole"
-        android:layout_width="100dp"
+        android:layout_width="@dimen/bottom_layout_width"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="누출확인"
-        android:textSize="16sp"
-        android:textColor="#000"/>
+        android:textColor="#000"
+        android:textSize="@dimen/bottom_short_tsize" />
 
     <Button
         android:id="@+id/btn_vacuum"
-        android:layout_width="100dp"
+        android:layout_width="@dimen/bottom_layout_width"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="진공배기"
-        android:textSize="16sp"
+        android:textSize="@dimen/bottom_short_tsize"
         android:textColor="#000"/>
 
     <Button
         android:id="@+id/btn_chargedt"
-        android:layout_width="110dp"
+        android:layout_width="@dimen/bottom_long_layout_width"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:text="충전기한확인" />
+        android:gravity="center"
+        android:textSize="@dimen/bottom_long_tsize"
+        android:text="충전기한확인"
+        android:textColor="#000"/>
 
     <Button
         android:id="@+id/btn_close"
-        android:layout_width="80dp"
+        android:layout_width="@dimen/bottom_cancel_width"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="닫 기"
-        android:textSize="16sp"
+        android:textSize="@dimen/bottom_short_tsize"
         android:textColor="#000"/>
 
 </LinearLayout>

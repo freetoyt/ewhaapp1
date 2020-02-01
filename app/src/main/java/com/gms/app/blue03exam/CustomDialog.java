@@ -59,10 +59,10 @@ public class CustomDialog {
         host = context.getString(R.string.host_name);
 
         if(buttonType.equals("판매") || buttonType.equals("대여") || buttonType.equals("회수")) {
-                value = sharedPreferences.getString("clist", "");
-
-                if(value ==null || value.length() <= 10)
-                    new HttpAsyncTask().execute(host + "api/customerAllList.do");
+            value = sharedPreferences.getString("clist", "");
+            Log.e("CustomDialog ",buttonType);
+            if(value ==null || value.length() <= 10)
+                new HttpAsyncTask().execute(host + "api/customerAllList.do");
         }else {
             if(!buttonType.equals("충전")) {
 
@@ -70,7 +70,6 @@ public class CustomDialog {
             }
         }
         //new HttpAsyncTask().execute("http://172.30.57.228:8080/api/carList.do");
-
     }
 
     // 호출할 다이얼로그 함수를 정의한다.
@@ -172,6 +171,7 @@ public class CustomDialog {
                         customerId = message.getText().toString();
                         //작업한 용기목록저장
                         SharedPreferences.Editor editor = sharedPreferences.edit();
+
                         editor.putString("previousBottles",bottles);
                         editor.commit();
 
@@ -197,22 +197,22 @@ public class CustomDialog {
             }
         });
     }
-/*
-    public void searchItem(String textToSearch){
-        if(items!=null) {
-            for (String item : items) {
+    /*
+        public void searchItem(String textToSearch){
+            if(items!=null) {
+                for (String item : items) {
 
-                if (!item.contains(textToSearch)) {
-                    listItems.remove(item);
+                    if (!item.contains(textToSearch)) {
+                        listItems.remove(item);
+                    }
                 }
-            }
 
-            adapter3.notifyDataSetChanged();
-        }else {
-            Toast.makeText(context, "items is null", Toast.LENGTH_SHORT).show();
+                adapter3.notifyDataSetChanged();
+            }else {
+                Toast.makeText(context, "items is null", Toast.LENGTH_SHORT).show();
+            }
         }
-    }
-*/
+    */
     // 검색을 수행하는 메소드
     public void search(String charText) {
         Log.d("search","start =="+charText);
@@ -243,10 +243,9 @@ public class CustomDialog {
     }
 
 
-
     private class HttpAsyncTask extends AsyncTask<String, Void, List<CustomerSimpleVO>> {
         private final String TAG = HttpAsyncTask.class.getSimpleName();
-       // int REQUEST_CODE =
+        // int REQUEST_CODE =
         // OkHttp 클라이언트
         OkHttpClient client = new OkHttpClient();
 

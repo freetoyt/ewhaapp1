@@ -58,8 +58,6 @@ public class RequestHttpURLConnection {
             URL url = new URL(_url);
             urlConn = (HttpURLConnection) url.openConnection();
 
-
-
             // [2-1]. urlConn 설정.
             urlConn.setRequestMethod("POST"); // URL 요청에 대한 메소드 설정 : POST.
             urlConn.setRequestProperty("Accept-Charset", "UTF-8"); // Accept-Charset 설정.
@@ -74,9 +72,10 @@ public class RequestHttpURLConnection {
 
             // [2-3]. 연결 요청 확인.
             // 실패 시 null을 리턴하고 메서드를 종료.
-            if (urlConn.getResponseCode() != HttpURLConnection.HTTP_OK)
+            if (urlConn.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                Log.i("RequestHttpURLConnection","Connection is Not OK");
                 return null;
-
+            }
             // [2-4]. 읽어온 결과물 리턴.
             // 요청한 URL의 출력물을 BufferedReader로 받는다.
             BufferedReader reader = new BufferedReader(new InputStreamReader(urlConn.getInputStream(), "UTF-8"));
