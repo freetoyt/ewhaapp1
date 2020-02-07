@@ -1,9 +1,5 @@
 package com.gms.app.barcode;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
@@ -13,15 +9,29 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Process;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.gson.Gson;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,13 +41,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
-
-import com.google.gson.Gson;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity implements BottomSheetDialog.BottomSheetListener{
 
@@ -60,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
     private Button btn_logout,btn_come, btn_out, btn_incar, btn_charge, btn_sales, btn_rental, btn_back,
             btn_scan, btn_deleteAll,btn_history, btn_etc, btn_manual, btn_setting;
 
+    //private  TextView main_label;
     private int REQUEST_TEST = 1;
     private static ArrayList<MainData> arrayList;
     private static MainAdapter mainAdapter;
@@ -70,11 +74,12 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
     private String userId = "";
     private String previousBottles="";
     private String host="";
+    private String version="";
+    private static final boolean closeB = true;
 
     //qr code scanner object
     private IntentIntegrator qrScan;
     int tempInd = 0;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +87,16 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
         setContentView(R.layout.activity_main);
         host = getString(R.string.host_name);
 
+        PackageInfo packageInfo = null;
+
+        try{
+            packageInfo = getPackageManager().getPackageInfo(getPackageName(),0);
+
+            version = packageInfo.versionName;
+            Log.d("############## Package Version",version);
+        }catch (PackageManager.NameNotFoundException e){
+            Log.d("############## Package Version","NameNotFoundException");
+        }
 
         btn_logout = (Button)findViewById(R.id.btn_logout);     //로그아웃
         btn_setting = (Button)findViewById(R.id.btn_setting);     //블루투스 연결
@@ -98,6 +113,9 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
         btn_history = (Button)findViewById(R.id.btn_history);       // 이전 작업 내역
         btn_etc = (Button)findViewById(R.id.btn_etc);       // 기타
         btn_manual= (Button)findViewById(R.id.btn_manual);       // 수동등록
+
+        //main_label = (TextView)findViewById(R.id.main_label);
+        //main_label.setText("V "+version);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv);
         linearLayoutManager = new LinearLayoutManager(this);
@@ -382,7 +400,11 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                 //String value = id.getText().toString();
                 editor.clear();
                 editor.commit();
+                try {
+                    mSocket.close();
+                }catch (IOException e){
 
+                }
                 Toast.makeText(MainActivity.this,"로그아웃 되었습니다,",Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(MainActivity.this,LoginActivity.class);
@@ -398,6 +420,36 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
 
         //에뮬레이터 구동시 주석처리 필요
         CheckBluetooth();
+    }
+
+    @Override
+    public void onBackPressed() {
+        //Toast.makeText(this,"한번 더 누르면 종료됩니다", Toast.LENGTH_SHORT).show();
+
+        AlertDialog.Builder ad = new AlertDialog.Builder(MainActivity.this);
+
+        ad.setMessage("앱(V"+version+")을 종료하시겠습니까?");
+
+        ad.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                moveTaskToBack(MainActivity.closeB);
+                finish();
+                Process.killProcess(Process.myPid());
+
+                dialog.dismiss();
+            }
+        });
+
+        ad.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        ad.show();
     }
 
     @Override
@@ -557,6 +609,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                 Log.i("mRemoteDevice",mRemoteDevice.getName()+" type="+mRemoteDevice.getType());
 
                 try {
+
                     // 소켓 생성
                     mSocket = mRemoteDevice.createRfcommSocketToServiceRecord(uuid);
 
