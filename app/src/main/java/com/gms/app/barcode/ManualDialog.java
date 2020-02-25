@@ -133,29 +133,34 @@ public class ManualDialog {
                 productNm = jsonObject.getString("productNm");
                 Log.i("ManualDialog onPostExecute","tv_bottleBarCd="+bottleBarCd+ "productNm ="+productNm);
 
-                SharedPreferences sharedPreferences = context.getSharedPreferences(shared, 0);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
+                if(bottleBarCd!=null && !bottleBarCd.equals("null") && bottleBarCd.length() > 5) {
+                    SharedPreferences sharedPreferences = context.getSharedPreferences(shared, 0);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                editor.putString(bottleBarCd,s);
-                editor.commit();
+                    editor.putString(bottleId,s);
+                    editor.commit();
 
+                    boolean updateFlag = true;
+                    for(int i=0;i<arrayList.size();i++){
+                        if(arrayList.get(i).getTv_bottleBarCd().equals(bottleBarCd)) updateFlag = false;
+                    }
+
+                    if(updateFlag) {
+                        //tv_result.setText(bottleBarCd+" "+s);
+                        mainData = new MainData(bottleId, bottleBarCd, productNm, null);
+                        //tv_result.setText(bottleBarCd+" "+s);
+                        arrayList.add(mainData);
+                        mainAdapter.notifyDataSetChanged();
+                    }else{
+                        Toast.makeText(context ,"등록된 바코드입니다.", Toast.LENGTH_SHORT).show();
+                    }
+                }else {
+                    Toast.makeText(context ,"등록되지 않은 바코드입니다.", Toast.LENGTH_SHORT).show();
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            boolean updateFlag = true;
-            for(int i=0;i<arrayList.size();i++){
-                if(arrayList.get(i).getTv_bottleBarCd().equals(bottleBarCd)) updateFlag = false;
-            }
 
-            if(updateFlag) {
-                //tv_result.setText(bottleBarCd+" "+s);
-                mainData = new MainData(bottleId, bottleBarCd, productNm, null);
-                //tv_result.setText(bottleBarCd+" "+s);
-                arrayList.add(mainData);
-                mainAdapter.notifyDataSetChanged();
-            }else{
-                Toast.makeText(context ,"등록된 바코드입니다.", Toast.LENGTH_SHORT).show();
-            }
         }
     }
 

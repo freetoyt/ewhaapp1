@@ -174,7 +174,7 @@ public class CustomDialog {
 
                         editor.putString("previousBottles",bottles);
                         editor.commit();
-
+                        Log.d("@@@@@@@@@@@@@okButton: ","previousBottles: " + bottles);
                         // 서버 전송
                         new HttpAsyncTask1().execute(host + "api/controlAction.do?userId=" + userId + "&bottles=" + bottles + "&customerNm=" + customerId + "&bottleType=" + bottleType + "&bottleWorkCd=" + buttonType);
 

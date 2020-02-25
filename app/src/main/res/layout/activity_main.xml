@@ -16,12 +16,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="invisible"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="140dp"
+        android:layout_marginBottom="200dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/btn_incar">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -31,6 +33,7 @@
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/ic_logo" />
+
             <TextView
                 android:id="@+id/main_label"
                 android:layout_width="@dimen/title_size"
@@ -60,11 +63,13 @@
                 android:background="@mipmap/gms_logout" />
 
         </LinearLayout>
-        <View style="@style/Divider"/>
+
+        <View style="@style/Divider" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="483dp"
             android:layout_weight="1"
             android:scrollbarFadeDuration="0"
             android:scrollbarSize="5dp"
@@ -154,8 +159,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="충전"
-        android:textSize="18sp"
         android:textColor="#000"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/btn_manual"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_incar" />
@@ -203,5 +208,49 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_etc"
         app:layout_constraintStart_toEndOf="@+id/btn_deleteAll" />
+
+    <Button
+        android:id="@+id/btn_noGas"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="단품판매"
+        android:textSize="@dimen/button_long_size"
+        android:textColor="#000"
+        app:layout_constraintBottom_toTopOf="@+id/btn_come"
+        app:layout_constraintEnd_toStartOf="@+id/button9"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button9"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="누출확인"
+        android:textSize="@dimen/button_long_size"
+        android:textColor="#000"
+        app:layout_constraintBottom_toTopOf="@+id/btn_out"
+        app:layout_constraintEnd_toStartOf="@+id/button10"
+        app:layout_constraintStart_toEndOf="@+id/btn_noGas" />
+
+    <Button
+        android:id="@+id/button10"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="진공배기"
+        android:textSize="@dimen/button_long_size"
+        android:textColor="#000"
+        app:layout_constraintBottom_toTopOf="@+id/btn_incar"
+        app:layout_constraintEnd_toStartOf="@+id/button11"
+        app:layout_constraintStart_toEndOf="@+id/button9" />
+
+    <Button
+        android:id="@+id/button11"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="충전기한"
+        android:textSize="@dimen/button_long_size"
+        android:textColor="#000"
+        app:layout_constraintBottom_toTopOf="@+id/btn_charge"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button10" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

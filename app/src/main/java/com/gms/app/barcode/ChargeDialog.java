@@ -2,6 +2,7 @@ package com.gms.app.barcode;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
@@ -28,7 +29,8 @@ public class ChargeDialog {
     ArrayAdapter<String> adapter;
     ListView listView ;
 
-
+    SharedPreferences sharedPreferences ;
+    private String shared = "file";
     String bottleType = "";
     String buttonType = "";
     String bottles;
@@ -40,7 +42,7 @@ public class ChargeDialog {
     public ChargeDialog(Context context, String bType) {
         this.context = context;
         this.buttonType = bType;
-
+        sharedPreferences = context.getSharedPreferences(shared, 0);
         host = context.getString(R.string.host_name);
 
     }
@@ -98,6 +100,12 @@ public class ChargeDialog {
 
                 Toast.makeText(context, String.format("\"%s=%s\" 을 입력하였습니다.", bottleType, buttonType), Toast.LENGTH_SHORT).show();
 
+                //작업한 용기목록저장
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                editor.putString("previousBottles",bottles);
+                editor.commit();
+                Log.d("@@@@@@@@@@@@@okButton: " ,"previousBottles: " + bottles);
                 // 서버 전송
                 new HttpAsyncTask().execute(host+"api/controlAction.do?userId="+userId+"&bottles="+bottles+"&customerNm="+customerId+"&bottleType="+bottleType+"&bottleWorkCd="+buttonType);
 
