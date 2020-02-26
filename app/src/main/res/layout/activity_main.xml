@@ -75,6 +75,7 @@
             android:scrollbarSize="5dp"
             android:scrollbarThumbVertical="@android:color/darker_gray"
             android:scrollbars="vertical"
+            android:stackFromBottom="true"
             android:text="1111" />
     </LinearLayout>
     <View style="@style/Divider"/>
@@ -83,7 +84,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="전체삭제"
-        android:textSize="@dimen/button_long_size"
+        android:textSize="@dimen/button_4_size"
         android:textColor="#000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_history"
@@ -94,7 +95,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="스캔하기"
-        android:textSize="@dimen/button_long_size"
+        android:textSize="@dimen/button_4_size"
         android:textColor="#000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_deleteAll"
@@ -137,7 +138,8 @@
         android:id="@+id/btn_manual"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="수동입력"        android:textSize="@dimen/button_long_size"
+        android:text="수동입력"
+        android:textSize="@dimen/button_4_size"
         android:textColor="#000"
         app:layout_constraintBottom_toTopOf="@+id/btn_etc"
         app:layout_constraintEnd_toEndOf="parent"
@@ -203,7 +205,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="이전목록"
-        android:textSize="@dimen/button_long_size"
+        android:textSize="@dimen/button_4_size"
         android:textColor="#000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_etc"
@@ -214,43 +216,43 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="단품판매"
-        android:textSize="@dimen/button_long_size"
+        android:textSize="@dimen/button_4_size"
         android:textColor="#000"
         app:layout_constraintBottom_toTopOf="@+id/btn_come"
-        app:layout_constraintEnd_toStartOf="@+id/button9"
+        app:layout_constraintEnd_toStartOf="@+id/btn_hole"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button9"
+        android:id="@+id/btn_hole"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="누출확인"
-        android:textSize="@dimen/button_long_size"
+        android:textSize="@dimen/button_4_size"
         android:textColor="#000"
         app:layout_constraintBottom_toTopOf="@+id/btn_out"
-        app:layout_constraintEnd_toStartOf="@+id/button10"
+        app:layout_constraintEnd_toStartOf="@+id/btn_vacuum"
         app:layout_constraintStart_toEndOf="@+id/btn_noGas" />
 
     <Button
-        android:id="@+id/button10"
+        android:id="@+id/btn_vacuum"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="진공배기"
-        android:textSize="@dimen/button_long_size"
+        android:textSize="@dimen/button_4_size"
         android:textColor="#000"
         app:layout_constraintBottom_toTopOf="@+id/btn_incar"
-        app:layout_constraintEnd_toStartOf="@+id/button11"
-        app:layout_constraintStart_toEndOf="@+id/button9" />
+        app:layout_constraintEnd_toStartOf="@+id/btn_chargedt"
+        app:layout_constraintStart_toEndOf="@+id/btn_hole" />
 
     <Button
-        android:id="@+id/button11"
+        android:id="@+id/btn_chargedt"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="충전기한"
-        android:textSize="@dimen/button_long_size"
+        android:text="충전기한확인"
         android:textColor="#000"
+        android:textSize="@dimen/button_long_size"
         app:layout_constraintBottom_toTopOf="@+id/btn_charge"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button10" />
+        app:layout_constraintStart_toEndOf="@+id/btn_vacuum" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

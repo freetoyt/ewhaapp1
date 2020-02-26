@@ -27,7 +27,6 @@ public class ManualDialog {
     private static ArrayList<MainData> arrayList;
     private static MainAdapter mainAdapter;
 
-
     public ManualDialog(Context context) {
         this.context = context;
 
@@ -56,9 +55,7 @@ public class ManualDialog {
         final Button okButton = (Button) dlg.findViewById(R.id.okButton);
         final Button cancelButton = (Button) dlg.findViewById(R.id.cancelButton);
 
-
         title.setText("수동입력");
-
 
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,8 +71,6 @@ public class ManualDialog {
                 // AsyncTask를 통해 HttpURLConnection 수행.
                 NetworkTask networkTask = new NetworkTask(url, null);
                 networkTask.execute();
-
-
 
                 // 커스텀 다이얼로그를.종료한다.
                 dlg.dismiss();

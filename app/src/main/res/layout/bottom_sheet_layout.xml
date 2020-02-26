@@ -7,7 +7,7 @@
     android:padding="16dp">
 
     <Button
-        android:id="@+id/btn_hole"
+        android:id="@+id/btn_hole1"
         android:layout_width="@dimen/bottom_layout_width"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -16,7 +16,7 @@
         android:textSize="@dimen/bottom_short_tsize" />
 
     <Button
-        android:id="@+id/btn_vacuum"
+        android:id="@+id/btn_vacuum1"
         android:layout_width="@dimen/bottom_layout_width"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -25,7 +25,7 @@
         android:textColor="#000"/>
 
     <Button
-        android:id="@+id/btn_chargedt"
+        android:id="@+id/btn_chargedt1"
         android:layout_width="@dimen/bottom_long_layout_width"
         android:layout_height="wrap_content"
         android:gravity="center"

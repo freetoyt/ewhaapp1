@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
 
     private Button btn_logout,btn_come, btn_out, btn_incar, btn_charge, btn_sales, btn_rental, btn_back,
             btn_scan, btn_deleteAll,btn_history, btn_etc, btn_manual, btn_setting, btn_noGas;
+    private Button btn_hole,btn_vacuum,btn_chargedt;
 
     //private  TextView main_label;
     private int REQUEST_TEST = 1;
@@ -127,12 +128,17 @@ ConnectivityManager.TYPE_MOBILE
         btn_manual= (Button)findViewById(R.id.btn_manual);       // 수동등록
 
         btn_noGas= (Button)findViewById(R.id.btn_noGas);       // 단품판매
+        btn_hole= (Button)findViewById(R.id.btn_hole);       // 누출확인
+        btn_vacuum= (Button)findViewById(R.id.btn_vacuum);       // 진공배기
+        btn_chargedt= (Button)findViewById(R.id.btn_chargedt);       // 충전기한확인
 
         //main_label = (TextView)findViewById(R.id.main_label);
         //main_label.setText("V "+version);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv);
         linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         arrayList = new ArrayList<>();
@@ -193,7 +199,6 @@ ConnectivityManager.TYPE_MOBILE
                     //Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
 
                     // 커스텀 다이얼로그를 호출한다.
-                    // 커스텀 다이얼로그의 결과를 출력할 TextView를 매개변수로 같이 넘겨준다.
                     customDialog.callFunction(tempStr, userId);
                 }
             }
@@ -215,7 +220,6 @@ ConnectivityManager.TYPE_MOBILE
                     //Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
 
                     // 커스텀 다이얼로그를 호출한다.
-                    // 커스텀 다이얼로그의 결과를 출력할 TextView를 매개변수로 같이 넘겨준다.
                     customDialog.callFunction(tempStr, userId);
                 }
             }
@@ -236,7 +240,6 @@ ConnectivityManager.TYPE_MOBILE
                     //Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
 
                     // 커스텀 다이얼로그를 호출한다.
-                    // 커스텀 다이얼로그의 결과를 출력할 TextView를 매개변수로 같이 넘겨준다.
                     customDialog.callFunction(tempStr, userId);
                 }
             }
@@ -257,7 +260,6 @@ ConnectivityManager.TYPE_MOBILE
                     //Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
 
                     // 커스텀 다이얼로그를 호출한다.
-                    // 커스텀 다이얼로그의 결과를 출력할 TextView를 매개변수로 같이 넘겨준다.
                     customDialog.callFunction(tempStr, userId);
                 }
             }
@@ -279,7 +281,6 @@ ConnectivityManager.TYPE_MOBILE
                     //Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
 
                     // 커스텀 다이얼로그를 호출한다.
-                    // 커스텀 다이얼로그의 결과를 출력할 TextView를 매개변수로 같이 넘겨준다.
                     customDialog.callFunction(tempStr, userId);
                 }
             }
@@ -301,7 +302,6 @@ ConnectivityManager.TYPE_MOBILE
                     //Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
 
                     // 커스텀 다이얼로그를 호출한다.
-                    // 커스텀 다이얼로그의 결과를 출력할 TextView를 매개변수로 같이 넘겨준다.
                     customDialog.callFunction(tempStr, userId);
                 }
             }
@@ -322,7 +322,6 @@ ConnectivityManager.TYPE_MOBILE
                     //Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
 
                     // 커스텀 다이얼로그를 호출한다.
-                    // 커스텀 다이얼로그의 결과를 출력할 TextView를 매개변수로 같이 넘겨준다.
                     customDialog.callFunction(tempStr, userId);
                 }
             }
@@ -402,6 +401,70 @@ ConnectivityManager.TYPE_MOBILE
             @Override
             public void onClick(View v) {
 
+                NoGasDialog noGasDialog = new NoGasDialog(MainActivity.this, btn_noGas.getText().toString());
+
+                // 커스텀 다이얼로그를 호출한다.
+                noGasDialog.callFunction(userId);
+            }
+        });
+
+        btn_hole.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(arrayList.size() <= 0){
+                    Toast.makeText(MainActivity.this, "용기를 선택하세요", Toast.LENGTH_LONG).show();
+                }else {
+                    ChargeDialog customDialog = new ChargeDialog(MainActivity.this, btn_hole.getText().toString());
+
+                    String tempStr = "";
+                    for (int i = 0; i < arrayList.size(); i++) {
+                        tempStr += arrayList.get(i).getTv_bottleId() + ",";
+                    }
+                    //Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
+
+                    // 커스텀 다이얼로그를 호출한다.
+                    customDialog.callFunction(tempStr, userId);
+                }
+            }
+        });
+
+        btn_vacuum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(arrayList.size() <= 0){
+                    Toast.makeText(MainActivity.this, "용기를 선택하세요", Toast.LENGTH_LONG).show();
+                }else {
+                    ChargeDialog customDialog = new ChargeDialog(MainActivity.this, btn_vacuum.getText().toString());
+
+                    String tempStr = "";
+                    for (int i = 0; i < arrayList.size(); i++) {
+                        tempStr += arrayList.get(i).getTv_bottleId() + ",";
+                    }
+                    //Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
+
+                    // 커스텀 다이얼로그를 호출한다.
+                    customDialog.callFunction(tempStr, userId);
+                }
+            }
+        });
+
+        btn_chargedt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(arrayList.size() <= 0){
+                    Toast.makeText(MainActivity.this, "용기를 선택하세요", Toast.LENGTH_LONG).show();
+                }else {
+                    ChargeDialog customDialog = new ChargeDialog(MainActivity.this, btn_chargedt.getText().toString());
+
+                    String tempStr = "";
+                    for (int i = 0; i < arrayList.size(); i++) {
+                        tempStr += arrayList.get(i).getTv_bottleId() + ",";
+                    }
+                    //Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
+
+                    // 커스텀 다이얼로그를 호출한다.
+                    customDialog.callFunction(tempStr, userId);
+                }
             }
         });
 
@@ -411,7 +474,7 @@ ConnectivityManager.TYPE_MOBILE
             public void onClick(View v) {
                 ManualDialog manualDialog = new ManualDialog(MainActivity.this);
 
-                // 커스텀 다이얼로그의 결과를 출력할 TextView를 매개변수로 같이 넘겨준다.
+                // 커스텀 다이얼로그를 호출한다.
                 manualDialog.callFunction(arrayList,mainAdapter);
             }
         });
@@ -462,7 +525,6 @@ ConnectivityManager.TYPE_MOBILE
                 moveTaskToBack(MainActivity.closeB);
                 finish();
                 Process.killProcess(Process.myPid());
-
                 dialog.dismiss();
             }
         });
@@ -613,7 +675,7 @@ ConnectivityManager.TYPE_MOBILE
                         e.printStackTrace();
                     }
                 } else {    //연결 실패
-                    Toast.makeText(MainActivity.this ,"장치를 확인해주세요", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this ,"장치를 확인해주세요", Toast.LENGTH_SHORT).show();
                     try {
                         mSocket.close();
                     } catch (IOException e) {
@@ -634,7 +696,6 @@ ConnectivityManager.TYPE_MOBILE
                 Log.i("mRemoteDevice",mRemoteDevice.getName()+" type="+mRemoteDevice.getType());
 
                 try {
-
                     // 소켓 생성
                     mSocket = mRemoteDevice.createRfcommSocketToServiceRecord(uuid);
 
