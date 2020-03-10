@@ -7,7 +7,7 @@
     android:padding="16dp">
 
     <Button
-        android:id="@+id/btn_hole1"
+        android:id="@+id/btn_hole"
         android:layout_width="@dimen/bottom_layout_width"
         android:layout_height="wrap_content"
         android:gravity="center"

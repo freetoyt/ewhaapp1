@@ -36,7 +36,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
         final SharedPreferences sharedPreferences = context.getSharedPreferences(shared,0);
         userId = sharedPreferences.getString("id", "");
 
-        btn_hole  = v.findViewById(R.id.btn_hole1);
+        btn_hole  = v.findViewById(R.id.btn_hole);
         btn_vacuum  = v.findViewById(R.id.btn_vacuum1);
         btn_chargedt  = v.findViewById(R.id.btn_chargedt1);
         btn_close  = v.findViewById(R.id.btn_close);

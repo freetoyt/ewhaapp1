@@ -105,9 +105,9 @@
         android:id="@+id/btn_etc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="기타"
-        android:textSize="18sp"
+        android:text="앱정보"
         android:textColor="#000"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_history" />
@@ -219,19 +219,8 @@
         android:textSize="@dimen/button_4_size"
         android:textColor="#000"
         app:layout_constraintBottom_toTopOf="@+id/btn_come"
-        app:layout_constraintEnd_toStartOf="@+id/btn_hole"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btn_hole"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="누출확인"
-        android:textSize="@dimen/button_4_size"
-        android:textColor="#000"
-        app:layout_constraintBottom_toTopOf="@+id/btn_out"
         app:layout_constraintEnd_toStartOf="@+id/btn_vacuum"
-        app:layout_constraintStart_toEndOf="@+id/btn_noGas" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btn_vacuum"
@@ -240,9 +229,20 @@
         android:text="진공배기"
         android:textSize="@dimen/button_4_size"
         android:textColor="#000"
+        app:layout_constraintBottom_toTopOf="@+id/btn_out"
+        app:layout_constraintEnd_toStartOf="@+id/btn_hole"
+        app:layout_constraintStart_toEndOf="@+id/btn_noGas" />
+
+    <Button
+        android:id="@+id/btn_hole"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="누출확인"
+        android:textSize="@dimen/button_4_size"
+        android:textColor="#000"
         app:layout_constraintBottom_toTopOf="@+id/btn_incar"
         app:layout_constraintEnd_toStartOf="@+id/btn_chargedt"
-        app:layout_constraintStart_toEndOf="@+id/btn_hole" />
+        app:layout_constraintStart_toEndOf="@+id/btn_vacuum" />
 
     <Button
         android:id="@+id/btn_chargedt"
@@ -253,6 +253,6 @@
         android:textSize="@dimen/button_long_size"
         app:layout_constraintBottom_toTopOf="@+id/btn_charge"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_vacuum" />
+        app:layout_constraintStart_toEndOf="@+id/btn_hole" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

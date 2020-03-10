@@ -1,8 +1,11 @@
 package com.gms.app.barcode;
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -50,6 +53,30 @@ public class LoginActivity extends AppCompatActivity {
             //intent.putExtra("pw", name);
             startActivity(intent);
         }
+
+        // 네트웍 상태체크
+        ConnectivityManager cm = (ConnectivityManager) LoginActivity.this.getSystemService( LoginActivity.this.CONNECTIVITY_SERVICE);
+
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+
+        if(networkInfo != null && networkInfo.isConnected()) {
+            if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
+                //WIFI에 연결됨
+            } else if (networkInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
+                //LTE(이동통신망)에 연결됨
+            }
+        } else {
+            // 연결되지않음
+            AlertDialog.Builder builder
+                    = new AlertDialog.Builder(LoginActivity.this,AlertDialog.THEME_HOLO_DARK);
+            builder .setTitle("대한특수가스")
+                    .setMessage("인터넷이 연결되지 않았습니다 ")
+                    .setPositiveButton("확인", null);
+            AlertDialog ad = builder.create();
+
+            ad.show();
+        }
+
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

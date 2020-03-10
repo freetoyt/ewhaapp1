@@ -115,8 +115,6 @@ public class CustomDialog {
             listView.setAdapter(adapter3);
         }
 
-
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -125,7 +123,6 @@ public class CustomDialog {
                 message.setText(text);
             }
         });
-
 
         message.addTextChangedListener(new TextWatcher() {
             @Override
@@ -231,7 +228,7 @@ public class CustomDialog {
             {
                 // arraylist의 모든 데이터에 입력받은 단어(charText)가 포함되어 있으면 true를 반환한다.
                 Log.d("search",charText);
-                if (items[i].toLowerCase().contains(charText))
+                if (items[i].toLowerCase().contains(charText.toLowerCase()))
                 {
                     // 검색된 데이터를 리스트에 추가한다.
                     listItems.add(items[i]);
@@ -241,7 +238,6 @@ public class CustomDialog {
         // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
         adapter3.notifyDataSetChanged();
     }
-
 
     private class HttpAsyncTask extends AsyncTask<String, Void, List<CustomerSimpleVO>> {
         private final String TAG = HttpAsyncTask.class.getSimpleName();

@@ -90,26 +90,40 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
         setContentView(R.layout.activity_main);
         host = getString(R.string.host_name);
 
+        // 버전 정보 가져오기
         PackageInfo packageInfo = null;
 
         try{
             packageInfo = getPackageManager().getPackageInfo(getPackageName(),0);
 
             version = packageInfo.versionName;
-            Log.d("############## Package Version",version);
+            //Log.d("############## Package Version",version);
         }catch (PackageManager.NameNotFoundException e){
-            Log.d("############## Package Version","NameNotFoundException");
+            Log.e("############## Package Version","NameNotFoundException");
         }
 
         // 네트웍 상태체크
         ConnectivityManager cm = (ConnectivityManager) MainActivity.this.getSystemService( MainActivity.this.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
 
-        NetworkInfo networkdInfo = cm.getActiveNetworkInfo();
-        Toast.makeText(MainActivity.this, " 연결됨"+networkdInfo.getType(), Toast.LENGTH_SHORT).show();
-/*
-ConnectivityManager.TYPE_WIFI
-ConnectivityManager.TYPE_MOBILE
- */
+        if(networkInfo != null && networkInfo.isConnected()) {
+          if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
+            //WIFI에 연결됨
+          } else if (networkInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
+            //LTE(이동통신망)에 연결됨
+          }
+        } else {
+          // 연결되지않음
+            AlertDialog.Builder builder1
+                    = new AlertDialog.Builder(MainActivity.this,AlertDialog.THEME_HOLO_DARK);
+            builder1 .setTitle("대한특수가스")
+                    .setMessage("인터넷이 연결되지 않았습니다 ")
+                    .setPositiveButton("확인", null);
+            AlertDialog ad = builder1.create();
+
+            ad.show();
+        }
+
 
         btn_logout = (Button)findViewById(R.id.btn_logout);     //로그아웃
         btn_setting = (Button)findViewById(R.id.btn_setting);     //블루투스 연결
@@ -131,9 +145,6 @@ ConnectivityManager.TYPE_MOBILE
         btn_hole= (Button)findViewById(R.id.btn_hole);       // 누출확인
         btn_vacuum= (Button)findViewById(R.id.btn_vacuum);       // 진공배기
         btn_chargedt= (Button)findViewById(R.id.btn_chargedt);       // 충전기한확인
-
-        //main_label = (TextView)findViewById(R.id.main_label);
-        //main_label.setText("V "+version);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv);
         linearLayoutManager = new LinearLayoutManager(this);
@@ -160,13 +171,13 @@ ConnectivityManager.TYPE_MOBILE
         btn_scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-/*
+
                 //TODO 임시 주석
                 qrScan.setPrompt("Scanning...");
                 qrScan.setBeepEnabled(false);//바코드 인식시 소리
                 qrScan.setOrientationLocked(false);
                 qrScan.initiateScan();
-*/
+/*/
                 //1/9 임시 테스트
                 if(tempInd==8) tempInd = 0;
                 // = new String[]{"AA315923""AA315784","AA316260"};
@@ -177,10 +188,10 @@ ConnectivityManager.TYPE_MOBILE
                 // AsyncTask를 통해 HttpURLConnection 수행.
                 NetworkTask networkTask = new NetworkTask(url, null);
                 networkTask.execute();
-
-
+*/
             }
         });
+
         final TextView main_label = (TextView) findViewById(R.id.main_label);
 
         btn_come.setOnClickListener(new View.OnClickListener() {
@@ -218,7 +229,6 @@ ConnectivityManager.TYPE_MOBILE
                         tempStr += arrayList.get(i).getTv_bottleId() + ",";
                     }
                     //Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
-
                     // 커스텀 다이얼로그를 호출한다.
                     customDialog.callFunction(tempStr, userId);
                 }
@@ -342,20 +352,20 @@ ConnectivityManager.TYPE_MOBILE
             public void onClick(View v) {
 
                 previousBottles = sharedPreferences.getString("previousBottles", "");
-                Log.d("previousBottles", previousBottles);
+                //Log.d("previousBottles", previousBottles);
 
                 if(previousBottles !=null && previousBottles.length() > 0) {
                     String[] aCode = previousBottles.split(",");
                     Button btn_info = findViewById(R.id.btn_info);
 
                     for (int i = 0; i < aCode.length; i++) {
-                        Log.d("previousBottles", "aCode " + aCode[i]);
+                        //Log.d("previousBottles", "aCode " + aCode[i]);
 
                         // 저장된 용기 정보 불러오기
                         Gson gson = new Gson();
                         String sharedValue = sharedPreferences.getString(aCode[i], "");
 
-                        Log.d("previousBottles", "value " + sharedValue);
+                        //Log.d("previousBottles", "value " + sharedValue);
 
                         BottleVO bottle = new BottleVO();
                         bottle = (BottleVO) gson.fromJson(sharedValue, bottle.getClass());
@@ -373,6 +383,7 @@ ConnectivityManager.TYPE_MOBILE
         btn_etc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+/*
                 if(arrayList.size() <= 0){
                     Toast.makeText(MainActivity.this, "용기를 선택하세요", Toast.LENGTH_LONG).show();
                 }else {
@@ -386,13 +397,17 @@ ConnectivityManager.TYPE_MOBILE
                     // 하단 창 띄우기
                     BottomSheetDialog bottomSheet = new BottomSheetDialog(MainActivity.this,tempStr);
                     bottomSheet.show(getSupportFragmentManager(), "exampleBottomSheet");
-                    /*/
-                    ChargeDialog customDialog = new ChargeDialog(MainActivity.this, btn_hole.getText().toString());
-                    // 커스텀 다이얼로그를 호출한다.
-                    // 커스텀 다이얼로그의 결과를 출력할 TextView를 매개변수로 같이 넘겨준다.
-                    customDialog.callFunction(tempStr, userId);
-*/
+
                 }
+ */
+                AlertDialog.Builder builder
+                        = new AlertDialog.Builder(MainActivity.this,AlertDialog.THEME_HOLO_DARK);
+                builder .setTitle("대한특수가스")
+                        .setMessage("앱(V "+version+")")
+                        .setPositiveButton("확인", null);
+                AlertDialog ad = builder.create();
+
+                ad.show();
             }
         });
 
