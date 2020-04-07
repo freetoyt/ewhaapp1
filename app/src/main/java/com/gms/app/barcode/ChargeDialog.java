@@ -37,14 +37,13 @@ public class ChargeDialog {
     String customerId="";
     String userId = "";
     String host ="";
-
+    String strBottleType="공병";
 
     public ChargeDialog(Context context, String bType) {
         this.context = context;
         this.buttonType = bType;
         sharedPreferences = context.getSharedPreferences(shared, 0);
         host = context.getString(R.string.host_name);
-
     }
 
     // 호출할 다이얼로그 함수를 정의한다.
@@ -58,7 +57,6 @@ public class ChargeDialog {
 
         // 액티비티의 타이틀바를 숨긴다.
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
 
         // 커스텀 다이얼로그의 레이아웃을 설정한다.
         dlg.setContentView(R.layout.charge_dialog);
@@ -78,15 +76,15 @@ public class ChargeDialog {
         title.setText(buttonType);
         // Add Data to listView
 
-
         rg_gender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if(checkedId == R.id.rb_man) {
-                    Toast.makeText(context,"실병 라디오버튼", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,"실병을 선택했습니다", Toast.LENGTH_SHORT).show();
                     bottleType = "F";
+                    strBottleType = "실병";
                 }else if(checkedId == R.id.rb_woman){
-                    Toast.makeText(context,"공병 라디오버튼", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,"공병을 선택했습니다", Toast.LENGTH_SHORT).show();
                     bottleType = "E";
                 }
             }
@@ -98,14 +96,14 @@ public class ChargeDialog {
                 // 커스텀 다이얼로그에서 입력한 메시지를 대입한다.
                 //main_label.setText(message.getText().toString()+"--"+str_result);
 
-                Toast.makeText(context, String.format("\"%s=%s\" 을 입력하였습니다.", bottleType, buttonType), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, String.format("\"%s으로 %s\" 처리를 하였습니다.", strBottleType, buttonType), Toast.LENGTH_SHORT).show();
 
                 //작업한 용기목록저장
                 SharedPreferences.Editor editor = sharedPreferences.edit();
 
                 editor.putString("previousBottles",bottles);
                 editor.commit();
-                Log.d("@@@@@@@@@@@@@okButton: " ,"previousBottles: " + bottles);
+                //Log.d("@@@@@@@@@@@@@okButton: " ,"previousBottles: " + bottles);
                 // 서버 전송
                 new HttpAsyncTask().execute(host+"api/controlAction.do?userId="+userId+"&bottles="+bottles+"&customerNm="+customerId+"&bottleType="+bottleType+"&bottleWorkCd="+buttonType);
 
@@ -126,8 +124,6 @@ public class ChargeDialog {
             }
         });
     }
-
-
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {
 
@@ -160,7 +156,7 @@ public class ChargeDialog {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-
         }
+
     }
 }

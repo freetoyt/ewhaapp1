@@ -9,5 +9,5 @@
         android:layout_height="30dp"
         android:gravity="center_vertical"
         android:text="AA315923"
-        android:textSize="18sp" />
+        android:textSize="@dimen/customer_item_text" />
 </LinearLayout>

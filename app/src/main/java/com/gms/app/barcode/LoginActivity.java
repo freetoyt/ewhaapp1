@@ -132,9 +132,9 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
                 JSONObject jsonObject = new JSONObject(s);
-                Log.d("LoginActivity", "jsonObject ="+jsonObject.toString());
+                //Log.d("LoginActivity", "jsonObject ="+jsonObject.toString());
                 success = jsonObject.getBoolean("success");
-                Log.e("LoginActivity", "success ="+success);
+                //Log.e("LoginActivity", "success ="+success);
                 if(success) {
                     String id = jsonObject.getString("userId");
                     String name = URLDecoder.decode(jsonObject.getString("userNm"),"UTF-8");

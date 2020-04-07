@@ -50,6 +50,7 @@ public class CustomDialog {
     String userId = "";
     String host ="";
     String value ="" ;
+    String strBottleType="공병";
 
     public CustomDialog(Context context, String bType) {
         this.context = context;
@@ -60,12 +61,11 @@ public class CustomDialog {
 
         if(buttonType.equals("판매") || buttonType.equals("대여") || buttonType.equals("회수")) {
             value = sharedPreferences.getString("clist", "");
-            Log.e("CustomDialog ",buttonType);
+            //Log.e("CustomDialog ",buttonType);
             if(value ==null || value.length() <= 10)
                 new HttpAsyncTask().execute(host + "api/customerAllList.do");
         }else {
             if(!buttonType.equals("충전")) {
-
                 new HttpAsyncTask().execute(host + "api/carList.do");
             }
         }
@@ -104,10 +104,9 @@ public class CustomDialog {
         // Add Data to listView
         listView = (ListView) dlg.findViewById(R.id.listview);
 
-
         if(buttonType.equals("판매") || buttonType.equals("대여") || buttonType.equals("회수")) {
             //value = sharedPreferences.getString("clist", "");
-            Log.d("CustomerDialog  value ", value);
+            //Log.d("CustomerDialog  value ", value);
             items = value.split(",");
 
             listItems = new ArrayList<>(Arrays.asList(items));
@@ -145,10 +144,11 @@ public class CustomDialog {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if(checkedId == R.id.rb_man) {
-                    Toast.makeText(context,"실병 선택", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,"실병을 선택했습니다", Toast.LENGTH_SHORT).show();
                     bottleType = "F";
+                    strBottleType = "실병";
                 }else if(checkedId == R.id.rb_woman){
-                    Toast.makeText(context,"공병 선택", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,"공병을 선택했습니다", Toast.LENGTH_SHORT).show();
                     bottleType = "E";
                 }
             }
@@ -163,7 +163,7 @@ public class CustomDialog {
                     if (bottleType.equals("B")) {
                         Toast.makeText(context, "실병/공병을 선택하세요", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(context, String.format("\"%s=%s=%s\" 을 입력하였습니다.", message.getText().toString(), bottleType, buttonType), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, String.format("\"%s에 %s으로 %s\" 를 하였습니다.", message.getText().toString(), strBottleType, buttonType), Toast.LENGTH_SHORT).show();
 
                         customerId = message.getText().toString();
                         //작업한 용기목록저장
@@ -171,7 +171,7 @@ public class CustomDialog {
 
                         editor.putString("previousBottles",bottles);
                         editor.commit();
-                        Log.d("@@@@@@@@@@@@@okButton: ","previousBottles: " + bottles);
+                        //Log.d("@@@@@@@@@@@@@okButton: ","previousBottles: " + bottles);
                         // 서버 전송
                         new HttpAsyncTask1().execute(host + "api/controlAction.do?userId=" + userId + "&bottles=" + bottles + "&customerNm=" + customerId + "&bottleType=" + bottleType + "&bottleWorkCd=" + buttonType);
 
@@ -194,22 +194,7 @@ public class CustomDialog {
             }
         });
     }
-    /*
-        public void searchItem(String textToSearch){
-            if(items!=null) {
-                for (String item : items) {
 
-                    if (!item.contains(textToSearch)) {
-                        listItems.remove(item);
-                    }
-                }
-
-                adapter3.notifyDataSetChanged();
-            }else {
-                Toast.makeText(context, "items is null", Toast.LENGTH_SHORT).show();
-            }
-        }
-    */
     // 검색을 수행하는 메소드
     public void search(String charText) {
         Log.d("search","start =="+charText);
@@ -276,7 +261,6 @@ public class CustomDialog {
         protected void onPostExecute(List<CustomerSimpleVO> customerList) {
             super.onPostExecute(customerList);
 
-
             Log.d("HttpAsyncTask", customerList.toString());
             //CustomerSimpleAdapter adapter = new CustomerSimpleAdapter(customerList);
             StringBuffer sb = new StringBuffer();
@@ -339,7 +323,6 @@ public class CustomDialog {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-
         }
     }
 }

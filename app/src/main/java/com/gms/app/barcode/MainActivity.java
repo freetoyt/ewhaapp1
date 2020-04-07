@@ -340,7 +340,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
         btn_deleteAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "리스트를 삭제", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "리스트를 삭제하였습니다", Toast.LENGTH_SHORT).show();
                 arrayList.clear();
                 mainAdapter.notifyDataSetChanged();
             }
@@ -383,23 +383,12 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
         btn_etc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                // 하단 창 띄우기
+                CashDialog cash = new CashDialog(MainActivity.this);
+                cash.callFunction(userId);
 /*
-                if(arrayList.size() <= 0){
-                    Toast.makeText(MainActivity.this, "용기를 선택하세요", Toast.LENGTH_LONG).show();
-                }else {
-
-                    String tempStr = "";
-                    for (int i = 0; i < arrayList.size(); i++) {
-                        tempStr += arrayList.get(i).getTv_bottleId() + ",";
-                    }
-                    //Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
-
-                    // 하단 창 띄우기
-                    BottomSheetDialog bottomSheet = new BottomSheetDialog(MainActivity.this,tempStr);
-                    bottomSheet.show(getSupportFragmentManager(), "exampleBottomSheet");
-
-                }
- */
                 AlertDialog.Builder builder
                         = new AlertDialog.Builder(MainActivity.this,AlertDialog.THEME_HOLO_DARK);
                 builder .setTitle("대한특수가스")
@@ -408,6 +397,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                 AlertDialog ad = builder.create();
 
                 ad.show();
+                 */
             }
         });
 
@@ -572,13 +562,9 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                     networkTask.execute();
                     //data를 json으로 변환
                     JSONObject obj = new JSONObject(result.getContents());
-                    //textViewName.setText(obj.getString("name"));
-                    //textViewAddress.setText(obj.getString("address"));
-                    Toast.makeText(MainActivity.this, obj.getString("name"), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(MainActivity.this, obj.getString("name"), Toast.LENGTH_LONG).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    //Toast.makeText(MainActivity.this, result.getContents(), Toast.LENGTH_LONG).show();
-                    //textViewResult.setText(result.getContents());
                 }
                 //sqrScan.initiateScan();
             }
@@ -601,7 +587,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter == null) {
             // 장치가 블루투스 지원하지 않는 경우
-            Toast.makeText(MainActivity.this, "Bluetooth no available", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Bluetooth를 이용할수 없습니다.", Toast.LENGTH_SHORT).show();
         } else {
             // 장치가 블루투스 지원하는 경우
             if (!mBluetoothAdapter.isEnabled()) {
@@ -625,8 +611,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
         //Alertdialog 생성(activity에는 context입력)
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         //AlertDialog 제목 설정
-        builder.setTitle("Select device");
-
+        builder.setTitle("기기를 선택해주세요");
 
         // 페어링 된 블루투스 장치의 이름 목록 작성
         final List<String> listItems = new ArrayList<String>();
@@ -661,6 +646,11 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
 
             builder.setCancelable(false);    // 뒤로 가기 버튼 사용 금지
             AlertDialog alert = builder.create();
+            if(mSocket!=null && mSocket.isConnected()){
+                Toast.makeText(MainActivity.this, "블루투스가 연결되었습니다.", Toast.LENGTH_SHORT).show();
+            }else {
+                Toast.makeText(MainActivity.this, "블루투스가 연결되지 않았습니다", Toast.LENGTH_SHORT).show();
+            }
             alert.show();   //alert 시작
         }
     }
@@ -672,7 +662,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
         //handler는 thread에서 던지는 메세지를 보고 다음 동작을 수행시킨다.
         final Handler mHandler = new Handler() {
             public void handleMessage(Message msg) {
-                Log.i("***************** MainActivity  connectToSelectedDevice msg",msg.toString());
+                //Log.i("***************** MainActivity  connectToSelectedDevice msg",msg.toString());
                 if (msg.what == 1) // 연결 완료
                 {
                     try {
@@ -748,13 +738,12 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
         return selectedDevice;
     }
 
-
     //블루투스 데이터 수신 Listener
     protected void beginListenForData() {
         final Handler handler = new Handler();
         readBuffer = new byte[1024];  //  수신 버퍼
         readBufferPositon = 0;        //   버퍼 내 수신 문자 저장 위치
-        Log.i("***************** MainActivity  beginListenForData msg","start");
+        //Log.i("***************** MainActivity  beginListenForData msg","start");
         // 문자열 수신 쓰레드
         mWorkerThread = new Thread(new Runnable() {
             @Override
@@ -772,8 +761,6 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                             String readMessage = new String(packetBytes, 0, bytesInt);
                             if(readMessage !=null && readMessage.length() > 14) {
                                 Log.d("***************** MainActivity readMessage", readMessage + "--" + readMessage.length());
-                                Log.d("***************** MainActivity readMessage", readMessage + "--" + readMessage.substring(5, 13));
-                                Log.d("***************** MainActivity  beginListenForData msg", "packetBytes " + packetBytes.toString());
 
                                 String url = host + "api/bottleDetail.do?bottleBarCd=" + readMessage.substring(5, 13);//AA315923";
                                 // AsyncTask를 통해 HttpURLConnection 수행.
@@ -792,17 +779,14 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                                     handler.post(new Runnable() {
                                         public void run() {
                                             //수신된 데이터는 data 변수에 string으로 저장!! 이 데이터를 이용하면 된다.
-
                                             char[] c_arr = data.toCharArray(); // char 배열로 변환
                                             Log.i("***************** 1MainActivity c_arr1",c_arr.toString());
                                             if (c_arr[0] == 'a') {
                                                 if (c_arr[1] == '1') {
-
                                                     //a1이라는 데이터가 수신되었을 때
                                                     Log.i("***************** MainActivity c_arr2",c_arr.toString());
                                                 }
                                                 if (c_arr[1] == '2') {
-
                                                     //a2라는 데이터가 수신 되었을 때
                                                 }
                                             }
@@ -813,7 +797,6 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                                 }
                             }
                              */
-
                         }
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
@@ -859,14 +842,14 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
             RequestHttpURLConnection requestHttpURLConnection = new RequestHttpURLConnection();
             result = requestHttpURLConnection.request(url, values); // 해당 URL로 부터 결과물을 얻어온다.
 
-            Log.d("MainActivity doInBackground","rseult="+result);
+            //Log.d("MainActivity doInBackground","rseult="+result);
             return result;
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.d("Mainctivity onPostExecute","s="+s);
+            //Log.d("Mainctivity onPostExecute","s="+s);
             //doInBackground()로 부터 리턴된 값이 onPostExecute()의 매개변수로 넘어오므로 s를 출력한다.
             //tv_result.setText(s);
             String bottleBarCd="";
@@ -882,7 +865,6 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                 if(bottleBarCd!=null && !bottleBarCd.equals("null") && bottleBarCd.length() > 5) {
 
                     productNm = jsonObject.getString("productNm");
-                    Log.d("Mainctivity onPostExecute1", "tv_bottleBarCd=" + bottleBarCd + " productNm =" + productNm);
 
                     SharedPreferences sharedPreferences = getSharedPreferences(shared, 0);
                     SharedPreferences.Editor editor = sharedPreferences.edit();

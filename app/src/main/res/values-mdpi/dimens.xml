@@ -12,4 +12,6 @@
     <dimen name="bottom_layout_width">80dp</dimen>
     <dimen name="bottom_long_layout_width">90dp</dimen>
     <dimen name="bottom_cancel_width">60dp</dimen>
+    <dimen name="cash_customerList">90dp</dimen>
+    <dimen name="customer_item_text">14sp</dimen>
 </resources>

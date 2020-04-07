@@ -105,9 +105,9 @@
         android:id="@+id/btn_etc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="앱정보"
+        android:text="입금/미수"
         android:textColor="#000"
-        android:textSize="18sp"
+        android:textSize="@dimen/button_4_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_history" />

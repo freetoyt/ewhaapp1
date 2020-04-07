@@ -2,7 +2,7 @@
 <resources>
     <dimen name="title_size">260dp</dimen>
     <dimen name="button_4_size">18sp</dimen>
-    <dimen name="button_long_size">14sp</dimen>
+    <dimen name="button_long_size">12sp</dimen>
     <dimen name="item_text_size">20sp</dimen>
     <dimen name="item_text_sizeB">18sp</dimen>
     <dimen name="item_width0">140dp</dimen>
@@ -12,4 +12,6 @@
     <dimen name="bottom_layout_width">90dp</dimen>
     <dimen name="bottom_long_layout_width">100dp</dimen>
     <dimen name="bottom_cancel_width">70dp</dimen>
+    <dimen name="cash_customerList">120dp</dimen>
+    <dimen name="customer_item_text">18sp</dimen>
 </resources>
