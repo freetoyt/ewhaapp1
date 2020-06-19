@@ -38,13 +38,14 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.CustomViewHold
         holder.tv_bottleId.setText(arrayList.get(position).getTv_bottleId());
         holder.tv_productNm.setText(arrayList.get(position).getTv_productNm());
         holder.tv_bottleBarCd.setText(arrayList.get(position).getTv_bottleBarCd());
+        holder.tv_chargedt.setText(arrayList.get(position).getTv_chargedt());
 
         holder.itemView.setTag(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String curNmae = holder.tv_productNm.getText().toString();
-                Toast.makeText(v.getContext(),curNmae,Toast.LENGTH_SHORT).show();
+
             }
         });
         //final TextView main_label = holder.btn_info;
@@ -52,7 +53,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.CustomViewHold
             @Override
             public void onClick(View view) {
                 //holder.textView.setText(items.get(holder.getAdapterPosition()));
-                Toast.makeText(view.getContext(), holder.tv_bottleBarCd.getText().toString(), Toast.LENGTH_SHORT).show();
 
                 SharedPreferences sharedPreferences = view.getContext().getSharedPreferences(shared,0);
                 String value = sharedPreferences.getString(holder.tv_bottleId.getText().toString(), "");
@@ -63,9 +63,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.CustomViewHold
                 // 커스텀 다이얼로그를 호출한다.
                 // 커스텀 다이얼로그의 결과를 출력할 TextView를 매개변수로 같이 넘겨준다.
                 bottleInfo.callFunction(value);
-
-
-
             }
         });
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -108,6 +105,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.CustomViewHold
         protected TextView tv_bottleId;
         protected TextView tv_productNm;
         protected TextView tv_bottleBarCd;
+        protected TextView tv_chargedt;
         protected Button btn_info;
 
         public CustomViewHolder(@NonNull View itemView) {
@@ -116,6 +114,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.CustomViewHold
             this.tv_bottleId = (TextView) itemView.findViewById(R.id.tv_bottleId);
             this.tv_productNm = (TextView) itemView.findViewById(R.id.tv_productNm);
             this.tv_bottleBarCd = (TextView) itemView.findViewById(R.id.tv_bottleBarCd);
+            this.tv_chargedt = (TextView) itemView.findViewById(R.id.tv_chargedt);
             this.btn_info = (Button)itemView.findViewById(R.id.btn_info);
         }
     }

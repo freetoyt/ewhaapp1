@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E6E5E5"
     tools:context=".MainActivity">
 
     <TextView
@@ -11,23 +12,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="invisible"/>
-    <TextView
-        android:id="@+id/bottleType"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="invisible"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="200dp"
+        android:layout_marginBottom="145dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/btn_incar">
+        app:layout_constraintBottom_toTopOf="@+id/btn_out">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#7484E6">
+            android:background="#7484E6"
+            >
 
             <ImageView
                 android:layout_width="60dp"
@@ -66,10 +63,23 @@
 
         <View style="@style/Divider" />
 
+        <TextView
+            android:id="@+id/tv_bottleCount"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:background="#D3D0D0"
+            android:gravity="center"
+            android:text="바코드 카운트"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+        <View style="@style/Divider" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv"
             android:layout_width="match_parent"
-            android:layout_height="483dp"
+            android:layout_height="552dp"
             android:layout_weight="1"
             android:scrollbarFadeDuration="0"
             android:scrollbarSize="5dp"
@@ -79,15 +89,16 @@
             android:text="1111" />
     </LinearLayout>
     <View style="@style/Divider"/>
+
     <Button
-        android:id="@+id/btn_deleteAll"
+        android:id="@+id/btn_manual"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="전체삭제"
-        android:textSize="@dimen/button_4_size"
+        android:text="수동입력"
         android:textColor="#000"
+        android:textSize="@dimen/button_4_size"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_history"
+        app:layout_constraintEnd_toStartOf="@+id/btn_money"
         app:layout_constraintStart_toEndOf="@+id/btn_scan" />
 
     <Button
@@ -98,19 +109,19 @@
         android:textSize="@dimen/button_4_size"
         android:textColor="#000"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_deleteAll"
+        app:layout_constraintEnd_toStartOf="@+id/btn_manual"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btn_etc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="입금/미수"
+        android:text="기타"
         android:textColor="#000"
         android:textSize="@dimen/button_4_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_history" />
+        app:layout_constraintStart_toEndOf="@+id/btn_money" />
 
     <Button
         android:id="@+id/btn_rental"
@@ -119,7 +130,7 @@
         android:text="대여"
         android:textSize="18sp"
         android:textColor="#000"
-        app:layout_constraintBottom_toTopOf="@+id/btn_deleteAll"
+        app:layout_constraintBottom_toTopOf="@+id/btn_manual"
         app:layout_constraintEnd_toStartOf="@+id/btn_back"
         app:layout_constraintStart_toEndOf="@+id/btn_sales" />
 
@@ -130,17 +141,17 @@
         android:text="판매"
         android:textSize="18sp"
         android:textColor="#000"
-        app:layout_constraintBottom_toTopOf="@+id/btn_deleteAll"
+        app:layout_constraintBottom_toTopOf="@+id/btn_manual"
         app:layout_constraintEnd_toStartOf="@+id/btn_rental"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btn_manual"
+        android:id="@+id/btn_history"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="수동입력"
-        android:textSize="@dimen/button_4_size"
+        android:text="이전목록"
         android:textColor="#000"
+        android:textSize="@dimen/button_4_size"
         app:layout_constraintBottom_toTopOf="@+id/btn_etc"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_back" />
@@ -152,107 +163,63 @@
         android:text="회수"
         android:textSize="18sp"
         android:textColor="#000"
-        app:layout_constraintBottom_toTopOf="@+id/btn_deleteAll"
-        app:layout_constraintEnd_toStartOf="@+id/btn_manual"
-        app:layout_constraintStart_toEndOf="@+id/btn_rental" />
-
-    <Button
-        android:id="@+id/btn_charge"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="충전"
-        android:textColor="#000"
-        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/btn_manual"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_incar" />
-
-    <Button
-        android:id="@+id/btn_come"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="입고"
-        android:textSize="18sp"
-        android:textColor="#000"
-        app:layout_constraintBottom_toTopOf="@+id/btn_sales"
-        app:layout_constraintEnd_toStartOf="@+id/btn_out"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/btn_history"
+        app:layout_constraintStart_toEndOf="@+id/btn_rental" />
 
     <Button
         android:id="@+id/btn_incar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="상차"
-        android:textSize="18sp"
         android:textColor="#000"
-        app:layout_constraintBottom_toTopOf="@+id/btn_back"
-        app:layout_constraintEnd_toStartOf="@+id/btn_charge"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_history"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_out" />
-
-    <Button
-        android:id="@+id/btn_out"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="출고"
-        android:textSize="18sp"
-        android:textColor="#000"
-        app:layout_constraintBottom_toTopOf="@+id/btn_rental"
-        app:layout_constraintEnd_toStartOf="@+id/btn_incar"
-        app:layout_constraintStart_toEndOf="@+id/btn_come" />
-
-    <Button
-        android:id="@+id/btn_history"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="이전목록"
-        android:textSize="@dimen/button_4_size"
-        android:textColor="#000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_etc"
-        app:layout_constraintStart_toEndOf="@+id/btn_deleteAll" />
 
     <Button
         android:id="@+id/btn_noGas"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="단품판매"
-        android:textSize="@dimen/button_4_size"
         android:textColor="#000"
-        app:layout_constraintBottom_toTopOf="@+id/btn_come"
-        app:layout_constraintEnd_toStartOf="@+id/btn_vacuum"
+        android:textSize="@dimen/button_4_size"
+        app:layout_constraintBottom_toTopOf="@+id/btn_sales"
+        app:layout_constraintEnd_toStartOf="@+id/btn_come"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btn_vacuum"
+        android:id="@+id/btn_out"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="진공배기"
-        android:textSize="@dimen/button_4_size"
+        android:text="출고"
         android:textColor="#000"
-        app:layout_constraintBottom_toTopOf="@+id/btn_out"
-        app:layout_constraintEnd_toStartOf="@+id/btn_hole"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_back"
+        app:layout_constraintEnd_toStartOf="@+id/btn_incar"
+        app:layout_constraintStart_toEndOf="@+id/btn_come" />
+
+    <Button
+        android:id="@+id/btn_come"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="입고"
+        android:textColor="#000"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_rental"
+        app:layout_constraintEnd_toStartOf="@+id/btn_out"
         app:layout_constraintStart_toEndOf="@+id/btn_noGas" />
 
     <Button
-        android:id="@+id/btn_hole"
+        android:id="@+id/btn_money"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="누출확인"
+        android:text="입금/미수"
+        android:textColor="#000"
         android:textSize="@dimen/button_4_size"
-        android:textColor="#000"
-        app:layout_constraintBottom_toTopOf="@+id/btn_incar"
-        app:layout_constraintEnd_toStartOf="@+id/btn_chargedt"
-        app:layout_constraintStart_toEndOf="@+id/btn_vacuum" />
-
-    <Button
-        android:id="@+id/btn_chargedt"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="충전기한확인"
-        android:textColor="#000"
-        android:textSize="@dimen/button_long_size"
-        app:layout_constraintBottom_toTopOf="@+id/btn_charge"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_hole" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_etc"
+        app:layout_constraintStart_toEndOf="@+id/btn_manual" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

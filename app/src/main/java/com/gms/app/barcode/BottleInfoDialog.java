@@ -59,8 +59,6 @@ public class BottleInfoDialog {
             BottleVO bottle = new BottleVO();
             bottle = (BottleVO) gson.fromJson(str_info, bottle.getClass());
 
-            Log.i("BottleInfoDialog bottleId==",bottle.getBottleId());
-            Log.i("BottleInfoDialog getBottleChargeDt==", bottle.getBottleChargeDt().substring(0,10));
             tv_barCd.setText(bottle.getBottleBarCd());
             tv_bottleId.setText(bottle.getBottleId());
             tv_productNm.setText(bottle.getProductNm());

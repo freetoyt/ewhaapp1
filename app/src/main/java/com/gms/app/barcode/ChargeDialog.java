@@ -145,7 +145,7 @@ public class ChargeDialog {
                 // 응답
                 Response response = client.newCall(request).execute();
                 result = response.body().string();
-                Log.d(TAG, "response.body().string(): " + result);
+                //Log.d(TAG, "response.body().string(): " + result);
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">대한GMS</string>
-    <string name="host_name">http://27.96.134.138/</string>
+    <string name="host_name">http://daehangas.co.kr/</string>
     <!--<string name="host_name">http://192.168.0.10/</string> -->
-    <!--<string name="host_name">http://172.30.59.240/</string> -->
 </resources>

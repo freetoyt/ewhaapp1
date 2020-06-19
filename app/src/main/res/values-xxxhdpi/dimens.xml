@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--2560*1440 -->
+    <!--1440*2560 -->
     <dimen name="title_size">240dp</dimen>
     <dimen name="button_4_size">18sp</dimen>
     <dimen name="button_long_size">14sp</dimen>
-    <dimen name="item_text_size">20sp</dimen>
+    <dimen name="item_text_size">18sp</dimen>
     <dimen name="item_text_sizeB">18sp</dimen>
     <dimen name="item_width0">140dp</dimen>
-    <dimen name="item_width1">160dp</dimen>
+    <dimen name="item_width1">120dp</dimen>
+    <dimen name="item_width2">80dp</dimen>
     <dimen name="bottom_short_tsize">16sp</dimen>
     <dimen name="bottom_long_tsize">14sp</dimen>
     <dimen name="bottom_layout_width">100dp</dimen>

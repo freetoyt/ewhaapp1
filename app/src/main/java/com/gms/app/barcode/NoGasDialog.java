@@ -27,7 +27,9 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -39,6 +41,7 @@ public class NoGasDialog {
     String[] items;
 
     ArrayList<String> listItems;
+    ArrayList<String> listItemsTemp;
     ListView listView ;
     ArrayAdapter adapter3 ;
     SharedPreferences sharedPreferences ;
@@ -103,6 +106,7 @@ public class NoGasDialog {
         //Log.d("noGasDialog  value ", value);
         items = value.split(",");
 
+        listItemsTemp  = new ArrayList<>(Arrays.asList(items));
         listItems = new ArrayList<>(Arrays.asList(items));
         adapter3 = new ArrayAdapter(context, R.layout.item_customer, R.id.tv_customer, listItems);
         listView.setAdapter(adapter3);
@@ -124,11 +128,14 @@ public class NoGasDialog {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                search(s.toString());
+                // 검색 수정 2020-06-19
+                //adapter3.getFilter().filter(s);
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                // 검색 수정 2020-06-19
+                filter(s.toString());
             }
         });
 
@@ -192,32 +199,17 @@ public class NoGasDialog {
     }
 
     // 검색을 수행하는 메소드
-    public void search(String charText) {
-        Log.d("search","start =="+charText);
-        // 문자 입력시마다 리스트를 지우고 새로 뿌려준다.
-        listItems.clear();
+    public void filter(String str) {
 
-        // 문자 입력이 없을때는 모든 데이터를 보여준다.
-        if (charText.length() == 0) {
-            listItems = new ArrayList<>(Arrays.asList(items));        }
-        // 문자 입력을 할때..
-        else
-        {
-            // 리스트의 모든 데이터를 검색한다.
-            int j=0;
-            for(int i = 0;i < items.length; i++)
-            {
-                // arraylist의 모든 데이터에 입력받은 단어(charText)가 포함되어 있으면 true를 반환한다.
-                //Log.d("search",charText);
-                if (items[i].toLowerCase().contains(charText.toLowerCase()))
-                {
-                    // 검색된 데이터를 리스트에 추가한다.
-                    listItems.add(items[i]);
-                }
+        listItems.clear();
+        Iterator it = this.listItemsTemp.iterator();
+        while (it.hasNext()) {
+            String str2 = (String) it.next();
+            if (str2.toString().toLowerCase(Locale.getDefault()).contains(str)) {
+                listItems.add(str2);
             }
         }
-        // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
-        adapter3.notifyDataSetChanged();
+        this.adapter3.notifyDataSetChanged();
     }
 
 
@@ -257,8 +249,6 @@ public class NoGasDialog {
         protected void onPostExecute(List<CustomerSimpleVO> customerList) {
             super.onPostExecute(customerList);
 
-            //Log.d("HttpAsyncTask", customerList.toString());
-            //CustomerSimpleAdapter adapter = new CustomerSimpleAdapter(customerList);
             StringBuffer sb = new StringBuffer();
             items = new String[customerList.size()];
             for (int i = 0; i < customerList.size(); i++) {
@@ -267,18 +257,19 @@ public class NoGasDialog {
                 sb.append(",");
             }
 
-            if((buttonType.equals("판매") || buttonType.equals("대여") || buttonType.equals("회수"))) {
-                int cCount = sharedPreferences.getInt("clistCount", 0);
+            //if((buttonType.equals("판매") || buttonType.equals("대여") || buttonType.equals("회수"))) {
+            // 거래처정보 SharedPreferences에 저장 0603
+            int cCount = sharedPreferences.getInt("clistCount", 0);
 
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                if(cCount > 0 || cCount == customerList.size()) isUpdate = false;
-                else isUpdate = true;
-                //String value = id.getText().toString();
-                editor.putString("clist", sb.toString());
-                editor.putInt("clistCount",customerList.size());
-                editor.commit();
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            if(cCount > 0 || cCount == customerList.size()) isUpdate = false;
+            else isUpdate = true;
+            //String value = id.getText().toString();
+            editor.putString("clist", sb.toString());
+            editor.putInt("clistCount",customerList.size());
+            editor.commit();
 
-            }
+            //}
             if(isUpdate) {
                 Log.d("isUpdate ture", "ture ");
                 listItems = new ArrayList<>(Arrays.asList(items));
@@ -325,7 +316,7 @@ public class NoGasDialog {
 
     // 단품상품 가져오기
     private class HttpAsyncTask2 extends AsyncTask<String, Void, List<ProductPriceSimpleVO>> {
-        private final String TAG = HttpAsyncTask.class.getSimpleName();
+        private final String TAG = HttpAsyncTask2.class.getSimpleName();
         // int REQUEST_CODE =
         // OkHttp 클라이언트
         OkHttpClient client = new OkHttpClient();
@@ -364,12 +355,8 @@ public class NoGasDialog {
             //Log.d("HttpAsyncTask2", productList.toString());
             List<String> spinnerArray =  new ArrayList<String>();
 
-            StringBuffer sb = new StringBuffer();
             for (int i = 0; i < productList.size(); i++) {
                 spinnerArray.add(productList.get(i).getProductNm().toString());
-
-                //sb.append(productList.get(i).getProductNm()).toString());
-                //sb.append(",");
             }
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, spinnerArray);
 

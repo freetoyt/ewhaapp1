@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E6E5E5"
     tools:context=".LoginActivity">
 
     <EditText
@@ -41,7 +42,7 @@
         android:layout_marginTop="10dp"
         android:text="로그인"
         android:textSize="20sp"
-        android:background="@color/colorAccent"
+        android:background="@android:color/darker_gray"
         app:layout_constraintEnd_toEndOf="@+id/et_pass"
         app:layout_constraintStart_toStartOf="@+id/et_pass"
         app:layout_constraintTop_toBottomOf="@+id/chk_login" />
@@ -55,6 +56,17 @@
         app:layout_constraintEnd_toEndOf="@+id/et_pass"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_pass" />
+
+    <TextView
+        android:id="@+id/tv_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:textSize="15sp"
+        android:text="버전"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

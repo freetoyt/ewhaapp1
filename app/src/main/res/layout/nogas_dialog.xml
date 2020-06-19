@@ -32,6 +32,7 @@
         android:id="@+id/listview"
         android:layout_width="fill_parent"
         android:layout_height="150dp"
+        android:textFilterEnabled="true"
         android:paddingLeft="10dp" />
     <Spinner
         android:id="@+id/spinner"
@@ -47,6 +48,7 @@
         android:gravity="center"
         android:textColor="#000000"
         android:textSize="16dp"
+        android:inputType="number"
         android:hint="수량 및 L."/>
     <View
         android:layout_width="match_parent"

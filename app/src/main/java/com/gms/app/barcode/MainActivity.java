@@ -40,6 +40,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -58,13 +59,15 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
     int readBufferPositon;      //버퍼 내 수신 문자 저장 위치
     byte[] readBuffer;      //수신 버퍼
     byte mDelimiter = 10;
+
     private TextView tv_result;
+    private static TextView tv_bottleCount;
     private int readBufferPosition; // 버퍼 내 문자 저장 위치
 
-
-    private Button btn_logout,btn_come, btn_out, btn_incar, btn_charge, btn_sales, btn_rental, btn_back,
-            btn_scan, btn_deleteAll,btn_history, btn_etc, btn_manual, btn_setting, btn_noGas;
-    private Button btn_hole,btn_vacuum,btn_chargedt;
+    private Button btn_logout, btn_setting,
+            btn_noGas, btn_come, btn_out, btn_incar,
+            btn_sales, btn_rental, btn_back, btn_history,
+            btn_scan, btn_manual, btn_money, btn_etc;
 
     //private  TextView main_label;
     private int REQUEST_TEST = 1;
@@ -73,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private static final String TAG = "MainActivity";
-    private String shared = "file";
+    private static final String shared = "file";
     private String userId = "";
     private String previousBottles="";
     private String host="";
@@ -83,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
     //qr code scanner object
     private IntentIntegrator qrScan;
     int tempInd = 0;
+    int iCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,11 +101,13 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
             packageInfo = getPackageManager().getPackageInfo(getPackageName(),0);
 
             version = packageInfo.versionName;
-            //Log.d("############## Package Version",version);
         }catch (PackageManager.NameNotFoundException e){
             Log.e("############## Package Version","NameNotFoundException");
         }
-
+        // user_id 가져오기 0601 추가
+        Intent intent = getIntent();
+        String uid = intent.getStringExtra("uid");
+        Log.d("############## uid==",uid);
         // 네트웍 상태체크
         ConnectivityManager cm = (ConnectivityManager) MainActivity.this.getSystemService( MainActivity.this.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
@@ -124,27 +130,26 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
             ad.show();
         }
 
+        tv_bottleCount = (TextView)findViewById(R.id.tv_bottleCount);   // 스캔한 용기 카운트수
+        tv_bottleCount.setText("바코드 카운트 : "+iCount);
 
         btn_logout = (Button)findViewById(R.id.btn_logout);     //로그아웃
         btn_setting = (Button)findViewById(R.id.btn_setting);     //블루투스 연결
 
+        btn_noGas= (Button)findViewById(R.id.btn_noGas);       // 단품판매//
         btn_come = (Button)findViewById(R.id.btn_come);     //입고
         btn_out = (Button)findViewById(R.id.btn_out);       // 출고
         btn_incar = (Button)findViewById(R.id.btn_incar);   // 상차
-        btn_charge = (Button)findViewById(R.id.btn_charge); // 충전
+
         btn_sales = (Button)findViewById(R.id.btn_sales);       // 판매
         btn_rental = (Button)findViewById(R.id.btn_rental);     //대여
         btn_back = (Button)findViewById(R.id.btn_back);         //회수
-        btn_scan = (Button)findViewById(R.id.btn_scan);         // 스캔하기
-        btn_deleteAll = (Button)findViewById(R.id.btn_deleteAll);       // 리스트 삭제
-        btn_history = (Button)findViewById(R.id.btn_history);       // 이전 작업 내역
-        btn_etc = (Button)findViewById(R.id.btn_etc);       // 기타
-        btn_manual= (Button)findViewById(R.id.btn_manual);       // 수동등록
+        btn_history = (Button)findViewById(R.id.btn_history);       // 이전 목록
 
-        btn_noGas= (Button)findViewById(R.id.btn_noGas);       // 단품판매
-        btn_hole= (Button)findViewById(R.id.btn_hole);       // 누출확인
-        btn_vacuum= (Button)findViewById(R.id.btn_vacuum);       // 진공배기
-        btn_chargedt= (Button)findViewById(R.id.btn_chargedt);       // 충전기한확인
+        btn_scan = (Button)findViewById(R.id.btn_scan);         // 스캔하기
+        btn_manual= (Button)findViewById(R.id.btn_manual);       // 수동등록
+        btn_money= (Button)findViewById(R.id.btn_money);       // 수동등록
+        btn_etc = (Button)findViewById(R.id.btn_etc);       // 기타
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv);
         linearLayoutManager = new LinearLayoutManager(this);
@@ -166,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
         //SharedPreferences 로그인 정보 유무 확인
         final SharedPreferences sharedPreferences = getSharedPreferences(shared,0);
         userId = sharedPreferences.getString("id", "");
-
+        if(userId == null || userId.length() <=0 ) userId = uid;
 
         btn_scan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -194,12 +199,25 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
 
         final TextView main_label = (TextView) findViewById(R.id.main_label);
 
+        //단매판매
+        btn_noGas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                NoGasDialog noGasDialog = new NoGasDialog(MainActivity.this, btn_noGas.getText().toString());
+
+                // 커스텀 다이얼로그를 호출한다.
+                noGasDialog.callFunction(userId);
+            }
+        });
+
+
         btn_come.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if(arrayList.size() <= 0){
-                    Toast.makeText(MainActivity.this, "용기를 선택하세요", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "용기를 선택하세요", Toast.LENGTH_SHORT).show();
                 }else {
                     CustomDialog customDialog = new CustomDialog(MainActivity.this, btn_come.getText().toString());
 
@@ -220,7 +238,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
             public void onClick(View v) {
 
                 if(arrayList.size() <= 0){
-                    Toast.makeText(MainActivity.this, "용기를 선택하세요", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "용기를 선택하세요", Toast.LENGTH_SHORT).show();
                 }else {
                     CustomDialog customDialog = new CustomDialog(MainActivity.this, btn_out.getText().toString());
 
@@ -239,29 +257,9 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
             @Override
             public void onClick(View v) {
                 if(arrayList.size() <= 0){
-                    Toast.makeText(MainActivity.this, "용기를 선택하세요", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "용기를 선택하세요", Toast.LENGTH_SHORT).show();
                 }else {
                     CustomDialog customDialog = new CustomDialog(MainActivity.this, btn_incar.getText().toString());
-
-                    String tempStr = "";
-                    for (int i = 0; i < arrayList.size(); i++) {
-                        tempStr += arrayList.get(i).getTv_bottleId() + ",";
-                    }
-                    //Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
-
-                    // 커스텀 다이얼로그를 호출한다.
-                    customDialog.callFunction(tempStr, userId);
-                }
-            }
-        });
-
-        btn_charge.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(arrayList.size() <= 0){
-                    Toast.makeText(MainActivity.this, "용기를 선택하세요", Toast.LENGTH_LONG).show();
-                }else {
-                    ChargeDialog customDialog = new ChargeDialog(MainActivity.this, btn_charge.getText().toString());
 
                     String tempStr = "";
                     for (int i = 0; i < arrayList.size(); i++) {
@@ -280,7 +278,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
             public void onClick(View v) {
 
                 if(arrayList.size() <= 0){
-                    Toast.makeText(MainActivity.this, "용기를 선택하세요", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "용기를 선택하세요", Toast.LENGTH_SHORT).show();
                 }else {
                     CustomDialog customDialog = new CustomDialog(MainActivity.this, btn_sales.getText().toString());
 
@@ -301,7 +299,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
             @Override
             public void onClick(View v) {
                 if(arrayList.size() <= 0){
-                    Toast.makeText(MainActivity.this, "용기를 선택하세요", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "용기를 선택하세요", Toast.LENGTH_SHORT).show();
                 }else {
                     CustomDialog customDialog = new CustomDialog(MainActivity.this, btn_rental.getText().toString());
 
@@ -321,7 +319,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
             @Override
             public void onClick(View v) {
                 if(arrayList.size() <= 0){
-                    Toast.makeText(MainActivity.this, "용기를 선택하세요", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "용기를 선택하세요", Toast.LENGTH_SHORT).show();
                 }else {
                     CustomDialog customDialog = new CustomDialog(MainActivity.this, btn_back.getText().toString());
 
@@ -336,16 +334,6 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                 }
             }
         });
-
-        btn_deleteAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "리스트를 삭제하였습니다", Toast.LENGTH_SHORT).show();
-                arrayList.clear();
-                mainAdapter.notifyDataSetChanged();
-            }
-        });
-
 
         btn_history.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -365,14 +353,19 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                         Gson gson = new Gson();
                         String sharedValue = sharedPreferences.getString(aCode[i], "");
 
-                        //Log.d("previousBottles", "value " + sharedValue);
-
                         BottleVO bottle = new BottleVO();
                         bottle = (BottleVO) gson.fromJson(sharedValue, bottle.getClass());
-                        MainData mainData = new MainData(bottle.getBottleId(), bottle.getBottleBarCd(), bottle.getProductNm(), btn_info);
-                        arrayList.add(mainData);
+                        boolean updateFlag = true;
+                        for(int j=0; j<arrayList.size(); j++){
+                            if(arrayList.get(j).getTv_bottleBarCd().equals(bottle.getBottleBarCd())) updateFlag = false;
+                        }
+                        if(updateFlag) {
+                            MainData mainData = new MainData(bottle.getBottleId(), bottle.getBottleBarCd(), bottle.getProductNm(), bottle.getMenuType()+"일",btn_info);
+                            arrayList.add(mainData);
+                        }
                     }
                     mainAdapter.notifyDataSetChanged();
+                    tv_bottleCount.setText("바코드 카운트 :  "+arrayList.size());
                 }else{
                     Toast.makeText(MainActivity.this, "이전 작업 내역이 없습니다.", Toast.LENGTH_SHORT).show();
                 }
@@ -380,109 +373,51 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
             }
         });
 
-        btn_etc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                // 하단 창 띄우기
-                CashDialog cash = new CashDialog(MainActivity.this);
-                cash.callFunction(userId);
-/*
-                AlertDialog.Builder builder
-                        = new AlertDialog.Builder(MainActivity.this,AlertDialog.THEME_HOLO_DARK);
-                builder .setTitle("대한특수가스")
-                        .setMessage("앱(V "+version+")")
-                        .setPositiveButton("확인", null);
-                AlertDialog ad = builder.create();
-
-                ad.show();
-                 */
-            }
-        });
-
-        //단매판매
-        btn_noGas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                NoGasDialog noGasDialog = new NoGasDialog(MainActivity.this, btn_noGas.getText().toString());
-
-                // 커스텀 다이얼로그를 호출한다.
-                noGasDialog.callFunction(userId);
-            }
-        });
-
-        btn_hole.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(arrayList.size() <= 0){
-                    Toast.makeText(MainActivity.this, "용기를 선택하세요", Toast.LENGTH_LONG).show();
-                }else {
-                    ChargeDialog customDialog = new ChargeDialog(MainActivity.this, btn_hole.getText().toString());
-
-                    String tempStr = "";
-                    for (int i = 0; i < arrayList.size(); i++) {
-                        tempStr += arrayList.get(i).getTv_bottleId() + ",";
-                    }
-                    //Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
-
-                    // 커스텀 다이얼로그를 호출한다.
-                    customDialog.callFunction(tempStr, userId);
-                }
-            }
-        });
-
-        btn_vacuum.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(arrayList.size() <= 0){
-                    Toast.makeText(MainActivity.this, "용기를 선택하세요", Toast.LENGTH_LONG).show();
-                }else {
-                    ChargeDialog customDialog = new ChargeDialog(MainActivity.this, btn_vacuum.getText().toString());
-
-                    String tempStr = "";
-                    for (int i = 0; i < arrayList.size(); i++) {
-                        tempStr += arrayList.get(i).getTv_bottleId() + ",";
-                    }
-                    //Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
-
-                    // 커스텀 다이얼로그를 호출한다.
-                    customDialog.callFunction(tempStr, userId);
-                }
-            }
-        });
-
-        btn_chargedt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(arrayList.size() <= 0){
-                    Toast.makeText(MainActivity.this, "용기를 선택하세요", Toast.LENGTH_LONG).show();
-                }else {
-                    ChargeDialog customDialog = new ChargeDialog(MainActivity.this, btn_chargedt.getText().toString());
-
-                    String tempStr = "";
-                    for (int i = 0; i < arrayList.size(); i++) {
-                        tempStr += arrayList.get(i).getTv_bottleId() + ",";
-                    }
-                    //Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
-
-                    // 커스텀 다이얼로그를 호출한다.
-                    customDialog.callFunction(tempStr, userId);
-                }
-            }
-        });
 
         //수동입력
         btn_manual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Toast.makeText(MainActivity.this, "btn_maneul.", Toast.LENGTH_SHORT).show();
                 ManualDialog manualDialog = new ManualDialog(MainActivity.this);
 
                 // 커스텀 다이얼로그를 호출한다.
                 manualDialog.callFunction(arrayList,mainAdapter);
             }
         });
+
+        btn_money.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 하단 창 띄우기
+                CashDialog cash = new CashDialog(MainActivity.this);
+                cash.callFunction(userId);
+            }
+        });
+
+        btn_etc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(arrayList.size() <= 0){
+                    Toast.makeText(MainActivity.this, "용기를 선택하세요", Toast.LENGTH_LONG).show();
+                }else {
+
+                    String tempStr = "";
+                    for (int i = 0; i < arrayList.size(); i++) {
+                        tempStr += arrayList.get(i).getTv_bottleId() + ",";
+                    }
+                    //Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
+
+                    // 하단 창 띄우기
+                    BottomSheetDialog bottomSheet = new BottomSheetDialog(MainActivity.this,tempStr);
+                    bottomSheet.show(getSupportFragmentManager(), "exampleBottomSheet");
+
+                }
+            }
+        });
+
 
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -504,6 +439,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                 startActivity(intent);
             }
         });
+
         btn_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -566,7 +502,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                //sqrScan.initiateScan();
+                qrScan.initiateScan();  //스캔모드 유지
             }
 
         } else {
@@ -760,43 +696,14 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                             int bytesInt = mInputStream.read(packetBytes);
                             String readMessage = new String(packetBytes, 0, bytesInt);
                             if(readMessage !=null && readMessage.length() > 14) {
-                                Log.d("***************** MainActivity readMessage", readMessage + "--" + readMessage.length());
+                                //Log.d("***************** MainActivity readMessage", readMessage + "--" + readMessage.length());
 
                                 String url = host + "api/bottleDetail.do?bottleBarCd=" + readMessage.substring(5, 13);//AA315923";
                                 // AsyncTask를 통해 HttpURLConnection 수행.
                                 NetworkTask networkTask = new NetworkTask(url, null);
                                 networkTask.execute();
                             }
-                            /*
-                            for (int i = 0; i < bytesAvailable; i++) {
-                                byte b = packetBytes[i];
-                                if (b == mDelimiter) {
-                                    byte[] encodedBytes = new byte[readBufferPositon];
-                                    System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length);
-                                    final String data = new String(encodedBytes, "US-ASCII");
-                                    Log.i("***************** MainActivity data",data);
-                                    readBufferPositon = 0;
-                                    handler.post(new Runnable() {
-                                        public void run() {
-                                            //수신된 데이터는 data 변수에 string으로 저장!! 이 데이터를 이용하면 된다.
-                                            char[] c_arr = data.toCharArray(); // char 배열로 변환
-                                            Log.i("***************** 1MainActivity c_arr1",c_arr.toString());
-                                            if (c_arr[0] == 'a') {
-                                                if (c_arr[1] == '1') {
-                                                    //a1이라는 데이터가 수신되었을 때
-                                                    Log.i("***************** MainActivity c_arr2",c_arr.toString());
-                                                }
-                                                if (c_arr[1] == '2') {
-                                                    //a2라는 데이터가 수신 되었을 때
-                                                }
-                                            }
-                                        }
-                                    });
-                                } else {
-                                    readBuffer[readBufferPositon++] = b;
-                                }
-                            }
-                             */
+
                         }
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
@@ -813,6 +720,20 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
     static  void  clearArrayList(){
         arrayList.clear();
         mainAdapter.notifyDataSetChanged();
+        tv_bottleCount.setText("바코드 카운트 :  0");
+    }
+
+    static  ArrayList<MainData>  getArrayList(){
+        return arrayList;
+    }
+
+    static void  getBackArrayList(){
+        //Toast.makeText(MainActivity.this ,"getBackArrayList 호출.", Toast.LENGTH_SHORT).show();
+        tv_bottleCount.setText("바코드 카운트 :  "+arrayList.size());
+    }
+
+    static  void  setTextBottleCount(int count){
+        tv_bottleCount.setText("바코드 카운트 : "+count);
     }
 
     public void SendResetSignal(){
@@ -842,7 +763,6 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
             RequestHttpURLConnection requestHttpURLConnection = new RequestHttpURLConnection();
             result = requestHttpURLConnection.request(url, values); // 해당 URL로 부터 결과물을 얻어온다.
 
-            //Log.d("MainActivity doInBackground","rseult="+result);
             return result;
         }
 
@@ -852,19 +772,29 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
             //Log.d("Mainctivity onPostExecute","s="+s);
             //doInBackground()로 부터 리턴된 값이 onPostExecute()의 매개변수로 넘어오므로 s를 출력한다.
             //tv_result.setText(s);
-            String bottleBarCd="";
-            String bottleId="";
-            String productNm="";
+            String bottleBarCd ="";
+            String bottleId ="";
+            String productNm ="";
+            String chargeDtCount ="";
+            String bottleChargeDt = null;
             Button btn_info = findViewById(R.id.btn_info);
             try {
-
+                Gson gson = new Gson();
+                BottleVO bottle = new BottleVO();
+                bottle = (BottleVO) gson.fromJson(s, bottle.getClass());
+                /*
                 JSONObject jsonObject = new JSONObject(s);
                 bottleId = jsonObject.getString("bottleId");
                 bottleBarCd = jsonObject.getString("bottleBarCd");
-
+*/
+                bottleId = bottle.getBottleId();
+                bottleBarCd = bottle.getBottleBarCd();
                 if(bottleBarCd!=null && !bottleBarCd.equals("null") && bottleBarCd.length() > 5) {
 
-                    productNm = jsonObject.getString("productNm");
+                    //productNm = jsonObject.getString("productNm");
+                    //bottleChargeDt = jsonObject.getString("bottleChargeDt");
+                    productNm = bottle.getProductNm();
+                    bottleChargeDt = bottle.getMenuType()+"일";
 
                     SharedPreferences sharedPreferences = getSharedPreferences(shared, 0);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -878,19 +808,21 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                     }
 
                     if(updateFlag) {
-                        MainData mainData = new MainData(bottleId, bottleBarCd, productNm, btn_info);
+                        MainData mainData = new MainData(bottleId, bottleBarCd, productNm, bottleChargeDt, btn_info);
 
                         arrayList.add(mainData);
                         mainAdapter.notifyDataSetChanged();
+                        iCount++;
+                        tv_bottleCount.setText("바코드 카운트 : "+iCount);
                     }else{
                         Toast.makeText(MainActivity.this ,"등록된 바코드입니다.", Toast.LENGTH_SHORT).show();
                     }
                 }else {
                     Toast.makeText(MainActivity.this ,"등록되지 않은 바코드입니다.", Toast.LENGTH_SHORT).show();
                 }
-            } catch (JSONException e) {
+           } catch (Exception e) {
                 e.printStackTrace();
-            }
+           }
         }
     }
 

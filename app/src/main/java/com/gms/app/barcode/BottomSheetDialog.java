@@ -1,16 +1,21 @@
 package com.gms.app.barcode;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
+import java.util.ArrayList;
 
 public class BottomSheetDialog extends BottomSheetDialogFragment {
     private BottomSheetListener mListener;
@@ -19,7 +24,10 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
     private String shared = "file";
     private String userId = "";
 
-    private Button btn_hole,btn_vacuum,btn_chargedt, btn_close;
+    private static ArrayList<MainData> arrayList;
+
+    private Button btn_charge,btn_freeback,btn_buyback, btn_close,
+            btn_deleteAll,btn_hole, btn_vacuum,btn_chargedt;
 
 
     public BottomSheetDialog(Context context, String bottles) {
@@ -36,67 +44,65 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
         final SharedPreferences sharedPreferences = context.getSharedPreferences(shared,0);
         userId = sharedPreferences.getString("id", "");
 
-        btn_hole  = v.findViewById(R.id.btn_hole);
-        btn_vacuum  = v.findViewById(R.id.btn_vacuum1);
-        btn_chargedt  = v.findViewById(R.id.btn_chargedt1);
+        btn_charge = v.findViewById(R.id.btn_incar);
+        btn_freeback = v.findViewById(R.id.btn_freeback);
+        btn_buyback = v.findViewById(R.id.btn_buyback);
         btn_close  = v.findViewById(R.id.btn_close);
 
-        btn_hole.setOnClickListener(new View.OnClickListener() {
+        btn_deleteAll  = v.findViewById(R.id.btn_deleteAll);
+        btn_chargedt  = v.findViewById(R.id.btn_chargedt);
+        btn_hole  = v.findViewById(R.id.btn_hole);
+        btn_vacuum  = v.findViewById(R.id.btn_vacuum);
+
+        arrayList = MainActivity.getArrayList();
+
+        btn_charge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onButtonClicked("Button 1 clicked");
-                ChargeDialog customDialog = new ChargeDialog(context, btn_hole.getText().toString());
+                if(arrayList.size() <= 0){
+                    Toast.makeText(context, "용기를 선택하세요", Toast.LENGTH_SHORT).show();
+                }else {
+                    ChargeDialog customDialog = new ChargeDialog(context, btn_charge.getText().toString());
 
-                //작업한 용기목록저장
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("previousBottles",bottles);
-                editor.commit();
+                    String tempStr = "";
+                    for (int i = 0; i < arrayList.size(); i++) {
+                        tempStr += arrayList.get(i).getTv_bottleId() + ",";
+                    }
 
-                //Toast.makeText(context, bottles, Toast.LENGTH_SHORT).show();
-                // 커스텀 다이얼로그를 호출한다.
-                // 커스텀 다이얼로그의 결과를 출력할 TextView를 매개변수로 같이 넘겨준다.
-
-                customDialog.callFunction(bottles, userId);
-                dismiss();
-            }
-        });
-        btn_vacuum.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.onButtonClicked("Button 1 clicked");
-                ChargeDialog customDialog = new ChargeDialog(context, btn_vacuum.getText().toString());
-
-                //작업한 용기목록저장
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("previousBottles",bottles);
-                editor.commit();
-
-                //Toast.makeText(context, bottles, Toast.LENGTH_SHORT).show();
-                // 커스텀 다이얼로그를 호출한다.
-                // 커스텀 다이얼로그의 결과를 출력할 TextView를 매개변수로 같이 넘겨준다.
-                customDialog.callFunction(bottles, userId);
-
-                dismiss();
+                    // 커스텀 다이얼로그를 호출한다.
+                    customDialog.callFunction(tempStr, userId);
+                    dismiss();
+                }
             }
         });
 
-        btn_chargedt.setOnClickListener(new View.OnClickListener() {
+        btn_freeback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onButtonClicked("btn_chargedt1 clicked");
-                ChargeDialog customDialog = new ChargeDialog(context, btn_chargedt.getText().toString());
+                CustomDialog customDialog = new CustomDialog(context, btn_freeback.getText().toString());
 
-                //작업한 용기목록저장
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("previousBottles",bottles);
-                editor.commit();
-
-                //Toast.makeText(context, bottles, Toast.LENGTH_SHORT).show();
+                String tempStr = "";
+                for (int i = 0; i < arrayList.size(); i++) {
+                    tempStr += arrayList.get(i).getTv_bottleId() + ",";
+                }
                 // 커스텀 다이얼로그를 호출한다.
-                // 커스텀 다이얼로그의 결과를 출력할 TextView를 매개변수로 같이 넘겨준다.
+                customDialog.callFunction(tempStr, userId);
+                dismiss();
+            }
+        });
 
-                customDialog.callFunction(bottles, userId);
+        btn_buyback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomDialog customDialog = new CustomDialog(context, btn_buyback.getText().toString());
 
+                String tempStr = "";
+                for (int i = 0; i < arrayList.size(); i++) {
+                    tempStr += arrayList.get(i).getTv_bottleId() + ",";
+                }
+
+                // 커스텀 다이얼로그를 호출한다.
+                customDialog.callFunction(tempStr, userId);
                 dismiss();
             }
         });
@@ -107,6 +113,103 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
                 dismiss();
             }
         });
+
+        btn_deleteAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(arrayList.size() > 0 ){
+
+                    AlertDialog.Builder ad = new AlertDialog.Builder(context);
+                    ad.setMessage("리스트를 삭제하시겠습니까?");
+
+                    ad.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            Toast.makeText(context, "리스트를 삭제하였습니다", Toast.LENGTH_SHORT).show();
+                            MainActivity.clearArrayList();
+                            dialog.dismiss();
+                        }
+                    });
+
+                    ad.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    ad.show();
+                }else{
+                    Toast.makeText(context, "삭제할 용기목록이 없습니다.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        btn_chargedt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(arrayList.size() <= 0){
+                    Toast.makeText(context, "용기를 선택하세요", Toast.LENGTH_SHORT).show();
+                }else {
+                    ChargeDialog customDialog = new ChargeDialog(context, btn_chargedt.getText().toString());
+
+                    String tempStr = "";
+                    for (int i = 0; i < arrayList.size(); i++) {
+                        tempStr += arrayList.get(i).getTv_bottleId() + ",";
+                    }
+                    //Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
+
+                    // 커스텀 다이얼로그를 호출한다.
+                    customDialog.callFunction(tempStr, userId);
+                    dismiss();
+                }
+            }
+        });
+
+        btn_hole.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(arrayList.size() <= 0){
+                    Toast.makeText(context, "용기를 선택하세요", Toast.LENGTH_SHORT).show();
+                }else {
+                    ChargeDialog customDialog = new ChargeDialog(context, btn_hole.getText().toString());
+
+                    String tempStr = "";
+                    for (int i = 0; i < arrayList.size(); i++) {
+                        tempStr += arrayList.get(i).getTv_bottleId() + ",";
+                    }
+                    //Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
+
+                    // 커스텀 다이얼로그를 호출한다.
+                    customDialog.callFunction(tempStr, userId);
+                    dismiss();
+                }
+            }
+        });
+
+        btn_vacuum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(arrayList.size() <= 0){
+                    Toast.makeText(context, "용기를 선택하세요", Toast.LENGTH_SHORT).show();
+                }else {
+                    ChargeDialog customDialog = new ChargeDialog(context, btn_vacuum.getText().toString());
+
+                    String tempStr = "";
+                    for (int i = 0; i < arrayList.size(); i++) {
+                        tempStr += arrayList.get(i).getTv_bottleId() + ",";
+                    }
+                    //Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
+
+                    // 커스텀 다이얼로그를 호출한다.
+                    customDialog.callFunction(tempStr, userId);
+                    dismiss();
+                }
+            }
+        });
+
+
 
         return v;
     }

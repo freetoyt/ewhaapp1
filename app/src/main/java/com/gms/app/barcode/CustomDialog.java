@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -26,7 +28,9 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -37,6 +41,7 @@ public class CustomDialog {
     private Context context;
     String[] items;
     ArrayList<String> listItems;
+    ArrayList<String> listItemsTemp;
     ListView listView ;
     ArrayAdapter adapter3 ;
     SharedPreferences sharedPreferences ;
@@ -50,6 +55,7 @@ public class CustomDialog {
     String userId = "";
     String host ="";
     String value ="" ;
+    String value1 ="";
     String strBottleType="공병";
 
     public CustomDialog(Context context, String bType) {
@@ -59,17 +65,21 @@ public class CustomDialog {
         sharedPreferences = context.getSharedPreferences(shared, 0);
         host = context.getString(R.string.host_name);
 
-        if(buttonType.equals("판매") || buttonType.equals("대여") || buttonType.equals("회수")) {
+        if(buttonType.equals("판매") || buttonType.equals("대여") || buttonType.equals("회수")
+                || buttonType.equals("무료회수") || buttonType.equals("매입") ) {
             value = sharedPreferences.getString("clist", "");
-            //Log.e("CustomDialog ",buttonType);
+            //Log.d("CustomDialog ",buttonType);
+            //Log.d("CustomDialog ",value);
             if(value ==null || value.length() <= 10)
                 new HttpAsyncTask().execute(host + "api/customerAllList.do");
         }else {
+            value1 = sharedPreferences.getString("carlist", "");
             if(!buttonType.equals("충전")) {
-                new HttpAsyncTask().execute(host + "api/carList.do");
+                if(value1 ==null || value1.length() <= 10)
+                    new HttpAsyncTask().execute(host + "api/carList.do");
             }
         }
-        //new HttpAsyncTask().execute("http://172.30.57.228:8080/api/carList.do");
+
     }
 
     // 호출할 다이얼로그 함수를 정의한다.
@@ -104,12 +114,22 @@ public class CustomDialog {
         // Add Data to listView
         listView = (ListView) dlg.findViewById(R.id.listview);
 
-        if(buttonType.equals("판매") || buttonType.equals("대여") || buttonType.equals("회수")) {
+        if(buttonType.equals("판매") || buttonType.equals("대여") || buttonType.equals("회수")
+                || buttonType.equals("무료회수") || buttonType.equals("매입")) {
             //value = sharedPreferences.getString("clist", "");
             //Log.d("CustomerDialog  value ", value);
             items = value.split(",");
 
             listItems = new ArrayList<>(Arrays.asList(items));
+            listItemsTemp  = new ArrayList<>(Arrays.asList(items));
+
+            adapter3 = new ArrayAdapter(context, R.layout.item_customer, R.id.tv_customer, listItems);
+            listView.setAdapter(adapter3);
+        }else{
+            items = value1.split(",");
+
+            listItems = new ArrayList<>(Arrays.asList(items));
+            listItemsTemp  = new ArrayList<>(Arrays.asList(items));
             adapter3 = new ArrayAdapter(context, R.layout.item_customer, R.id.tv_customer, listItems);
             listView.setAdapter(adapter3);
         }
@@ -117,7 +137,7 @@ public class CustomDialog {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(context, "click item", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "click item", Toast.LENGTH_SHORT).show();
                 String text = (String)parent.getAdapter().getItem(position);
                 message.setText(text);
             }
@@ -131,12 +151,13 @@ public class CustomDialog {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                search(s.toString());
+                //filter(s.toString());
+                //adapter3.getFilter().filter(s);
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                filter(s.toString());
             }
         });
 
@@ -196,33 +217,21 @@ public class CustomDialog {
     }
 
     // 검색을 수행하는 메소드
-    public void search(String charText) {
-        Log.d("search","start =="+charText);
-        // 문자 입력시마다 리스트를 지우고 새로 뿌려준다.
-        listItems.clear();
+    public void filter(String str) {
 
-        // 문자 입력이 없을때는 모든 데이터를 보여준다.
-        if (charText.length() == 0) {
-            listItems = new ArrayList<>(Arrays.asList(items));        }
-        // 문자 입력을 할때..
-        else
-        {
-            // 리스트의 모든 데이터를 검색한다.
-            int j=0;
-            for(int i = 0;i < items.length; i++)
-            {
-                // arraylist의 모든 데이터에 입력받은 단어(charText)가 포함되어 있으면 true를 반환한다.
-                Log.d("search",charText);
-                if (items[i].toLowerCase().contains(charText.toLowerCase()))
-                {
-                    // 검색된 데이터를 리스트에 추가한다.
-                    listItems.add(items[i]);
-                }
+        listItems.clear();
+        Iterator it = this.listItemsTemp.iterator();
+        while (it.hasNext()) {
+            String str2 = (String) it.next();
+            if (str2.toString().toLowerCase(Locale.getDefault()).contains(str)) {
+                //this.mAccountList.add(str2);
+                listItems.add(str2);
             }
         }
-        // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
-        adapter3.notifyDataSetChanged();
+
+        this.adapter3.notifyDataSetChanged();
     }
+
 
     private class HttpAsyncTask extends AsyncTask<String, Void, List<CustomerSimpleVO>> {
         private final String TAG = HttpAsyncTask.class.getSimpleName();
@@ -249,7 +258,7 @@ public class CustomDialog {
                 }.getType();
                 customerList = gson.fromJson(response.body().string(), listType);
 
-                Log.d(TAG, "onCreate: " + customerList.toString());
+                //Log.d(TAG, "onCreate: " + customerList.toString());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -261,7 +270,7 @@ public class CustomDialog {
         protected void onPostExecute(List<CustomerSimpleVO> customerList) {
             super.onPostExecute(customerList);
 
-            Log.d("HttpAsyncTask", customerList.toString());
+            //Log.d("HttpAsyncTask", customerList.toString());
             //CustomerSimpleAdapter adapter = new CustomerSimpleAdapter(customerList);
             StringBuffer sb = new StringBuffer();
             items = new String[customerList.size()];
@@ -271,10 +280,11 @@ public class CustomDialog {
                 sb.append(",");
             }
 
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
             if((buttonType.equals("판매") || buttonType.equals("대여") || buttonType.equals("회수"))) {
                 int cCount = sharedPreferences.getInt("clistCount", 0);
 
-                SharedPreferences.Editor editor = sharedPreferences.edit();
                 if(cCount > 0 || cCount == customerList.size()) isUpdate = false;
                 else isUpdate = true;
                 //String value = id.getText().toString();
@@ -282,9 +292,18 @@ public class CustomDialog {
                 editor.putInt("clistCount",customerList.size());
                 editor.commit();
 
+            }else{
+                int cCount = sharedPreferences.getInt("carCount", 0);
+
+                if(cCount > 0 || cCount == customerList.size()) isUpdate = false;
+                else isUpdate = true;
+                //String value = id.getText().toString();
+                editor.putString("carlist", sb.toString());
+                editor.putInt("carCount",customerList.size());
+                editor.commit();
             }
             if(isUpdate) {
-                Log.d("isUpdate ture", "ture ");
+                //Log.d("isUpdate ture", "ture ");
                 listItems = new ArrayList<>(Arrays.asList(items));
                 adapter3 = new ArrayAdapter(context, R.layout.item_customer, R.id.tv_customer, listItems);
                 listView.setAdapter(adapter3);
@@ -312,7 +331,18 @@ public class CustomDialog {
                 // 응답
                 Response response = client.newCall(request).execute();
                 result = response.body().string();
-                Log.d(TAG, "response.body().string(): " + result);
+                //Log.d(TAG, "response.body().string(): " + result);
+                if(result.equals("fail")){
+                    Handler mHandler = new Handler(Looper.getMainLooper());
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            // 사용하고자 하는 코드
+                            Toast.makeText(CustomDialog.this.context, "등록에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    }, 0);
+                }
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

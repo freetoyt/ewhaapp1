@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -27,7 +29,9 @@ import java.lang.reflect.Type;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -38,6 +42,7 @@ public class CashDialog {
     String[] items;
     String[] bottleItems;
     ArrayList<String> listItems;
+    ArrayList<String> listItemsTemp;
     ArrayList<String> bottleArray;
     ListView listView ;
     ListView lv_bottle ;
@@ -115,6 +120,7 @@ public class CashDialog {
         items = value.split(",");
 
         listItems = new ArrayList<>(Arrays.asList(items));
+        listItemsTemp  = new ArrayList<>(Arrays.asList(items));
         adapter3 = new ArrayAdapter(context, R.layout.item_customer, R.id.tv_customer, listItems);
         listView.setAdapter(adapter3);
 
@@ -138,12 +144,13 @@ public class CashDialog {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                search(s.toString());
+                //filter(s.toString());
+                //adapter3.getFilter().filter(s);
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                filter(s.toString());
             }
         });
 
@@ -179,7 +186,7 @@ public class CashDialog {
                     if(et_receivable.getText() == null && et_income.getText() == null) {
                         Toast.makeText(context, "수금액과 입금액을 입력하세요", Toast.LENGTH_SHORT).show();
                         isGo =false;
-                    }else if(et_receivable.getText().toString().length() <= 0 && et_income.getText().toString().length() <=0 ) {
+                    }else if( (et_receivable.getText()!=null && et_receivable.getText().toString().length() <= 0 ) && et_income.getText().toString().length() <=0 ) {
                             Toast.makeText(context, "수금액과 입금액을 입력하세요", Toast.LENGTH_SHORT).show();
                     }else{
                         if(et_receivable.getText().toString().length() >0){
@@ -197,7 +204,6 @@ public class CashDialog {
                         }
                         if(isGo) {
                             Toast.makeText(context, String.format("\"%s에  %s\" 를 하였습니다.", message.getText().toString(), strAction), Toast.LENGTH_SHORT).show();
-
                             customerId = message.getText().toString();
 
                             // 서버 전송
@@ -221,35 +227,23 @@ public class CashDialog {
             }
         });
     }
-
     // 검색을 수행하는 메소드
-    public void search(String charText) {
-        //Log.d("search","start =="+charText);
-        // 문자 입력시마다 리스트를 지우고 새로 뿌려준다.
-        listItems.clear();
+    public void filter(String str) {
 
-        // 문자 입력이 없을때는 모든 데이터를 보여준다.
-        if (charText.length() == 0) {
-            listItems = new ArrayList<>(Arrays.asList(items));        }
-        // 문자 입력을 할때..
-        else
-        {
-            // 리스트의 모든 데이터를 검색한다.
-            int j=0;
-            for(int i = 0;i < items.length; i++)
-            {
-                // arraylist의 모든 데이터에 입력받은 단어(charText)가 포함되어 있으면 true를 반환한다.
-                //Log.d("search",charText);
-                if (items[i].toLowerCase().contains(charText.toLowerCase()))
-                {
-                    // 검색된 데이터를 리스트에 추가한다.
-                    listItems.add(items[i]);
-                }
+        listItems.clear();
+        Iterator it = this.listItemsTemp.iterator();
+        while (it.hasNext()) {
+            String str2 = (String) it.next();
+            if (str2.toString().toLowerCase(Locale.getDefault()).contains(str)) {
+                //this.mAccountList.add(str2);
+                listItems.add(str2);
             }
         }
-        // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
-        adapter3.notifyDataSetChanged();
+
+        this.adapter3.notifyDataSetChanged();
     }
+
+
 
     private class HttpAsyncTask extends AsyncTask<String, Void, List<CustomerSimpleVO>> {
         private final String TAG = HttpAsyncTask.class.getSimpleName();
@@ -336,7 +330,16 @@ public class CashDialog {
                 // 응답
                 Response response = client.newCall(request).execute();
                 result = response.body().string();
-                //Log.d(TAG, "response.body().string(): " + result);
+                if(result.equals("fail")){
+                    Handler mHandler = new Handler(Looper.getMainLooper());
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            // 사용하고자 하는 코드
+                            Toast.makeText(CashDialog.this.context, "등록에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    }, 0);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -390,7 +393,7 @@ public class CashDialog {
             int receivableAmount = 0;
             bottleItems = new String[bottleList.size()];
             for (int i = 0; i < bottleList.size(); i++) {
-                bottleItems[i] = bottleList.get(i).getBottleBarCd()+" ("+bottleList.get(i).getProductNm()+", "+bottleList.get(i).getBottleCapa()+")";
+                bottleItems[i] = bottleList.get(i).getBottleBarCd()+" ["+bottleList.get(i).getProductNm()+", "+bottleList.get(i).getBottleCapa()+"]";
                 receivableAmount = bottleList.get(i).getReceivableAmount();
             }
             DecimalFormat df = new DecimalFormat( "##,###.##" ); //format설정

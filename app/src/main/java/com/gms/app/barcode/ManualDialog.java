@@ -120,12 +120,14 @@ public class ManualDialog {
             String bottleBarCd="";
             String bottleId="";
             String productNm="";
+            String bottleChargeDt = "";
             //final Button btn_info = MainActivity.findViewById(R.id.btn_info);
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 bottleId = jsonObject.getString("bottleId");
                 bottleBarCd = jsonObject.getString("bottleBarCd");
                 productNm = jsonObject.getString("productNm");
+                bottleChargeDt = jsonObject.getString("menuType")+"일";
                 Log.i("ManualDialog onPostExecute","tv_bottleBarCd="+bottleBarCd+ "productNm ="+productNm);
 
                 if(bottleBarCd!=null && !bottleBarCd.equals("null") && bottleBarCd.length() > 5) {
@@ -142,10 +144,11 @@ public class ManualDialog {
 
                     if(updateFlag) {
                         //tv_result.setText(bottleBarCd+" "+s);
-                        mainData = new MainData(bottleId, bottleBarCd, productNm, null);
+                        mainData = new MainData(bottleId, bottleBarCd, productNm, bottleChargeDt,null);
                         //tv_result.setText(bottleBarCd+" "+s);
                         arrayList.add(mainData);
                         mainAdapter.notifyDataSetChanged();
+                        MainActivity.setTextBottleCount(arrayList.size());
                     }else{
                         Toast.makeText(context ,"등록된 바코드입니다.", Toast.LENGTH_SHORT).show();
                     }

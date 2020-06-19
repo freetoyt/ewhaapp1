@@ -7,13 +7,15 @@ public class MainData {
     private String tv_bottleId;
     private String tv_bottleBarCd;
     private String tv_productNm;
+    private String tv_chargedt;
     private Button btn_info;
 
 
-    public MainData(String tv_bottleId, String tv_bottleBarCd, String tv_productNm, Button btn_info) {
+    public MainData(String tv_bottleId, String tv_bottleBarCd, String tv_productNm, String tv_chargedt, Button btn_info) {
         this.tv_bottleId = tv_bottleId;
         this.tv_bottleBarCd = tv_bottleBarCd;
         this.tv_productNm = tv_productNm;
+        this.tv_chargedt = tv_chargedt;
         this.btn_info = btn_info;
     }
 
@@ -45,8 +47,15 @@ public class MainData {
         this.tv_productNm = tv_productNm;
     }
 
-
     public void setTv_bottleBarCd(String tv_bottleBarCd) {
         this.tv_bottleBarCd = tv_bottleBarCd;
+    }
+
+    public String getTv_chargedt() {
+        return tv_chargedt;
+    }
+
+    public void setTv_chargedt(String tv_chargedt) {
+        this.tv_chargedt = tv_chargedt;
     }
 }

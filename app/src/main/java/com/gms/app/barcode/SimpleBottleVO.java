@@ -63,7 +63,7 @@ public class SimpleBottleVO implements Serializable {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("Weather{");
+        final StringBuffer sb = new StringBuffer("Bottle{");
         sb.append("bottleBarCd='").append(bottleBarCd).append('\'');
         sb.append(", productNm='").append(productNm).append('\'');
         sb.append('}');

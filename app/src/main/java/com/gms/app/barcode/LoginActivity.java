@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +29,7 @@ import java.net.URLDecoder;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText et_id, et_pass;
+    private TextView tv_version;
     private Button btn_login;
     private CheckBox chk_login;
     private String shared = "file";
@@ -42,14 +46,27 @@ public class LoginActivity extends AppCompatActivity {
         btn_login = (Button)findViewById(R.id.btn_login);
         chk_login = (CheckBox)findViewById(R.id.chk_login);
 
+        tv_version = (TextView)findViewById(R.id.tv_version) ;
+        // 버전 정보 가져오기
+        PackageInfo packageInfo = null;
+        try{
+            packageInfo = getPackageManager().getPackageInfo(getPackageName(),0);
+
+            tv_version.setText("V : "+packageInfo.versionName);
+            //Log.d("############## Package Version",version);
+        }catch (PackageManager.NameNotFoundException e){
+            Log.e("############## Package Version","NameNotFoundException");
+        }
+
         //SharedPreferences 로그인 정보 유무 확인
         SharedPreferences sharedPreferences = getSharedPreferences(shared,0);
         String value = sharedPreferences.getString("id", "");
 
         if(value != null && value.length() > 0) {
-            Toast.makeText(getApplicationContext(),"로그인이 되어 있습니다,",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"ID: "+value+" 로 로그인이 되어 있습니다,",Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-            //intent.putExtra("id",id);
+            // user_id 가져오기 0601 추가
+            intent.putExtra("uid",value);
             //intent.putExtra("pw", name);
             startActivity(intent);
         }
@@ -113,16 +130,13 @@ public class LoginActivity extends AppCompatActivity {
             RequestHttpURLConnection requestHttpURLConnection = new RequestHttpURLConnection();
             result = requestHttpURLConnection.request(url, values); // 해당 URL로 부터 결과물을 얻어온다.
 
-            Log.i("LoginActivity doInBackground","rseult="+result);
             return result;
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.i("LoginActivity onPostExecute","s="+s);
-            //doInBackground()로 부터 리턴된 값이 onPostExecute()의 매개변수로 넘어오므로 s를 출력한다.
-            //tv_result.setText(s);
+
             boolean success = false;
 
             try {
@@ -148,10 +162,10 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString("name", name);
                         editor.commit();
                     }
-                    Toast.makeText(getApplicationContext(),"로그인이 성공하였습니다,",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"아이디  "+id+"로 로그인이 성공하였습니다,",Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                    intent.putExtra("id",id);
+                    intent.putExtra("uid",id);
                     intent.putExtra("pw", name);
                     startActivity(intent);
                 }else{
