@@ -280,7 +280,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                 if(arrayList.size() <= 0){
                     Toast.makeText(MainActivity.this, "용기를 선택하세요", Toast.LENGTH_SHORT).show();
                 }else {
-                    CustomDialog customDialog = new CustomDialog(MainActivity.this, btn_sales.getText().toString());
+                    CustomDialog customDialog = new CustomDialog(MainActivity.this, "판매");
 
                     String tempStr = "";
                     for (int i = 0; i < arrayList.size(); i++) {
@@ -301,7 +301,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                 if(arrayList.size() <= 0){
                     Toast.makeText(MainActivity.this, "용기를 선택하세요", Toast.LENGTH_SHORT).show();
                 }else {
-                    CustomDialog customDialog = new CustomDialog(MainActivity.this, btn_rental.getText().toString());
+                    CustomDialog customDialog = new CustomDialog(MainActivity.this, "대여");
 
                     String tempStr = "";
                     for (int i = 0; i < arrayList.size(); i++) {
