@@ -104,7 +104,7 @@ public class NoGasDialog {
 
         //value = sharedPreferences.getString("clist", "");
         //Log.d("noGasDialog  value ", value);
-        items = value.split(",");
+        items = value.split("#");
 
         listItemsTemp  = new ArrayList<>(Arrays.asList(items));
         listItems = new ArrayList<>(Arrays.asList(items));
@@ -254,7 +254,7 @@ public class NoGasDialog {
             for (int i = 0; i < customerList.size(); i++) {
                 items[i] = customerList.get(i).getCustomerNm().toString();
                 sb.append(customerList.get(i).getCustomerNm().toString());
-                sb.append(",");
+                sb.append("#");
             }
 
             //if((buttonType.equals("판매") || buttonType.equals("대여") || buttonType.equals("회수"))) {

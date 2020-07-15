@@ -117,7 +117,7 @@ public class CashDialog {
         // Add Data to listView
         listView = (ListView) dlg.findViewById(R.id.listview);
 
-        items = value.split(",");
+        items = value.split("#");
 
         listItems = new ArrayList<>(Arrays.asList(items));
         listItemsTemp  = new ArrayList<>(Arrays.asList(items));
@@ -289,7 +289,7 @@ public class CashDialog {
             for (int i = 0; i < customerList.size(); i++) {
                 items[i] = customerList.get(i).getCustomerNm().toString();
                 sb.append(customerList.get(i).getCustomerNm().toString());
-                sb.append(",");
+                sb.append("#");
             }
             int cCount = sharedPreferences.getInt("clistCount", 0);
 

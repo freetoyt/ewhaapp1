@@ -7,24 +7,18 @@
     android:background="#E6E5E5"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/customerId"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="invisible"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="145dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/btn_out">
+        app:layout_constraintBottom_toTopOf="@+id/btn_out"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#7484E6"
-            >
+            android:background="#1E88E5">
 
             <ImageView
                 android:layout_width="60dp"
@@ -34,11 +28,11 @@
             <TextView
                 android:id="@+id/main_label"
                 android:layout_width="@dimen/title_size"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:gravity="center_vertical"
                 android:text=" (주)대한특수가스"
-                android:textColor="#000000"
+                android:textColor="#ffffff"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"

@@ -118,15 +118,15 @@ public class CustomDialog {
                 || buttonType.equals("무료회수") || buttonType.equals("매입")) {
             //value = sharedPreferences.getString("clist", "");
             //Log.d("CustomerDialog  value ", value);
-            items = value.split(",");
-
+            items = value.split("#");
+            Log.d("CustomDialog ","items.length=="+items.length);
             listItems = new ArrayList<>(Arrays.asList(items));
             listItemsTemp  = new ArrayList<>(Arrays.asList(items));
 
             adapter3 = new ArrayAdapter(context, R.layout.item_customer, R.id.tv_customer, listItems);
             listView.setAdapter(adapter3);
         }else{
-            items = value1.split(",");
+            items = value1.split("#");
 
             listItems = new ArrayList<>(Arrays.asList(items));
             listItemsTemp  = new ArrayList<>(Arrays.asList(items));
@@ -277,7 +277,7 @@ public class CustomDialog {
             for (int i = 0; i < customerList.size(); i++) {
                 items[i] = customerList.get(i).getCustomerNm().toString();
                 sb.append(customerList.get(i).getCustomerNm().toString());
-                sb.append(",");
+                sb.append("#");
             }
 
             SharedPreferences.Editor editor = sharedPreferences.edit();

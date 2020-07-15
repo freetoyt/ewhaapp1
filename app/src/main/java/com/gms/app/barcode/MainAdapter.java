@@ -70,6 +70,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.CustomViewHold
             public boolean onLongClick(View v) {
                 //리스트 삭제
                 remove(holder.getAdapterPosition());
+                MainActivity.setTextBottleCount();
                 return true;
             }
         });

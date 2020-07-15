@@ -44,6 +44,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity implements BottomSheetDialog.BottomSheetListener{
 
@@ -86,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
     //qr code scanner object
     private IntentIntegrator qrScan;
     int tempInd = 0;
-    int iCount = 0;
+    static int iCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -695,15 +697,22 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                             //mInputStream.read(packetBytes);
                             int bytesInt = mInputStream.read(packetBytes);
                             String readMessage = new String(packetBytes, 0, bytesInt);
-                            if(readMessage !=null && readMessage.length() > 14) {
-                                //Log.d("***************** MainActivity readMessage", readMessage + "--" + readMessage.length());
 
-                                String url = host + "api/bottleDetail.do?bottleBarCd=" + readMessage.substring(5, 13);//AA315923";
+                            if(readMessage.indexOf("\u0001") > 0){
+                                readMessage = readMessage.substring(readMessage.indexOf("\u0001")+1,readMessage.length());
+                            }
+                            if(readMessage.indexOf("\u0003") > 0){
+                                readMessage = readMessage.substring(0,readMessage.indexOf("\u0003"));
+                            }
+
+                            if(readMessage !=null && readMessage.length() > 0) {
+
+                                //String url = host + "api/bottleDetail.do?bottleBarCd=" + readMessage.substring(5, readMessage.length());//AA315923";
+                                String url = host + "api/bottleDetail.do?bottleBarCd=" + readMessage;//AA315923";
                                 // AsyncTask를 통해 HttpURLConnection 수행.
                                 NetworkTask networkTask = new NetworkTask(url, null);
                                 networkTask.execute();
                             }
-
                         }
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
@@ -721,6 +730,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
         arrayList.clear();
         mainAdapter.notifyDataSetChanged();
         tv_bottleCount.setText("바코드 카운트 :  0");
+        iCount=0;
     }
 
     static  ArrayList<MainData>  getArrayList(){
@@ -728,12 +738,13 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
     }
 
     static void  getBackArrayList(){
-        //Toast.makeText(MainActivity.this ,"getBackArrayList 호출.", Toast.LENGTH_SHORT).show();
+
         tv_bottleCount.setText("바코드 카운트 :  "+arrayList.size());
     }
 
-    static  void  setTextBottleCount(int count){
-        tv_bottleCount.setText("바코드 카운트 : "+count);
+    static  void  setTextBottleCount(){
+
+        tv_bottleCount.setText("바코드 카운트 : "+arrayList.size());
     }
 
     public void SendResetSignal(){
@@ -775,7 +786,6 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
             String bottleBarCd ="";
             String bottleId ="";
             String productNm ="";
-            String chargeDtCount ="";
             String bottleChargeDt = null;
             Button btn_info = findViewById(R.id.btn_info);
             try {
@@ -813,7 +823,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                         arrayList.add(mainData);
                         mainAdapter.notifyDataSetChanged();
                         iCount++;
-                        tv_bottleCount.setText("바코드 카운트 : "+iCount);
+                        tv_bottleCount.setText("바코드 카운트 : "+arrayList.size());
                     }else{
                         Toast.makeText(MainActivity.this ,"등록된 바코드입니다.", Toast.LENGTH_SHORT).show();
                     }

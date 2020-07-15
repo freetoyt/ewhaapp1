@@ -148,7 +148,7 @@ public class ManualDialog {
                         //tv_result.setText(bottleBarCd+" "+s);
                         arrayList.add(mainData);
                         mainAdapter.notifyDataSetChanged();
-                        MainActivity.setTextBottleCount(arrayList.size());
+                        MainActivity.setTextBottleCount();
                     }else{
                         Toast.makeText(context ,"등록된 바코드입니다.", Toast.LENGTH_SHORT).show();
                     }

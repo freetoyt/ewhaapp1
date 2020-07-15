@@ -123,7 +123,18 @@
                 />
         </LinearLayout>
     </LinearLayout>
-
+    <View style="@style/Divider"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/brv"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_weight="1"
+        android:scrollbarFadeDuration="0"
+        android:scrollbarSize="5dp"
+        android:scrollbarThumbVertical="@android:color/darker_gray"
+        android:scrollbars="vertical"
+        android:stackFromBottom="true"
+        android:text="1111" />
     <View style="@style/Divider"/>
     <Button
         android:id="@+id/okButton"
