@@ -28,6 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.theme.MaterialComponentsViewInflater;
 import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -89,6 +90,54 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
     private IntentIntegrator qrScan;
     int tempInd = 0;
     static int iCount = 0;
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        String arrStr ="";
+        if(arrayList !=null) {
+            for (int i = 0; i < arrayList.size(); i++) {
+                MainData mainD = arrayList.get(i);
+                arrStr += mainD.getTv_bottleId() + "@";
+            }
+            SharedPreferences sharedPreferences = getSharedPreferences(shared, 0);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            editor.putString("notSaveArray", arrStr);
+            editor.commit();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        SharedPreferences sharedPreferences = getSharedPreferences(shared,0);
+        String arrStr = sharedPreferences.getString("notSaveArray", "");
+
+        if(arrStr !=null && arrStr.length() > 1) {
+            clearArrayList();
+            String[] aCode = arrStr.split("@");
+            Button btn_info = findViewById(R.id.btn_info);
+
+            for (int i = 0; i < aCode.length; i++) {
+
+                // 저장된 용기 정보 불러오기
+                Gson gson = new Gson();
+                String sharedValue = sharedPreferences.getString(aCode[i], "");
+
+                BottleVO bottle = new BottleVO();
+                bottle = (BottleVO) gson.fromJson(sharedValue, bottle.getClass());
+
+                MainData mainData = new MainData(bottle.getBottleId(), bottle.getBottleBarCd(), bottle.getProductNm(), bottle.getMenuType()+"일",btn_info);
+                arrayList.add(mainData);
+            }
+            mainAdapter.notifyDataSetChanged();
+            tv_bottleCount.setText("바코드 카운트 :  "+arrayList.size());
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
