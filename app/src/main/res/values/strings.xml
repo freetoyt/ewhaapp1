@@ -3,4 +3,16 @@
     <!--<string name="host_name">http://daehangas.co.kr/</string>-->
     <string name="host_name">http://192.168.0.10/</string>
 
+    <string name="api_customerList">api/customerAllList.do</string>
+    <string name="api_bottleDetail">api/bottleDetail.do</string>
+    <string name="api_ngasProduct">api/ngasProductPriceList.do</string>
+    <string name="api_login">api/loginEncodeAction.do?</string>
+    <string name="api_reportList">api/workReportList.do</string>
+    <string name="api_controlAction">api/controlAction.do?</string>
+    <string name="api_controlActionNoGas">api/controlActionNoGas.do?</string>
+    <string name="api_customerBottle">api/customerBottle.do?</string>
+    <string name="api_controlCashFlow">api/controlCashFlow.do?</string>
+    <string name="api_getDummyBottle">api/dummyList.do?</string>
+    <string name="api_bottleHistoryList">api/bottleHistoryList.do?</string>
+    <string name="api_controlMassAction">api/controlMassAction.do?</string>
 </resources>

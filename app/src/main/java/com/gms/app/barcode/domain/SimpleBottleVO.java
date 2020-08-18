@@ -1,4 +1,4 @@
-package com.gms.app.barcode;
+package com.gms.app.barcode.domain;
 
 import java.io.Serializable;
 
@@ -17,6 +17,12 @@ public class SimpleBottleVO implements Serializable {
 
     /** Bottle_Capa	*/
     private String bottleCapa;
+
+    /** Product Id */
+    private Integer productId ;
+
+    /** Product_Price_Seq		*/
+    private Integer productPriceSeq;
 
     /** Receivable_Amount	*/
     private int receivableAmount;
@@ -61,6 +67,23 @@ public class SimpleBottleVO implements Serializable {
         return receivableAmount;
     }
 
+
+    public Integer getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Integer productId) {
+        this.productId = productId;
+    }
+
+    public Integer getProductPriceSeq() {
+        return productPriceSeq;
+    }
+
+    public void setProductPriceSeq(Integer productPriceSeq) {
+        this.productPriceSeq = productPriceSeq;
+    }
+
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("Bottle{");
@@ -70,3 +93,4 @@ public class SimpleBottleVO implements Serializable {
         return sb.toString();
     }
 }
+

@@ -1,15 +1,18 @@
 package com.gms.app.barcode;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.gms.app.barcode.dialog.BottleInfoDialog;
 
 import java.util.ArrayList;
 
@@ -48,6 +51,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.CustomViewHold
 
             }
         });
+
         //final TextView main_label = holder.btn_info;
         holder.btn_info.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,13 +72,36 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.CustomViewHold
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                //리스트 삭제
-                remove(holder.getAdapterPosition());
-                MainActivity.setTextBottleCount();
+
+                AlertDialog.Builder ad = new AlertDialog.Builder(v.getContext());
+                ad.setMessage("용기를 삭제하시겠습니까?");
+
+                ad.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        //Toast.makeText(v.getContext(), "용기를 삭제하였습니다", Toast.LENGTH_SHORT).show();
+                        //리스트 삭제
+                        remove(holder.getAdapterPosition());
+                        MainActivity.setTextBottleCount();
+                        dialog.dismiss();
+                    }
+                });
+
+                ad.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                ad.show();
+
                 return true;
             }
         });
     }
+
+
     /*
     TODO 버튼 추가시 처리 예정
 

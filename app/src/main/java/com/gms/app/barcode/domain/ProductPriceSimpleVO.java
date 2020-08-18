@@ -1,4 +1,4 @@
-package com.gms.app.barcode;
+package com.gms.app.barcode.domain;
 
 import java.io.Serializable;
 

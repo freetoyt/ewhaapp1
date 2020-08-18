@@ -1,4 +1,4 @@
-package com.gms.app.barcode;
+package com.gms.app.barcode.domain;
 
 import java.util.Date;
 
@@ -78,7 +78,6 @@ public class BottleVO {
   /** Customer_Nm		*/
   private String customerNm;
 
-
   /** Member_Comp_Seq	*/
   private Integer memberCompSeq;
 
@@ -98,31 +97,6 @@ public class BottleVO {
   /** 복수 삭제용 Ids*/
   private String bottleIds;
 
-  /** 검색용			*/
-  /** SearchBottleiId	*/
-  private String  searchBottleId;
-
-  /** SearchGasId		*/
-  private String  searchGasId;
-
-  /** SearchProductId		*/
-  private String  searchProductId;
-
-  /** searchChargeDt	*/
-  private String  searchChargeDt;
-
-  /** searchCustomerNm	*/
-  private String  searchCustomerNm;
-
-  /** searchChargeDtFrom	*/
-  private String  searchChargeDtFrom;
-
-  /** searchChargeDtEnd	*/
-  private String  searchChargeDtEnd;
-
-  /** searchChargeDtEnd	*/
-  private String  searchSalesYn;
-
   /** menuType
    * 1:list
    * 2:charge
@@ -130,7 +104,6 @@ public class BottleVO {
    * 4.:rental
    * 	*/
   private int  menuType;
-
 
   /** Car Customer_ID		*/
   private String carCustomerId;
@@ -343,70 +316,6 @@ public class BottleVO {
 
   public void setBottleIds(String bottleIds) {
     this.bottleIds = bottleIds;
-  }
-
-  public String getSearchBottleId() {
-    return searchBottleId;
-  }
-
-  public void setSearchBottleId(String searchBottleId) {
-    this.searchBottleId = searchBottleId;
-  }
-
-  public String getSearchGasId() {
-    return searchGasId;
-  }
-
-  public void setSearchGasId(String searchGasId) {
-    this.searchGasId = searchGasId;
-  }
-
-  public String getSearchProductId() {
-    return searchProductId;
-  }
-
-  public void setSearchProductId(String searchProductId) {
-    this.searchProductId = searchProductId;
-  }
-
-  public String getSearchChargeDt() {
-    return searchChargeDt;
-  }
-
-  public void setSearchChargeDt(String searchChargeDt) {
-    this.searchChargeDt = searchChargeDt;
-  }
-
-  public String getSearchCustomerNm() {
-    return searchCustomerNm;
-  }
-
-  public void setSearchCustomerNm(String searchCustomerNm) {
-    this.searchCustomerNm = searchCustomerNm;
-  }
-
-  public String getSearchChargeDtFrom() {
-    return searchChargeDtFrom;
-  }
-
-  public void setSearchChargeDtFrom(String searchChargeDtFrom) {
-    this.searchChargeDtFrom = searchChargeDtFrom;
-  }
-
-  public String getSearchChargeDtEnd() {
-    return searchChargeDtEnd;
-  }
-
-  public void setSearchChargeDtEnd(String searchChargeDtEnd) {
-    this.searchChargeDtEnd = searchChargeDtEnd;
-  }
-
-  public String getSearchSalesYn() {
-    return searchSalesYn;
-  }
-
-  public void setSearchSalesYn(String searchSalesYn) {
-    this.searchSalesYn = searchSalesYn;
   }
 
   public int getMenuType() {

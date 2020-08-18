@@ -1,26 +1,27 @@
-package com.gms.app.barcode;
+package com.gms.app.barcode.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.gms.app.barcode.R;
+import com.gms.app.barcode.adapter.BottleHistoryAdapter;
+import com.gms.app.barcode.domain.BottleHistoryData;
+import com.gms.app.barcode.domain.BottleVO;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -44,7 +45,7 @@ public class BottleInfoDialog {
 
     // 호출할 다이얼로그 함수를 정의한다.
     public void callFunction(String str) {
-        Log.i("BottleInfoDialog",str);
+
         str_info = str;
         host = context.getString(R.string.host_name);
 
@@ -98,8 +99,7 @@ public class BottleInfoDialog {
             tv_bottleChargeDt.setText(bottle.getBottleChargeDt().substring(0,10));
             tv_bottleVolumn.setText(bottle.getBottleVolumn());
 
-
-            new HttpAsyncTask().execute(host + "api/bottleHistoryList.do?bottleId="+bottle.getBottleId());
+            new HttpAsyncTask().execute(host + context.getString(R.string.api_bottleHistoryList) +"bottleId="+bottle.getBottleId());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -133,7 +133,7 @@ public class BottleInfoDialog {
                 }.getType();
                 bottleList = gson.fromJson(response.body().string(), listType);
 
-                Log.d(TAG, "onCreate: " + bottleList.toString());
+                //Log.d(TAG, "onCreate: " + bottleList.toString());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -149,7 +149,7 @@ public class BottleInfoDialog {
                 String customerNm = "";
                 if(bottleList.get(i).getCustomerNm()!=null) customerNm = bottleList.get(i).getCustomerNm();
 
-                Log.d(TAG, "bottleList.i: " + bottleList.get(i).getCustomerNm());
+                //Log.d(TAG, "bottleList.i: " + bottleList.get(i).getCustomerNm());
                 BottleHistoryData hBottle = new BottleHistoryData(customerNm, bottleList.get(i).getBottleWorkCdNm(), bottleList.get(i).getBottleWorkDt().substring(0,10));
 
                 arrayList.add(hBottle);

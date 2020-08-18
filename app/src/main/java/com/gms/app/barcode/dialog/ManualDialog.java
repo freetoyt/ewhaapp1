@@ -1,17 +1,24 @@
-package com.gms.app.barcode;
+package com.gms.app.barcode.dialog;
 
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.gms.app.barcode.MainActivity;
+import com.gms.app.barcode.MainAdapter;
+import com.gms.app.barcode.MainData;
+import com.gms.app.barcode.R;
+import com.gms.app.barcode.RequestHttpURLConnection;
+import com.gms.app.barcode.domain.BottleVO;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -66,7 +73,7 @@ public class ManualDialog {
 
                 //MainActivity List 등록
                 //MainActivity.insertList(str_BarCd);
-                String url =context.getString(R.string.host_name)+"api/bottleDetail.do?bottleBarCd="+str_BarCd;//AA315923";
+                String url =context.getString(R.string.host_name)+context.getString(R.string.api_bottleDetail)+"?bottleBarCd="+str_BarCd;//AA315923";
 
                 // AsyncTask를 통해 HttpURLConnection 수행.
                 NetworkTask networkTask = new NetworkTask(url, null);
@@ -107,14 +114,13 @@ public class ManualDialog {
             RequestHttpURLConnection requestHttpURLConnection = new RequestHttpURLConnection();
             result = requestHttpURLConnection.request(url, values); // 해당 URL로 부터 결과물을 얻어온다.
 
-            Log.i("MainActivity doInBackground","rseult="+result);
             return result;
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.i("ManualDialog onPostExecute","s="+s);
+            //Log.d("MainActivity onPostExecute","s="+s);
             //doInBackground()로 부터 리턴된 값이 onPostExecute()의 매개변수로 넘어오므로 s를 출력한다.
             //tv_result.setText(s);
             String bottleBarCd="";
@@ -123,39 +129,48 @@ public class ManualDialog {
             String bottleChargeDt = "";
             //final Button btn_info = MainActivity.findViewById(R.id.btn_info);
             try {
-                JSONObject jsonObject = new JSONObject(s);
-                bottleId = jsonObject.getString("bottleId");
-                bottleBarCd = jsonObject.getString("bottleBarCd");
-                productNm = jsonObject.getString("productNm");
-                bottleChargeDt = jsonObject.getString("menuType")+"일";
-                Log.i("ManualDialog onPostExecute","tv_bottleBarCd="+bottleBarCd+ "productNm ="+productNm);
 
-                if(bottleBarCd!=null && !bottleBarCd.equals("null") && bottleBarCd.length() > 5) {
-                    SharedPreferences sharedPreferences = context.getSharedPreferences(shared, 0);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                Gson gson = new Gson();
+                BottleVO bottle = new BottleVO();
+                bottle = (BottleVO) gson.fromJson(s, bottle.getClass());
 
-                    editor.putString(bottleId,s);
-                    editor.commit();
+                if(bottle != null && bottle.getBottleId() !=null && bottle.getBottleId().length() > 0) {
 
-                    boolean updateFlag = true;
-                    for(int i=0;i<arrayList.size();i++){
-                        if(arrayList.get(i).getTv_bottleBarCd().equals(bottleBarCd)) updateFlag = false;
+                    bottleId = bottle.getBottleId();
+                    bottleBarCd = bottle.getBottleBarCd();
+                    productNm = bottle.getProductNm();
+                    bottleChargeDt = bottle.getMenuType() + "일";
+
+                    if (bottleBarCd != null && !bottleBarCd.equals("null") && bottleBarCd.length() > 5) {
+                        SharedPreferences sharedPreferences = context.getSharedPreferences(shared, 0);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                        editor.putString(bottleId, s);
+                        editor.commit();
+
+                        boolean updateFlag = true;
+                        for (int i = 0; i < arrayList.size(); i++) {
+                            if (arrayList.get(i).getTv_bottleBarCd().equals(bottleBarCd))
+                                updateFlag = false;
+                        }
+
+                        if (updateFlag) {
+                            //tv_result.setText(bottleBarCd+" "+s);
+                            mainData = new MainData(bottleId, bottleBarCd, productNm, bottleChargeDt, null);
+                            //tv_result.setText(bottleBarCd+" "+s);
+                            arrayList.add(mainData);
+                            mainAdapter.notifyDataSetChanged();
+                            MainActivity.setTextBottleCount();
+                        } else {
+                            Toast.makeText(context, "등록된 바코드입니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(context, "시스템에 등록되지 않은 바코드입니다.", Toast.LENGTH_SHORT).show();
                     }
-
-                    if(updateFlag) {
-                        //tv_result.setText(bottleBarCd+" "+s);
-                        mainData = new MainData(bottleId, bottleBarCd, productNm, bottleChargeDt,null);
-                        //tv_result.setText(bottleBarCd+" "+s);
-                        arrayList.add(mainData);
-                        mainAdapter.notifyDataSetChanged();
-                        MainActivity.setTextBottleCount();
-                    }else{
-                        Toast.makeText(context ,"등록된 바코드입니다.", Toast.LENGTH_SHORT).show();
-                    }
-                }else {
-                    Toast.makeText(context ,"등록되지 않은 바코드입니다.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "시스템에 등록되지 않은 바코드입니다.", Toast.LENGTH_SHORT).show();
                 }
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 

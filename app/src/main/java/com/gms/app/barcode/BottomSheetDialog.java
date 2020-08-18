@@ -26,8 +26,8 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
 
     private static ArrayList<MainData> arrayList;
 
-    private Button btn_charge,btn_freeback,btn_buyback, btn_close,
-            btn_deleteAll,btn_hole, btn_vacuum,btn_chargedt;
+    private Button btn_charge, btn_freeback, btn_buyback, btn_close,
+            btn_deleteAll, btn_hole, btn_vacuum, btn_chargedt;
 
 
     public BottomSheetDialog(Context context, String bottles) {
@@ -130,6 +130,10 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
                             Toast.makeText(context, "리스트를 삭제하였습니다", Toast.LENGTH_SHORT).show();
                             MainActivity.clearArrayList();
                             dialog.dismiss();
+
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.remove("notSaveArray");
+                            editor.commit();
                         }
                     });
 
@@ -208,9 +212,6 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
                 }
             }
         });
-
-
-
         return v;
     }
 

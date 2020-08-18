@@ -8,14 +8,16 @@
     tools:context=".MainActivity">
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="145dp"
+        android:layout_marginBottom="195dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/btn_out"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:id="@+id/title_layout"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="#1E88E5">
@@ -41,7 +43,7 @@
 
             <Button
                 android:id="@+id/btn_setting"
-                android:layout_width="40dp"
+                android:layout_width="38dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center|right"
                 android:background="@drawable/bluetooth_icon" />
@@ -73,7 +75,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv"
             android:layout_width="match_parent"
-            android:layout_height="552dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:scrollbarFadeDuration="0"
             android:scrollbarSize="5dp"
@@ -215,5 +217,49 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_etc"
         app:layout_constraintStart_toEndOf="@+id/btn_manual" />
+
+    <Button
+        android:id="@+id/btn_mass"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="대량"
+        android:textColor="#000"
+        android:textSize="@dimen/button_4_size"
+        app:layout_constraintBottom_toTopOf="@+id/btn_noGas"
+        app:layout_constraintEnd_toStartOf="@+id/btn_massBack"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_massBack"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="더미용기"
+        android:textColor="#000"
+        android:textSize="@dimen/button_4_size"
+        app:layout_constraintBottom_toTopOf="@+id/btn_come"
+        app:layout_constraintEnd_toStartOf="@+id/btn_freeChange"
+        app:layout_constraintStart_toEndOf="@+id/btn_mass" />
+
+    <Button
+        android:id="@+id/btn_freeChange"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="무상교체"
+        android:textColor="#000"
+        android:textSize="@dimen/button_4_size"
+        app:layout_constraintBottom_toTopOf="@+id/btn_out"
+        app:layout_constraintEnd_toStartOf="@+id/btn_report"
+        app:layout_constraintStart_toEndOf="@+id/btn_massBack" />
+
+    <Button
+        android:id="@+id/btn_report"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="업무일지"
+        android:textColor="#000"
+        android:textSize="@dimen/button_4_size"
+        app:layout_constraintBottom_toTopOf="@+id/btn_incar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_freeChange" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

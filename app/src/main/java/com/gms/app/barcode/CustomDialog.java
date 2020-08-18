@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -21,6 +20,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gms.app.barcode.domain.CustomerSimpleVO;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -65,21 +65,10 @@ public class CustomDialog {
         sharedPreferences = context.getSharedPreferences(shared, 0);
         host = context.getString(R.string.host_name);
 
-        if(buttonType.equals("판매") || buttonType.equals("대여") || buttonType.equals("회수")
-                || buttonType.equals("무료회수") || buttonType.equals("매입") ) {
-            value = sharedPreferences.getString("clist", "");
-            //Log.d("CustomDialog ",buttonType);
-            //Log.d("CustomDialog ",value);
-            if(value ==null || value.length() <= 10)
-                new HttpAsyncTask().execute(host + "api/customerAllList.do");
-        }else {
-            value1 = sharedPreferences.getString("carlist", "");
-            if(!buttonType.equals("충전")) {
-                if(value1 ==null || value1.length() <= 10)
-                    new HttpAsyncTask().execute(host + "api/carList.do");
-            }
-        }
+        value = sharedPreferences.getString("clist", "");
 
+        if(value ==null || value.length() <= 10)
+            new HttpAsyncTask().execute(host + context.getString(R.string.api_customerList));
     }
 
     // 호출할 다이얼로그 함수를 정의한다.
@@ -114,25 +103,13 @@ public class CustomDialog {
         // Add Data to listView
         listView = (ListView) dlg.findViewById(R.id.listview);
 
-        if(buttonType.equals("판매") || buttonType.equals("대여") || buttonType.equals("회수")
-                || buttonType.equals("무료회수") || buttonType.equals("매입")) {
-            //value = sharedPreferences.getString("clist", "");
-            //Log.d("CustomerDialog  value ", value);
-            items = value.split("#");
-            Log.d("CustomDialog ","items.length=="+items.length);
-            listItems = new ArrayList<>(Arrays.asList(items));
-            listItemsTemp  = new ArrayList<>(Arrays.asList(items));
+        items = value.split("#");
+        //Log.d("CustomDialog ","items.length=="+items.length);
+        listItems = new ArrayList<>(Arrays.asList(items));
+        listItemsTemp  = new ArrayList<>(Arrays.asList(items));
 
-            adapter3 = new ArrayAdapter(context, R.layout.item_customer, R.id.tv_customer, listItems);
-            listView.setAdapter(adapter3);
-        }else{
-            items = value1.split("#");
-
-            listItems = new ArrayList<>(Arrays.asList(items));
-            listItemsTemp  = new ArrayList<>(Arrays.asList(items));
-            adapter3 = new ArrayAdapter(context, R.layout.item_customer, R.id.tv_customer, listItems);
-            listView.setAdapter(adapter3);
-        }
+        adapter3 = new ArrayAdapter(context, R.layout.item_customer, R.id.tv_customer, listItems);
+        listView.setAdapter(adapter3);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -174,6 +151,7 @@ public class CustomDialog {
                 }
             }
         });
+
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -191,10 +169,13 @@ public class CustomDialog {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
 
                         editor.putString("previousBottles",bottles);
+
+                        editor.remove("notSaveArray");
+
                         editor.commit();
                         //Log.d("@@@@@@@@@@@@@okButton: ","previousBottles: " + bottles);
                         // 서버 전송
-                        new HttpAsyncTask1().execute(host + "api/controlAction.do?userId=" + userId + "&bottles=" + bottles + "&customerNm=" + customerId + "&bottleType=" + bottleType + "&bottleWorkCd=" + buttonType);
+                        new HttpAsyncTask1().execute(host + context.getString(R.string.api_controlAction) +"userId=" + userId + "&bottles=" + bottles + "&customerNm=" + customerId + "&bottleType=" + bottleType + "&bottleWorkCd=" + buttonType);
 
                         //MainActivity List 제거
                         MainActivity.clearArrayList();
@@ -205,6 +186,7 @@ public class CustomDialog {
                 }
             }
         });
+
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -282,26 +264,15 @@ public class CustomDialog {
 
             SharedPreferences.Editor editor = sharedPreferences.edit();
 
-            if((buttonType.equals("판매") || buttonType.equals("대여") || buttonType.equals("회수"))) {
-                int cCount = sharedPreferences.getInt("clistCount", 0);
+            int cCount = sharedPreferences.getInt("clistCount", 0);
 
-                if(cCount > 0 || cCount == customerList.size()) isUpdate = false;
-                else isUpdate = true;
-                //String value = id.getText().toString();
-                editor.putString("clist", sb.toString());
-                editor.putInt("clistCount",customerList.size());
-                editor.commit();
+            if(cCount > 0 || cCount == customerList.size()) isUpdate = false;
+            else isUpdate = true;
+            //String value = id.getText().toString();
+            editor.putString("clist", sb.toString());
+            editor.putInt("clistCount",customerList.size());
+            editor.commit();
 
-            }else{
-                int cCount = sharedPreferences.getInt("carCount", 0);
-
-                if(cCount > 0 || cCount == customerList.size()) isUpdate = false;
-                else isUpdate = true;
-                //String value = id.getText().toString();
-                editor.putString("carlist", sb.toString());
-                editor.putInt("carCount",customerList.size());
-                editor.commit();
-            }
             if(isUpdate) {
                 //Log.d("isUpdate ture", "ture ");
                 listItems = new ArrayList<>(Arrays.asList(items));

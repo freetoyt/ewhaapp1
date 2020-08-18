@@ -4,19 +4,31 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gms.app.barcode.domain.CustomerSimpleVO;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -26,6 +38,7 @@ public class ChargeDialog {
     private Context context;
     String[] items;
     ArrayList<String> listItems;
+    ArrayList<String> listItemsTemp;
     ArrayAdapter<String> adapter;
     ListView listView ;
 
@@ -34,16 +47,26 @@ public class ChargeDialog {
     String bottleType = "";
     String buttonType = "";
     String bottles;
-    String customerId="";
+    String customerId ="";
     String userId = "";
     String host ="";
-    String strBottleType="공병";
+    String strBottleType ="공병";
+    String value ="" ;
+    String value1 ="";
+    boolean isUpdate = true;
 
     public ChargeDialog(Context context, String bType) {
         this.context = context;
         this.buttonType = bType;
         sharedPreferences = context.getSharedPreferences(shared, 0);
         host = context.getString(R.string.host_name);
+
+        value = sharedPreferences.getString("clist", "");
+
+        if(value ==null || value.length() <= 10)
+            new HttpAsyncTask().execute(host + context.getString(R.string.api_customerList));
+
+        //new HttpAsyncTask().execute(host + "api/gasCustomerList.do");
     }
 
     // 호출할 다이얼로그 함수를 정의한다.
@@ -66,6 +89,7 @@ public class ChargeDialog {
 
         // 커스텀 다이얼로그의 각 위젯들을 정의한다.
         final TextView title = (TextView) dlg.findViewById(R.id.title);
+        final EditText message = (EditText) dlg.findViewById(R.id.mesgase1);
         final Button okButton = (Button) dlg.findViewById(R.id.okButton);
         final Button cancelButton = (Button) dlg.findViewById(R.id.cancelButton);
 
@@ -74,7 +98,40 @@ public class ChargeDialog {
         final RadioButton rb_woman = dlg.findViewById(R.id.rb_woman);
 
         title.setText(buttonType);
-        // Add Data to listView
+        listView = (ListView) dlg.findViewById(R.id.listview1);
+
+        items = value.split("#");
+        //Log.d("CustomDialog ","items.length=="+items.length);
+        listItems = new ArrayList<>(Arrays.asList(items));
+        listItemsTemp  = new ArrayList<>(Arrays.asList(items));
+
+        adapter = new ArrayAdapter(context, R.layout.item_customer, R.id.tv_customer, listItems);
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //Toast.makeText(context, "click item", Toast.LENGTH_SHORT).show();
+                String text = (String)parent.getAdapter().getItem(position);
+                message.setText(text);
+            }
+        });
+
+        message.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter(s.toString());
+            }
+        });
 
         rg_gender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -89,12 +146,14 @@ public class ChargeDialog {
                 }
             }
         });
+
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // '확인' 버튼 클릭시 메인 액티비티에서 설정한 main_label에
                 // 커스텀 다이얼로그에서 입력한 메시지를 대입한다.
                 //main_label.setText(message.getText().toString()+"--"+str_result);
+                customerId = message.getText().toString();
 
                 Toast.makeText(context, String.format("\"%s으로 %s\" 처리를 하였습니다.", strBottleType, buttonType), Toast.LENGTH_SHORT).show();
 
@@ -102,10 +161,11 @@ public class ChargeDialog {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
 
                 editor.putString("previousBottles",bottles);
+                editor.remove("notSaveArray");
                 editor.commit();
                 //Log.d("@@@@@@@@@@@@@okButton: " ,"previousBottles: " + bottles);
                 // 서버 전송
-                new HttpAsyncTask().execute(host+"api/controlAction.do?userId="+userId+"&bottles="+bottles+"&customerNm="+customerId+"&bottleType="+bottleType+"&bottleWorkCd="+buttonType);
+                new HttpAsyncTask1().execute(host+ context.getString(R.string.api_controlAction) +"userId="+userId+"&bottles="+bottles+"&customerNm="+customerId+"&bottleType="+bottleType+"&bottleWorkCd="+buttonType);
 
                 //MainActivity List 제거
                 MainActivity.clearArrayList();
@@ -114,6 +174,7 @@ public class ChargeDialog {
                 dlg.dismiss();
             }
         });
+
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,7 +186,86 @@ public class ChargeDialog {
         });
     }
 
-    private class HttpAsyncTask extends AsyncTask<String, Void, String> {
+    // 검색을 수행하는 메소드
+    public void filter(String str) {
+
+        listItems.clear();
+        Iterator it = this.listItemsTemp.iterator();
+        while (it.hasNext()) {
+            String str2 = (String) it.next();
+            if (str2.toString().toLowerCase(Locale.getDefault()).contains(str)) {
+                listItems.add(str2);
+            }
+        }
+
+        this.adapter.notifyDataSetChanged();
+    }
+
+    private class HttpAsyncTask extends AsyncTask<String, Void, List<CustomerSimpleVO>> {
+        private final String TAG = HttpAsyncTask.class.getSimpleName();
+        // int REQUEST_CODE =
+        // OkHttp 클라이언트
+        OkHttpClient client = new OkHttpClient();
+
+        @Override
+        protected List<CustomerSimpleVO> doInBackground(String... params) {
+            List<CustomerSimpleVO> customerList = new ArrayList<>();
+            String strUrl = params[0];
+            try {
+                // 요청
+                Request request = new Request.Builder()
+                        .url(strUrl)
+                        .build();
+                // 응답
+                Response response = client.newCall(request).execute();
+
+                Gson gson = new Gson();
+
+                // import java.lang.reflect.Type
+                Type listType = new TypeToken<ArrayList<CustomerSimpleVO>>() {
+                }.getType();
+                customerList = gson.fromJson(response.body().string(), listType);
+
+                //Log.d(TAG, "onCreate: " + customerList.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return customerList;
+        }
+
+        @Override
+        protected void onPostExecute(List<CustomerSimpleVO> customerList) {
+            super.onPostExecute(customerList);
+
+            StringBuffer sb = new StringBuffer();
+            items = new String[customerList.size()];
+            for (int i = 0; i < customerList.size(); i++) {
+                items[i] = customerList.get(i).getCustomerNm().toString();
+                sb.append(customerList.get(i).getCustomerNm().toString());
+                sb.append("#");
+            }
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            int cCount = sharedPreferences.getInt("clistCount", 0);
+
+            if(cCount > 0 || cCount == customerList.size()) isUpdate = false;
+            else isUpdate = true;
+            //String value = id.getText().toString();
+            editor.putString("clist", sb.toString());
+            editor.putInt("clistCount",customerList.size());
+            editor.commit();
+
+            if(isUpdate) {
+                //Log.d("isUpdate ture", "ture ");
+                listItems = new ArrayList<>(Arrays.asList(items));
+                adapter = new ArrayAdapter(context, R.layout.item_customer, R.id.tv_customer, listItems);
+                listView.setAdapter(adapter);
+            }
+        }
+    }
+    private class HttpAsyncTask1 extends AsyncTask<String, Void, String> {
 
         private final String TAG = HttpAsyncTask.class.getSimpleName();
         // int REQUEST_CODE =

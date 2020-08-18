@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MassActivity">
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/title_layout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#1E88E5">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_logo" />
+
+            <TextView
+                android:id="@+id/main_label"
+                android:layout_width="@dimen/title_size"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:gravity="center_vertical"
+                android:text=" (주)대한특수가스1"
+                android:textColor="#ffffff"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </LinearLayout>
+
+        <View style="@style/Divider" />
+
+        <TextView
+            android:id="@+id/tv_MassProductCount"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:background="#D3D0D0"
+            android:gravity="center"
+            android:text="상품 카운트"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+        <View style="@style/Divider" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tv_mass"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scrollbarFadeDuration="0"
+            android:scrollbarSize="5dp"
+            android:scrollbarThumbVertical="@android:color/darker_gray"
+            android:scrollbars="vertical"
+            android:stackFromBottom="true"
+            android:text="1111" />
+    </LinearLayout>
+    <View style="@style/Divider"/>
+
+    <Button
+        android:id="@+id/btn_massSale"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="대량판매"
+        android:textColor="#000"
+        android:textSize="@dimen/button_4_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_massBack"
+        app:layout_constraintStart_toEndOf="@+id/btn_massProduct" />
+
+    <Button
+        android:id="@+id/btn_massProduct"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="상품"
+        android:textColor="#000"
+        android:textSize="@dimen/button_4_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_massSale"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_goBack"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="메인으로"
+        android:textColor="#000"
+        android:textSize="@dimen/button_4_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_massBack" />
+
+    <Button
+        android:id="@+id/btn_massBack"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="대량회수"
+        android:textColor="#000"
+        android:textSize="@dimen/button_4_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_goBack"
+        app:layout_constraintStart_toEndOf="@+id/btn_massSale" />
+</androidx.constraintlayout.widget.ConstraintLayout>

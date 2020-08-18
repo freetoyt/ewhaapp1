@@ -53,7 +53,6 @@ public class LoginActivity extends AppCompatActivity {
             packageInfo = getPackageManager().getPackageInfo(getPackageName(),0);
 
             tv_version.setText("V : "+packageInfo.versionName);
-            //Log.d("############## Package Version",version);
         }catch (PackageManager.NameNotFoundException e){
             Log.e("############## Package Version","NameNotFoundException");
         }
@@ -100,8 +99,10 @@ public class LoginActivity extends AppCompatActivity {
                 String id = et_id.getText().toString();
                 String pw = et_pass.getText().toString();
 
-                String url = getString(R.string.host_name)+"api/loginAction.do?id="+id+"&pw="+pw;//AA315923";
-
+                String encodedId = encode(id);
+                String encodedPw = encode(pw);
+                String url = getString(R.string.host_name)+getString(R.string.api_login)+"id="+encodedId+"&pw="+encodedPw;//AA315923";
+                //String url = getString(R.string.host_name)+"/api/loginEncodeAction.do?id="+encodeId+"&pw="+pw;//AA315923";
                 // AsyncTask를 통해 HttpURLConnection 수행.
                 NetworkTask networkTask = new NetworkTask(url, null);
                 networkTask.execute();
@@ -110,7 +111,10 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
+    public static String encode(String content) {
+        byte[] encodedBytes = org.apache.commons.codec.binary.Base64.encodeBase64(content.getBytes());
+        return new String(encodedBytes);
+    }
 
     public class NetworkTask extends AsyncTask<Void, Void, String> {
 

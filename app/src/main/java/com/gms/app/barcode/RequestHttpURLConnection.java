@@ -87,7 +87,7 @@ public class RequestHttpURLConnection {
             // 라인을 받아와 합친다.
             while ((line = reader.readLine()) != null){
                 page += line;
-                Log.i("RequestHttpURLCon ", "line "+line);
+                //Log.i("RequestHttpURLCon ", "line "+line);
             }
 
             return page;
@@ -102,9 +102,7 @@ public class RequestHttpURLConnection {
             if (urlConn != null)
                 urlConn.disconnect();
         }
-
         return null;
-
     }
 
 }
