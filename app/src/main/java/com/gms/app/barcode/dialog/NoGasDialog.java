@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -116,7 +118,7 @@ public class NoGasDialog {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(context, "click item", Toast.LENGTH_SHORT).show();
+
                 String text = (String)parent.getAdapter().getItem(position);
                 message.setText(text);
             }
@@ -303,7 +305,28 @@ public class NoGasDialog {
                 // 응답
                 Response response = client.newCall(request).execute();
                 result = response.body().string();
-                //Log.d(TAG, "response.body().string(): " + result);
+
+                if(result.equals("fail")){
+                    Handler mHandler = new Handler(Looper.getMainLooper());
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            // 사용하고자 하는 코드
+                            Toast.makeText(NoGasDialog.this.context, "등록에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    }, 0);
+                }else if(result.equals("noUser")){
+                    Handler mHandler = new Handler(Looper.getMainLooper());
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            // 사용하고자 하는 코드
+                            Toast.makeText(NoGasDialog.this.context, "사용자 정보가 없습니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    }, 0);
+                }
+
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

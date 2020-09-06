@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -51,7 +52,7 @@ public class ReportActivity extends AppCompatActivity {
         final SharedPreferences sharedPreferences = getSharedPreferences(shared,0);
         userId = sharedPreferences.getString("id", "");
 
-        //Log.d(TAG,"userId="+userId);
+
         btn_okbtn = (Button)findViewById(R.id.btn_okbtn);       // 기타
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_report);
@@ -106,7 +107,6 @@ public class ReportActivity extends AppCompatActivity {
                 }.getType();
                 workReportList = gson.fromJson(response.body().string(), listType);
 
-                Log.d(TAG, "onCreate: " + workReportList.toString());
             } catch (IOException e) {
                 e.printStackTrace();
             }

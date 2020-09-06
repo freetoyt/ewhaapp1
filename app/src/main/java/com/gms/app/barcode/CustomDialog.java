@@ -312,6 +312,15 @@ public class CustomDialog {
                             Toast.makeText(CustomDialog.this.context, "등록에 실패했습니다.", Toast.LENGTH_SHORT).show();
                         }
                     }, 0);
+                }else if(result.equals("noUser")){
+                    Handler mHandler = new Handler(Looper.getMainLooper());
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            // 사용하고자 하는 코드
+                            Toast.makeText(CustomDialog.this.context, "사용자 정보가 없습니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    }, 0);
                 }
 
             } catch (IOException e) {

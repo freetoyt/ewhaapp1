@@ -211,7 +211,18 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
         userId = sharedPreferences.getString("id", "");
         if(userId == null || userId.length() <=0 ) userId = uid;
 
-        //Log.d("############## uid==",uid);
+        // 사용자 정보 체크
+        if( userId == null || userId.length() <= 0 ){
+            Toast.makeText(MainActivity.this, "사용자 정보가 없습니다.로그인 페이지로 이동합니다.", Toast.LENGTH_SHORT).show();
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            editor.clear();
+            editor.commit();
+
+            Intent intent1 = new Intent(MainActivity.this,LoginActivity.class);
+            startActivity(intent1);
+        }
+
         // 네트웍 상태체크
         ConnectivityManager cm = (ConnectivityManager) MainActivity.this.getSystemService( MainActivity.this.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
@@ -645,20 +656,38 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
         if (result != null) {
             //qrcode 가 없으면
             if (result.getContents() == null) {
+                String arrStr ="";
+                if(arrayList !=null && arrayList.size() > 0) {
+                    for (int i = 0; i < arrayList.size(); i++) {
+                        MainData mainD = arrayList.get(i);
+                        arrStr += mainD.getTv_bottleId() + "@";
+                    }
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                    editor.putString("notSaveArray", arrStr);
+                    editor.commit();
+                }
                 Toast.makeText(MainActivity.this, "취소!", Toast.LENGTH_SHORT).show();
                 isScan = false;
             } else {
                 //qrcode 결과가 있으면
-                Toast.makeText(MainActivity.this, "스캔완료!"+result.getContents(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "스캔완료!"+result.getContents(), Toast.LENGTH_SHORT).show();
                 try {
-                    String url =host+getString(R.string.api_bottleDetail)+"?bottleBarCd="+result.getContents();//AA315923";
+                    boolean isBeen = false;
+                    for(int i = 0; i < arrayList.size() ; i++){
+                        if(arrayList.get(i).getTv_bottleBarCd().equals(result.getContents())) isBeen = true;
+                    }
 
-                    // AsyncTask를 통해 HttpURLConnection 수행.
-                    NetworkTask networkTask = new NetworkTask(url, null);
-                    networkTask.execute();
-                    //data를 json으로 변환
-                    JSONObject obj = new JSONObject(result.getContents());
-                    //Toast.makeText(MainActivity.this, obj.getString("name"), Toast.LENGTH_LONG).show();
+                    if(!isBeen) {
+                        String url = host + getString(R.string.api_bottleDetail) + "?bottleBarCd=" + result.getContents();//AA315923";
+
+                        // AsyncTask를 통해 HttpURLConnection 수행.
+                        NetworkTask networkTask = new NetworkTask(url, null);
+                        networkTask.execute();
+                        //data를 json으로 변환
+                        JSONObject obj = new JSONObject(result.getContents());
+                        //Toast.makeText(MainActivity.this, obj.getString("name"), Toast.LENGTH_LONG).show();
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -978,6 +1007,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                             mainAdapter.notifyDataSetChanged();
                             iCount++;
                             tv_bottleCount.setText("바코드 카운트 : " + arrayList.size());
+                            Toast.makeText(MainActivity.this, bottleBarCd+"를 등록했습니다.", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(MainActivity.this, "등록된 바코드입니다.", Toast.LENGTH_SHORT).show();
                         }
