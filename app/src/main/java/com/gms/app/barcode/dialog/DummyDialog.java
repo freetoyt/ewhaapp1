@@ -331,7 +331,7 @@ public class DummyDialog {
                         SharedPreferences sharedPreferences = context.getSharedPreferences(shared, 0);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                        editor.putString(bottleId, s);
+                        editor.putString(bottleBarCd, s);
                         editor.commit();
 
                         boolean updateFlag = true;

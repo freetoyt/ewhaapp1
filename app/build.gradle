@@ -7,8 +7,8 @@ android {
         applicationId "com.gms.app.barcode"
         minSdkVersion 15
         targetSdkVersion 29
-        versionCode 10
-        versionName "1.0.9"
+        versionCode 13
+        versionName "1.0.12"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

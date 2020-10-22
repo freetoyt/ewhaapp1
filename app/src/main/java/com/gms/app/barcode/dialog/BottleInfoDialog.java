@@ -99,7 +99,7 @@ public class BottleInfoDialog {
             tv_bottleChargeDt.setText(bottle.getBottleChargeDt().substring(0,10));
             tv_bottleVolumn.setText(bottle.getBottleVolumn());
 
-            new HttpAsyncTask().execute(host + context.getString(R.string.api_bottleHistoryList) +"bottleId="+bottle.getBottleId());
+            new HttpAsyncTask().execute(host + context.getString(R.string.api_bottleHistoryList) +"bottleBarCd="+bottle.getBottleBarCd());
 
         } catch (Exception e) {
             e.printStackTrace();

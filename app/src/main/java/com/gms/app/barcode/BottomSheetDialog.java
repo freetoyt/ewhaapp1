@@ -66,7 +66,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
 
                     String tempStr = "";
                     for (int i = 0; i < arrayList.size(); i++) {
-                        tempStr += arrayList.get(i).getTv_bottleId() + ",";
+                        tempStr += arrayList.get(i).getTv_bottleBarCd() + ",";
                     }
 
                     // 커스텀 다이얼로그를 호출한다.
@@ -83,7 +83,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
 
                 String tempStr = "";
                 for (int i = 0; i < arrayList.size(); i++) {
-                    tempStr += arrayList.get(i).getTv_bottleId() + ",";
+                    tempStr += arrayList.get(i).getTv_bottleBarCd() + ",";
                 }
                 // 커스텀 다이얼로그를 호출한다.
                 customDialog.callFunction(tempStr, userId);
@@ -98,7 +98,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
 
                 String tempStr = "";
                 for (int i = 0; i < arrayList.size(); i++) {
-                    tempStr += arrayList.get(i).getTv_bottleId() + ",";
+                    tempStr += arrayList.get(i).getTv_bottleBarCd() + ",";
                 }
 
                 // 커스텀 다이얼로그를 호출한다.
@@ -160,7 +160,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
 
                     String tempStr = "";
                     for (int i = 0; i < arrayList.size(); i++) {
-                        tempStr += arrayList.get(i).getTv_bottleId() + ",";
+                        tempStr += arrayList.get(i).getTv_bottleBarCd() + ",";
                     }
                     //Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
 
@@ -181,7 +181,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
 
                     String tempStr = "";
                     for (int i = 0; i < arrayList.size(); i++) {
-                        tempStr += arrayList.get(i).getTv_bottleId() + ",";
+                        tempStr += arrayList.get(i).getTv_bottleBarCd() + ",";
                     }
                     //Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
 
@@ -202,7 +202,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
 
                     String tempStr = "";
                     for (int i = 0; i < arrayList.size(); i++) {
-                        tempStr += arrayList.get(i).getTv_bottleId() + ",";
+                        tempStr += arrayList.get(i).getTv_bottleBarCd() + ",";
                     }
                     //Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
 

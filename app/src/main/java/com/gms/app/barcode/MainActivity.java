@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
         if(arrayList !=null && arrayList.size() > 0) {
             for (int i = 0; i < arrayList.size(); i++) {
                 MainData mainD = arrayList.get(i);
-                arrStr += mainD.getTv_bottleId() + "@";
+                arrStr += mainD.getTv_bottleBarCd() + "@";
             }
             //SharedPreferences sharedPreferences = getSharedPreferences(shared, 0);
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -334,7 +334,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
 
                     String tempStr = "";
                     for (int i = 0; i < arrayList.size(); i++) {
-                        tempStr += arrayList.get(i).getTv_bottleId() + ",";
+                        tempStr += arrayList.get(i).getTv_bottleBarCd() + ",";
                     }
                     //Toast.makeText(MainActivity.this, tempStr, Toast.LENGTH_SHORT).show();
                     // 커스텀 다이얼로그를 호출한다.
@@ -354,7 +354,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
 
                     String tempStr = "";
                     for (int i = 0; i < arrayList.size(); i++) {
-                        tempStr += arrayList.get(i).getTv_bottleId() + ",";
+                        tempStr += arrayList.get(i).getTv_bottleBarCd() + ",";
                     }
 
                     // 커스텀 다이얼로그를 호출한다.
@@ -373,7 +373,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
 
                     String tempStr = "";
                     for (int i = 0; i < arrayList.size(); i++) {
-                        tempStr += arrayList.get(i).getTv_bottleId() + ",";
+                        tempStr += arrayList.get(i).getTv_bottleBarCd() + ",";
                     }
 
                     // 커스텀 다이얼로그를 호출한다.
@@ -393,7 +393,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
 
                     String tempStr = "";
                     for (int i = 0; i < arrayList.size(); i++) {
-                        tempStr += arrayList.get(i).getTv_bottleId() + ",";
+                        tempStr += arrayList.get(i).getTv_bottleBarCd() + ",";
                     }
 
                     // 커스텀 다이얼로그를 호출한다.
@@ -413,7 +413,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
 
                     String tempStr = "";
                     for (int i = 0; i < arrayList.size(); i++) {
-                        tempStr += arrayList.get(i).getTv_bottleId() + ",";
+                        tempStr += arrayList.get(i).getTv_bottleBarCd() + ",";
                     }
 
                     // 커스텀 다이얼로그를 호출한다.
@@ -432,7 +432,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
 
                     String tempStr = "";
                     for (int i = 0; i < arrayList.size(); i++) {
-                        tempStr += arrayList.get(i).getTv_bottleId() + ",";
+                        tempStr += arrayList.get(i).getTv_bottleBarCd() + ",";
                     }
 
                     // 커스텀 다이얼로그를 호출한다.
@@ -512,7 +512,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
 
                     String tempStr = "";
                     for (int i = 0; i < arrayList.size(); i++) {
-                        tempStr += arrayList.get(i).getTv_bottleId() + ",";
+                        tempStr += arrayList.get(i).getTv_bottleBarCd() + ",";
                     }
 
                     // 하단 창 띄우기
@@ -585,7 +585,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
 
                     String tempStr = "";
                     for (int i = 0; i < arrayList.size(); i++) {
-                        tempStr += arrayList.get(i).getTv_bottleId() + ",";
+                        tempStr += arrayList.get(i).getTv_bottleBarCd() + ",";
                     }
 
                     // 커스텀 다이얼로그를 호출한다.
@@ -660,7 +660,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                 if(arrayList !=null && arrayList.size() > 0) {
                     for (int i = 0; i < arrayList.size(); i++) {
                         MainData mainD = arrayList.get(i);
-                        arrStr += mainD.getTv_bottleId() + "@";
+                        arrStr += mainD.getTv_bottleBarCd() + "@";
                     }
                     SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -988,10 +988,10 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                         productNm = bottle.getProductNm();
                         bottleChargeDt = bottle.getMenuType() + "일";
 
-                        //SharedPreferences sharedPreferences = getSharedPreferences(shared, 0);
+                        SharedPreferences sharedPreferences = getSharedPreferences(shared, 0);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                        editor.putString(bottleId, s);
+                        editor.putString(bottleBarCd, s);
                         editor.commit();
 
                         boolean updateFlag = true;
