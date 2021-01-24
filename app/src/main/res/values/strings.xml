@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">대한GMS</string>
     <string name="host_name">http://daehangas.co.kr/</string>
-
     <string name="api_login">api/loginEncodeAction.do?</string>
+    <string name="VersionCode">23</string>
+    <!-- <string name="host_name">http://192.168.0.10/</string>-->
     <string name="api_customerList">api/customerAllList.do</string>
     <string name="api_bottleDetail">api/bottleDetail.do</string>
     <string name="api_ngasProduct">api/ngasProductPriceList.do</string>
@@ -14,4 +15,8 @@
     <string name="api_getDummyBottle">api/dummyList.do?</string>
     <string name="api_bottleHistoryList">api/bottleHistoryList.do?</string>
     <string name="api_controlMassAction">api/controlMassAction.do?</string>
+    <string name="api_customerLn2List">api/customerLn2List.do</string>
+    <string name="api_appVersion">api/appVersion.do</string>
+    <string name="api_customrBottleList">api/customerBottleList.do?</string>
+    <string name="LN2_ProductID">60</string>
 </resources>

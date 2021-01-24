@@ -96,8 +96,10 @@ public class LoginActivity extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String id = et_id.getText().toString();
                 String pw = et_pass.getText().toString();
+                //Toast.makeText(getApplicationContext(),"아이디  "+id+"로 로그인 버튼을 클릭 하였습니다.",Toast.LENGTH_LONG).show();
 
                 String encodedId = encode(id);
                 String encodedPw = encode(pw);
@@ -144,33 +146,38 @@ public class LoginActivity extends AppCompatActivity {
             boolean success = false;
 
             try {
-
+                //Toast.makeText(getApplicationContext(),"서버에 로그인 요청하였습니다",Toast.LENGTH_LONG).show();
                 if(s == null || s.length() < 10) {
-                    Toast.makeText(getApplicationContext(),"계정정보를 확인해주세요,",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"계정정보를 확인해주세요,",Toast.LENGTH_LONG).show();
                     return;
                 }
                 JSONObject jsonObject = new JSONObject(s);
                 //Log.d("LoginActivity", "jsonObject ="+jsonObject.toString());
-                success = jsonObject.getBoolean("success");
+                if(jsonObject != null)
+                    success = jsonObject.getBoolean("success");
                 //Log.e("LoginActivity", "success ="+success);
                 if(success) {
+                    //Toast.makeText(getApplicationContext(),"로그인 서버 성공!,",Toast.LENGTH_LONG).show();
                     String id = jsonObject.getString("userId");
                     String name = URLDecoder.decode(jsonObject.getString("userNm"),"UTF-8");
 
                     //SharedPreferences 저장
                     if(chk_login.isChecked()) {
+                       //Toast.makeText(getApplicationContext(),"로그인 설정 여부 체크,",Toast.LENGTH_LONG).show();
                         SharedPreferences sharedPreferences = getSharedPreferences(shared, 0);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         //String value = id.getText().toString();
                         editor.putString("id", id);
                         editor.putString("name", name);
                         editor.commit();
+                        //Toast.makeText(getApplicationContext(),"로그인 설정 저장,",Toast.LENGTH_LONG).show();
                     }
-                    Toast.makeText(getApplicationContext(),"아이디  "+id+"로 로그인이 성공하였습니다,",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"아이디  "+id+"로 로그인이 성공하였습니다.",Toast.LENGTH_LONG).show();
 
                     Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                     intent.putExtra("uid",id);
                     intent.putExtra("pw", name);
+                    Toast.makeText(getApplicationContext(),"메인창 이동.",Toast.LENGTH_LONG).show();
                     startActivity(intent);
                 }else{
                     Toast.makeText(getApplicationContext(),"로그인이 실패하였습니다,",Toast.LENGTH_SHORT).show();

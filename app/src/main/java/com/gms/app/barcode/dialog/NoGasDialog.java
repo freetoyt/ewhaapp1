@@ -1,5 +1,6 @@
 package com.gms.app.barcode.dialog;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -53,7 +54,7 @@ public class NoGasDialog {
     boolean isUpdate = true;
     private Spinner spinner;
     List<ProductPriceSimpleVO> productList = new ArrayList<>();
-
+    static EditText productCount;
     String productType = "";
     String buttonType = "";
     String customerId="";
@@ -99,7 +100,7 @@ public class NoGasDialog {
         final EditText message = (EditText) dlg.findViewById(R.id.mesgase);
         final Button okButton = (Button) dlg.findViewById(R.id.okButton);
         final Button cancelButton = (Button) dlg.findViewById(R.id.cancelButton);
-        final EditText productCount = (EditText) dlg.findViewById(R.id.productCount);
+        productCount = (EditText) dlg.findViewById(R.id.productCount);
 
         title.setText(buttonType);
         // Add Data to listView
@@ -124,7 +125,11 @@ public class NoGasDialog {
             }
         });
 
-
+        if(buttonType.equals("LN2")) {
+            spinner.setVisibility(View.INVISIBLE);
+            productCount.setVisibility(View.VISIBLE);
+            productCount.setHint("L");
+        }
         message.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -147,6 +152,13 @@ public class NoGasDialog {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 productType = parent.getItemAtPosition(position).toString();
+                if(productType.equals("LN2(소분) - 병"))
+                    productCount.setHint("가격");
+
+                if(productType.indexOf("액체산소(소분)") > -1 || productType.indexOf("액체알곤(소분)") > -1) {
+                    productCount.setText("1");
+                    productCount.setVisibility(View.INVISIBLE);
+                }
                 //tv_result.setText(parent.getItemAtPosition(position).toString());
             }
 
@@ -167,28 +179,61 @@ public class NoGasDialog {
                     Integer productId = 0;
                     Integer productPriceSeq = 0;
                     int iProductCount = 0 ;
-                    if(productCount.getText().toString().equals("") || productCount.getText().toString() == null){
+                    if(productCount.getText().toString().equals("") || productCount.getText().toString() == null ){
                         Toast.makeText(context, "수량을 입력하세요", Toast.LENGTH_SHORT).show();
                     }else {
-                        Toast.makeText(context, String.format("\"%s에 %s를 %s\"하였습니다.", message.getText().toString(), productType, buttonType), Toast.LENGTH_SHORT).show();
+                        boolean isGo = false;
+                        if(buttonType.equals("LN2")) {
+                            productId = Integer.parseInt(context.getString(R.string.LN2_ProductID));
+                            for (int i = 0; i < productList.size(); i++) {
+                                if (productCount.getText().toString().equals(productList.get(i).getProductCapa()) ){
+                                    productPriceSeq = productList.get(i).getProductPriceSeq();
+                                    isGo = true;
+                                    break;
+                                }
+                            }
+                            iProductCount = 1;
 
-                        iProductCount = Integer.parseInt(productCount.getText().toString());
-
-                        for (int i = 0; i < productList.size(); i++) {
-                            if (productType.equals(productList.get(i).getProductNm())) {
-                                productId = productList.get(i).getProductId();
-                                productPriceSeq = productList.get(i).getProductPriceSeq();
-                                //Toast.makeText(context, productType+"="+productList.get(i).getProductId()+"="+productList.get(i).getProductPriceSeq() ,Toast.LENGTH_SHORT).show();
+                        }else {
+                            iProductCount = Integer.parseInt(productCount.getText().toString());
+                            isGo = true;
+                        }
+                        if(!buttonType.equals("LN2")) {
+                            for (int i = 0; i < productList.size(); i++) {
+                                if (productType.equals(productList.get(i).getProductNm())) {
+                                    productId = productList.get(i).getProductId();
+                                    productPriceSeq = productList.get(i).getProductPriceSeq();
+                                    //Toast.makeText(context, productType+"="+productList.get(i).getProductId()+"="+productList.get(i).getProductPriceSeq() ,Toast.LENGTH_SHORT).show();
+                                }
                             }
                         }
-                        // 서버 전송
-                        new HttpAsyncTask1().execute(host + context.getString(R.string.api_controlActionNoGas) +"userId=" + userId + "&customerNm=" + customerId + "&productId=" + productId + "&productPriceSeq=" + productPriceSeq + "&productCount=" + iProductCount);
 
-                        //MainActivity List 제거
-                        MainActivity.clearArrayList();
+                        if(isGo) {
+                            String strAction = buttonType;
+                            String strProductType = productType;
+                            if(buttonType.equals("LN2"))  {
+                                strAction = " 판매";
+                                strProductType = buttonType + "_" +productCount.getText().toString();
+                            }
 
-                        // 커스텀 다이얼로그를 종료한다.
-                        dlg.dismiss();
+                            Toast.makeText(context, String.format("\"%s에 %s를 %s\"하였습니다.", message.getText().toString(), strProductType, strAction), Toast.LENGTH_SHORT).show();
+                            // 서버 전송
+                            new HttpAsyncTask1().execute(host + context.getString(R.string.api_controlActionNoGas) + "userId=" + userId + "&customerNm=" + customerId + "&productId=" + productId + "&productPriceSeq=" + productPriceSeq + "&productCount=" + iProductCount);
+                            //MainActivity List 제거
+                            MainActivity.clearArrayList();
+                            // 커스텀 다이얼로그를 종료한다.
+                            dlg.dismiss();
+                        }else{
+                            // 상품이 존재하지 않음
+                            AlertDialog.Builder builder1
+                                    = new AlertDialog.Builder(context,AlertDialog.THEME_HOLO_DARK);
+                            builder1 .setTitle("대한특수가스")
+                                    .setMessage("상품이 존재하지 않습니다 ")
+                                    .setPositiveButton("확인", null);
+                            AlertDialog ad = builder1.create();
+
+                            ad.show();
+                        }
                     }
 
                 }
@@ -383,7 +428,14 @@ public class NoGasDialog {
             List<String> spinnerArray =  new ArrayList<String>();
 
             for (int i = 0; i < productList.size(); i++) {
-                spinnerArray.add(productList.get(i).getProductNm().toString());
+                if(buttonType.equals("LN2")) {
+                    if(productList.get(i).getProductId() == 60)
+                        spinnerArray.add(productList.get(i).getProductNm().toString());
+                        //productCount.setVisibility(View.INVISIBLE);
+                }else {
+                    if(productList.get(i).getProductId() != 60)
+                        spinnerArray.add(productList.get(i).getProductNm().toString());
+                }
             }
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, spinnerArray);
 

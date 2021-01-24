@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -40,14 +41,19 @@ public class MassActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mass);
 
-        //final SharedPreferences sharedPreferences = getSharedPreferences(shared,0);
-        userId = MainActivity.sharedPreferences.getString("id", "");
+        Intent intent = getIntent();
+        String uid = intent.getStringExtra("uid");
+
+        final SharedPreferences sharedPreferences = getSharedPreferences(shared,0);
+        if(uid !=null) userId = uid;
+        else
+            userId = sharedPreferences.getString("id", "");
 
         tv_MassProductCount = (TextView)findViewById(R.id.tv_MassProductCount);   // 스캔한 용기 카운트수
 
         btn_massProduct = (Button)findViewById(R.id.btn_massProduct);       // 상품선택//
         btn_massSale = (Button)findViewById(R.id.btn_massSale);       // 대량판매//
-        btn_massBack = (Button)findViewById(R.id.btn_massBack);     //대량회수
+        btn_massBack = (Button)findViewById(R.id.btn_back);     //대량회수
         btn_goBack = (Button)findViewById(R.id.btn_goBack);     //메인으로
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.tv_mass);

@@ -10,7 +10,7 @@
         android:layout_height="40dp"
         android:gravity="center"
         android:textColor="#ffffff"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:text="커스텀 다이얼로그"
         android:background="@color/colorAccent"/>
 
@@ -25,36 +25,66 @@
         android:layout_height="50dp"
         android:gravity="center"
         android:textColor="#000000"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:hint="검색."/>
 
     <ListView
         android:id="@+id/listview"
         android:layout_width="fill_parent"
-        android:layout_height="150dp"
-        android:textFilterEnabled="true"
+        android:layout_height="@dimen/cash_customerList"
         android:paddingLeft="10dp" />
-    <Spinner
-        android:id="@+id/spinner"
+    <View style="@style/Divider" />
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:textSize="@dimen/item_text_size"
-        android:entries="@array/nodagProduct">
-    </Spinner>
+        android:layout_height="200dp"
+        android:background="#F8F9FC"
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/productCount"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center"
-        android:hint="수량"
-        android:inputType="number"
-        android:textColor="#000000"
-        android:textSize="16dp" />
+        <LinearLayout
+            android:id="@+id/ll_title"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_gravity="top"
+            android:gravity="top"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_pNm"
+                android:layout_width="@dimen/report_p"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:layout_gravity="center_vertical"
+                android:text="상품" />
+            <TextView
+                android:id="@+id/tv_rvtitle"
+                android:layout_width="@dimen/report_c"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:layout_gravity="center_vertical"
+                android:text="수량" />
+
+
+        </LinearLayout>
+        <View style="@style/Divider"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal">
+            <ListView
+            android:id="@+id/lv_bottle"
+            android:layout_width="fill_parent"
+            android:layout_height="200dp"
+            android:paddingLeft="10dp" />
+        </LinearLayout>
+    </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#000000"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -68,24 +98,9 @@
             android:gravity="center"
             android:text="확인"
             android:textColor="#000000"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:background="#ffffff"/>
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="#000000" />
-
-        <Button
-            android:id="@+id/cancelButton"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="취소"
-            android:textColor="#000000"
-            android:textSize="16dp"
-            android:background="#ffffff"/>
     </LinearLayout>
 
     <View

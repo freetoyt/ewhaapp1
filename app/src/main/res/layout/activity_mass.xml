@@ -29,7 +29,7 @@
                 android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:gravity="center_vertical"
-                android:text=" (주)대한특수가스1"
+                android:text=" (주)대한특수가스"
                 android:textColor="#ffffff"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -77,7 +77,7 @@
         android:textColor="#000"
         android:textSize="@dimen/button_4_size"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_massBack"
+        app:layout_constraintEnd_toStartOf="@+id/btn_back"
         app:layout_constraintStart_toEndOf="@+id/btn_massProduct" />
 
     <Button
@@ -100,10 +100,10 @@
         android:textSize="@dimen/button_4_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_massBack" />
+        app:layout_constraintStart_toEndOf="@+id/btn_back" />
 
     <Button
-        android:id="@+id/btn_massBack"
+        android:id="@+id/btn_back"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="대량회수"

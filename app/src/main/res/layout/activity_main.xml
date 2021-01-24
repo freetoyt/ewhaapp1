@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="195dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/btn_out"
+        app:layout_constraintBottom_toTopOf="@+id/btn_money"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
@@ -94,7 +94,7 @@
         android:textColor="#000"
         android:textSize="@dimen/button_4_size"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_money"
+        app:layout_constraintEnd_toStartOf="@+id/btn_history"
         app:layout_constraintStart_toEndOf="@+id/btn_scan" />
 
     <Button
@@ -117,139 +117,29 @@
         android:textSize="@dimen/button_4_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_money" />
+        app:layout_constraintStart_toEndOf="@+id/btn_history" />
 
     <Button
-        android:id="@+id/btn_rental"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="대여\n(가스)"
-        android:textSize="@dimen/bottom_long_tsize"
-        android:textColor="#000"
-        app:layout_constraintBottom_toTopOf="@+id/btn_manual"
-        app:layout_constraintEnd_toStartOf="@+id/btn_back"
-        app:layout_constraintStart_toEndOf="@+id/btn_sales" />
-
-    <Button
-        android:id="@+id/btn_sales"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="판매\n(용기+가스)"
-        android:textSize="9dp"
-        android:textColor="#000"
-        app:layout_constraintBottom_toTopOf="@+id/btn_manual"
-        app:layout_constraintEnd_toStartOf="@+id/btn_rental"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btn_history"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="이전목록"
-        android:textColor="#000"
-        android:textSize="@dimen/button_4_size"
-        app:layout_constraintBottom_toTopOf="@+id/btn_etc"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_back" />
-
-    <Button
-        android:id="@+id/btn_back"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="회수"
-        android:textSize="18sp"
-        android:textColor="#000"
-        app:layout_constraintBottom_toTopOf="@+id/btn_manual"
-        app:layout_constraintEnd_toStartOf="@+id/btn_history"
-        app:layout_constraintStart_toEndOf="@+id/btn_rental" />
-
-    <Button
-        android:id="@+id/btn_incar"
+        android:id="@+id/btn_close"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="상차"
         android:textColor="#000"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_history"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_out" />
+        app:layout_constraintBottom_toTopOf="@+id/btn_manual"
+        app:layout_constraintEnd_toStartOf="@+id/btn_deleteAll"
+        app:layout_constraintStart_toEndOf="@+id/btn_dummy" />
 
     <Button
-        android:id="@+id/btn_noGas"
+        android:id="@+id/btn_dummy"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="단품판매"
+        android:text="미등록용기"
         android:textColor="#000"
-        android:textSize="@dimen/button_4_size"
-        app:layout_constraintBottom_toTopOf="@+id/btn_sales"
-        app:layout_constraintEnd_toStartOf="@+id/btn_come"
+        android:textSize="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_manual"
+        app:layout_constraintEnd_toStartOf="@+id/btn_close"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btn_out"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="출고"
-        android:textColor="#000"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_back"
-        app:layout_constraintEnd_toStartOf="@+id/btn_incar"
-        app:layout_constraintStart_toEndOf="@+id/btn_come" />
-
-    <Button
-        android:id="@+id/btn_come"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="입고"
-        android:textColor="#000"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_rental"
-        app:layout_constraintEnd_toStartOf="@+id/btn_out"
-        app:layout_constraintStart_toEndOf="@+id/btn_noGas" />
-
-    <Button
-        android:id="@+id/btn_money"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="입금/미수"
-        android:textColor="#000"
-        android:textSize="@dimen/button_4_size"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_etc"
-        app:layout_constraintStart_toEndOf="@+id/btn_manual" />
-
-    <Button
-        android:id="@+id/btn_mass"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="대량"
-        android:textColor="#000"
-        android:textSize="@dimen/button_4_size"
-        app:layout_constraintBottom_toTopOf="@+id/btn_noGas"
-        app:layout_constraintEnd_toStartOf="@+id/btn_massBack"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btn_massBack"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="더미용기"
-        android:textColor="#000"
-        android:textSize="@dimen/button_4_size"
-        app:layout_constraintBottom_toTopOf="@+id/btn_come"
-        app:layout_constraintEnd_toStartOf="@+id/btn_freeChange"
-        app:layout_constraintStart_toEndOf="@+id/btn_mass" />
-
-    <Button
-        android:id="@+id/btn_freeChange"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="무상교체"
-        android:textColor="#000"
-        android:textSize="@dimen/button_4_size"
-        app:layout_constraintBottom_toTopOf="@+id/btn_out"
-        app:layout_constraintEnd_toStartOf="@+id/btn_report"
-        app:layout_constraintStart_toEndOf="@+id/btn_massBack" />
 
     <Button
         android:id="@+id/btn_report"
@@ -258,8 +148,118 @@
         android:text="업무일지"
         android:textColor="#000"
         android:textSize="@dimen/button_4_size"
-        app:layout_constraintBottom_toTopOf="@+id/btn_incar"
+        app:layout_constraintBottom_toTopOf="@+id/btn_etc"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_freeChange" />
+        app:layout_constraintStart_toEndOf="@+id/btn_deleteAll" />
+
+    <Button
+        android:id="@+id/btn_deleteAll"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="전체삭제"
+        android:textColor="#000"
+        android:textSize="@dimen/button_4_size"
+        app:layout_constraintBottom_toTopOf="@+id/btn_manual"
+        app:layout_constraintEnd_toStartOf="@+id/btn_report"
+        app:layout_constraintStart_toEndOf="@+id/btn_close" />
+
+    <Button
+        android:id="@+id/btn_version"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="대여용기"
+        android:textColor="#000"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_report"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_money" />
+
+    <Button
+        android:id="@+id/btn_noGas"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="단품판매"
+        android:textColor="#000"
+        android:textSize="@dimen/button_4_size"
+        app:layout_constraintBottom_toTopOf="@+id/btn_dummy"
+        app:layout_constraintEnd_toStartOf="@+id/btn_mass"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_money"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="입금/미수"
+        android:textColor="#000"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_deleteAll"
+        app:layout_constraintEnd_toStartOf="@+id/btn_version"
+        app:layout_constraintStart_toEndOf="@+id/btn_mass" />
+
+    <Button
+        android:id="@+id/btn_mass"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="대량\n(대리점)"
+        android:textColor="#000"
+        android:textSize="9sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_close"
+        app:layout_constraintEnd_toStartOf="@+id/btn_money"
+        app:layout_constraintStart_toEndOf="@+id/btn_noGas" />
+
+    <Button
+        android:id="@+id/btn_history"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="이전목록"
+        android:textColor="#000"
+        android:textSize="@dimen/button_4_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_etc"
+        app:layout_constraintStart_toEndOf="@+id/btn_manual" />
+
+    <Button
+        android:id="@+id/btn_rental"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="대여\n(가스)"
+        android:textColor="#000"
+        android:textSize="@dimen/bottom_long_tsize"
+        app:layout_constraintBottom_toTopOf="@+id/btn_noGas"
+        app:layout_constraintEnd_toStartOf="@+id/btn_back"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_back"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="회수"
+        android:textColor="#000"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_mass"
+        app:layout_constraintEnd_toStartOf="@+id/btn_sales"
+        app:layout_constraintStart_toEndOf="@+id/btn_rental" />
+
+    <Button
+        android:id="@+id/btn_sales"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="판매\n(용기+가스)"
+        android:textColor="#000"
+        android:textSize="9sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_money"
+        app:layout_constraintEnd_toStartOf="@+id/btn_ln2"
+        app:layout_constraintStart_toEndOf="@+id/btn_back" />
+
+    <Button
+        android:id="@+id/btn_ln2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="LN2"
+        android:textColor="#000"
+        android:textSize="@dimen/button_4_size"
+        app:layout_constraintBottom_toTopOf="@+id/btn_version"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_sales" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

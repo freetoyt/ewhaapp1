@@ -59,7 +59,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.CustomViewHold
                 //holder.textView.setText(items.get(holder.getAdapterPosition()));
 
                 SharedPreferences sharedPreferences = view.getContext().getSharedPreferences(shared,0);
-                String value = sharedPreferences.getString(holder.tv_bottleId.getText().toString(), "");
+                String value = sharedPreferences.getString(holder.tv_bottleBarCd.getText().toString(), "");
                 //Toast.makeText(view.getContext(), "value "+value, Toast.LENGTH_SHORT).show();
 
                 //info 정보 띄우기

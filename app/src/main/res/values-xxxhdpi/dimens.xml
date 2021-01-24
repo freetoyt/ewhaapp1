@@ -20,4 +20,6 @@
     <dimen name="bottom_cancel_width">70dp</dimen>
     <dimen name="cash_customerList">160dp</dimen>
     <dimen name="customer_item_text">18sp</dimen>
+    <dimen name="report_p">200dp</dimen>
+    <dimen name="report_c">40dp</dimen>
 </resources>

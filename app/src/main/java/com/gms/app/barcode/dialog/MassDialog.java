@@ -167,6 +167,8 @@ public class MassDialog {
                     } else {
                         Toast.makeText(context, "등록된 상품입니다.", Toast.LENGTH_SHORT).show();
                     }
+                    // 커스텀 다이얼로그를.종료한다.
+                    dlg.dismiss();
                 }
             }
         });
