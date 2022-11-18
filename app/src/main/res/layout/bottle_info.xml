@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="300dp"
     android:layout_height="match_parent"
     android:background="#ffffff">
@@ -10,7 +11,7 @@
         android:layout_height="40dp"
         android:gravity="center"
         android:textColor="#ffffff"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:text="용기 정보"
         android:background="@color/colorAccent"/>
     <View style="@style/Divider"/>
@@ -29,7 +30,9 @@
                 android:paddingLeft="10dp"
                 android:textSize="18sp"
                 android:gravity="center"
-                android:text="바코드" />
+                android:text="바코드"
+                android:paddingStart="10dp"
+                tools:ignore="RtlSymmetry" />
             <View style="@style/Divider"/>
             <TextView
                 android:layout_width="80dp"
@@ -144,7 +147,7 @@
         android:gravity="center"
         android:text="확인"
         android:textColor="#000000"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:background="#ffffff"/>
 
 </LinearLayout>

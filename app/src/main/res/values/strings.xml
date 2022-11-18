@@ -1,12 +1,14 @@
 <resources>
-    <string name="app_name">대한GMS</string>
-    <string name="host_name">http://daehangas.co.kr/</string>
+    <string name="app_name">이화GMS</string>
+    <string name="comp_name"> 이화산업가스(주)</string>
+    <!-- <string name="host_name">http://daehangas.co.kr/</string>-->
+    <string name="host_name">http://192.168.0.12/</string>
+
     <string name="api_login">api/loginEncodeAction.do?</string>
-    <string name="VersionCode">23</string>
-    <!-- <string name="host_name">http://192.168.0.10/</string>-->
+    <string name="VersionCode">1</string>
     <string name="api_customerList">api/customerAllList.do</string>
     <string name="api_bottleDetail">api/bottleDetail.do</string>
-    <string name="api_ngasProduct">api/ngasProductPriceList.do</string>
+    <string name="api_ngasProduct">api/ngasProductPriceListV2.do?saleCtype=C</string>
     <string name="api_reportList">api/workReportList.do</string>
     <string name="api_controlAction">api/controlAction.do?</string>
     <string name="api_controlActionNoGas">api/controlActionNoGas.do?</string>
@@ -16,7 +18,22 @@
     <string name="api_bottleHistoryList">api/bottleHistoryList.do?</string>
     <string name="api_controlMassAction">api/controlMassAction.do?</string>
     <string name="api_customerLn2List">api/customerLn2List.do</string>
+    <string name="api_ln2LProductPriceList">api/ln2LProductPriceList.do</string>
     <string name="api_appVersion">api/appVersion.do</string>
     <string name="api_customrBottleList">api/customerBottleList.do?</string>
+    <string name="api_deleteWorkBottle">/api/deleteWorkBottle.do?param=</string>
+    <string name="api_deleteWorkBottleNew">/api/deleteWorkBottleNew.do?param=</string>
+    <string name="api_tankProduct">api/tankProductPriceList.do</string>
+    <string name="api_controlTank">api/controlTank.do?</string>
+    <string name="api_allProduct">api/allProductSimpleList.do</string>
+    <string name="api_registerOrder">api/registerOrder.do?</string>
+    <string name="api_orderList">api/orderList.do?</string>
+    <string name="api_deleteOrder">api/deleteOrder.do?</string>
+    <string name="api_orderProductList">api/orderProductList.do?</string>
     <string name="LN2_ProductID">60</string>
+    <string name="login_id">아이디</string>
+    <string name="login_pawd">비밀번호</string>
+    <string name="login_btn_title">로그인</string>
+    <string name="login_title_chbox">로그인유지</string>
+    <string name="login_title_version">버전</string>
 </resources>

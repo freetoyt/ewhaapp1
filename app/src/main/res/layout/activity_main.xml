@@ -25,7 +25,8 @@
             <ImageView
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_logo" />
+                android:src="@mipmap/ic_logo"
+                android:contentDescription="로고" />
 
             <TextView
                 android:id="@+id/main_label"
@@ -33,7 +34,7 @@
                 android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:gravity="center_vertical"
-                android:text=" (주)대한특수가스"
+                android:text="@string/comp_name"
                 android:textColor="#ffffff"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -84,7 +85,8 @@
             android:stackFromBottom="true"
             android:text="1111" />
     </LinearLayout>
-    <View style="@style/Divider"/>
+    <View style="@style/Divider"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/btn_manual"
@@ -120,14 +122,14 @@
         app:layout_constraintStart_toEndOf="@+id/btn_history" />
 
     <Button
-        android:id="@+id/btn_close"
+        android:id="@+id/btn_tank"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="상차"
+        android:text="Tank"
         android:textColor="#000"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/btn_manual"
-        app:layout_constraintEnd_toStartOf="@+id/btn_deleteAll"
+        app:layout_constraintEnd_toStartOf="@+id/btn_buyback"
         app:layout_constraintStart_toEndOf="@+id/btn_dummy" />
 
     <Button
@@ -138,7 +140,7 @@
         android:textColor="#000"
         android:textSize="10dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_manual"
-        app:layout_constraintEnd_toStartOf="@+id/btn_close"
+        app:layout_constraintEnd_toStartOf="@+id/btn_tank"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -150,26 +152,26 @@
         android:textSize="@dimen/button_4_size"
         app:layout_constraintBottom_toTopOf="@+id/btn_etc"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_deleteAll" />
+        app:layout_constraintStart_toEndOf="@+id/btn_buyback" />
 
     <Button
-        android:id="@+id/btn_deleteAll"
+        android:id="@+id/btn_buyback"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="전체삭제"
+        android:text="주문"
         android:textColor="#000"
         android:textSize="@dimen/button_4_size"
         app:layout_constraintBottom_toTopOf="@+id/btn_manual"
         app:layout_constraintEnd_toStartOf="@+id/btn_report"
-        app:layout_constraintStart_toEndOf="@+id/btn_close" />
+        app:layout_constraintStart_toEndOf="@+id/btn_tank" />
 
     <Button
-        android:id="@+id/btn_version"
+        android:id="@+id/btn_rentB"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="대여용기"
         android:textColor="#000"
-        android:textSize="18sp"
+        android:textSize="@dimen/button_4_size"
         app:layout_constraintBottom_toTopOf="@+id/btn_report"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_money" />
@@ -191,9 +193,9 @@
         android:layout_height="wrap_content"
         android:text="입금/미수"
         android:textColor="#000"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_deleteAll"
-        app:layout_constraintEnd_toStartOf="@+id/btn_version"
+        android:textSize="@dimen/button_4_size"
+        app:layout_constraintBottom_toTopOf="@+id/btn_buyback"
+        app:layout_constraintEnd_toStartOf="@+id/btn_rentB"
         app:layout_constraintStart_toEndOf="@+id/btn_mass" />
 
     <Button
@@ -203,7 +205,7 @@
         android:text="대량\n(대리점)"
         android:textColor="#000"
         android:textSize="9sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_close"
+        app:layout_constraintBottom_toTopOf="@+id/btn_tank"
         app:layout_constraintEnd_toStartOf="@+id/btn_money"
         app:layout_constraintStart_toEndOf="@+id/btn_noGas" />
 
@@ -258,7 +260,7 @@
         android:text="LN2"
         android:textColor="#000"
         android:textSize="@dimen/button_4_size"
-        app:layout_constraintBottom_toTopOf="@+id/btn_version"
+        app:layout_constraintBottom_toTopOf="@+id/btn_rentB"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_sales" />
 

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:textSize="16dp"
+        android:text="커스텀 다이얼로그"
+        android:background="@color/colorAccent"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"/>
+
+    <EditText
+        android:id="@+id/mesgase"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:textColor="#000000"
+        android:textSize="16dp"
+        android:hint="검색."/>
+
+    <ListView
+        android:id="@+id/listview"
+        android:layout_width="fill_parent"
+        android:layout_height="150dp"
+        android:textFilterEnabled="true"
+        android:paddingLeft="10dp" />
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:textSize="@dimen/item_text_size"
+        android:entries="@array/nodagProduct">
+    </Spinner>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:textColor="#000000"
+            android:textSize="16dp"
+            android:text="용량"/>
+        <EditText
+            android:id="@+id/productSeq"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:textColor="#000000"
+            android:textSize="16dp"
+            android:inputType="number"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:textColor="#000000"
+            android:textSize="16dp"
+            android:text="수량"/>
+        <EditText
+            android:id="@+id/productCount"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:textColor="#000000"
+            android:textSize="16dp"
+            android:inputType="number"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/okButton"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="확인"
+            android:textColor="#000000"
+            android:textSize="16dp"
+            android:background="#ffffff"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#000000" />
+
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="취소"
+            android:textColor="#000000"
+            android:textSize="16dp"
+            android:background="#ffffff"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"/>
+</LinearLayout>

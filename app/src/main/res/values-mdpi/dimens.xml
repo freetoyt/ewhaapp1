@@ -7,11 +7,13 @@
     <dimen name="item_text_sizeB">14sp</dimen>
     <dimen name="item_text_sizeD">9sp</dimen>
     <dimen name="item_width0">120dp</dimen>
-    <dimen name="item_width1">150dp</dimen>
+    <dimen name="item_width1">120dp</dimen>
     <dimen name="item_width2">70dp</dimen>
-    <dimen name="item_width3">30dp</dimen>
-    <dimen name="item_width4">140dp</dimen>
+    <dimen name="item_width3">20dp</dimen>
+    <dimen name="item_width4">110dp</dimen>
     <dimen name="item_width5">150dp</dimen>
+    <dimen name="item_width6">10dp</dimen>
+    <dimen name="item_width7">40dp</dimen>
     <dimen name="bottom_short_tsize">12sp</dimen>
     <dimen name="bottom_long_tsize">10sp</dimen>
     <dimen name="bottom_layout_width">80dp</dimen>

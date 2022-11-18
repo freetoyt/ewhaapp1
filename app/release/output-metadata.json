@@ -4,15 +4,15 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.gms.app.barcode",
+  "applicationId": "com.gms.app.ewhabarcode",
   "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
       "properties": [],
-      "versionCode": 24,
-      "versionName": "1.0.21",
+      "versionCode": 1,
+      "versionName": "1.0.1",
       "enabled": true,
       "outputFile": "app-release.apk"
     }

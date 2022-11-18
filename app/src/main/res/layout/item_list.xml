@@ -10,8 +10,9 @@
 
         <TextView
             android:id="@+id/tv_bottleBarCd"
-            android:layout_width="@dimen/item_width0"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="2"
             android:text="DHCO200273"
             android:paddingLeft="10dp"
             android:textColor="#000000"
@@ -26,8 +27,9 @@
 
         <TextView
             android:id="@+id/tv_productNm"
-            android:layout_width="@dimen/item_width1"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="2"
             android:textSize="@dimen/item_text_sizeB"
             android:textColor="#000000"
             android:gravity="center_vertical"
@@ -35,15 +37,16 @@
 
         <TextView
             android:id="@+id/tv_chargedt"
-            android:layout_width="@dimen/item_width2"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:textSize="@dimen/item_text_sizeB"
             android:textColor="#000000"
             android:gravity="center_vertical"
             android:text="1000일" />
 
         <Button
-            android:id="@+id/btn_info"
+            android:id="@+id/btn_buyback"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"

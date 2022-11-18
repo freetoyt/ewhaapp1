@@ -13,6 +13,8 @@
     <dimen name="item_width3">50dp</dimen>
     <dimen name="item_width4">140dp</dimen>
     <dimen name="item_width5">150dp</dimen>
+    <dimen name="item_width6">20dp</dimen>
+    <dimen name="item_width7">50dp</dimen>
     <dimen name="bottom_short_tsize">16sp</dimen>
     <dimen name="bottom_long_tsize">10sp</dimen>
     <dimen name="bottom_layout_width">100dp</dimen>

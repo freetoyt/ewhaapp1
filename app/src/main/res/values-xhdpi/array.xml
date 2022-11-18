@@ -9,4 +9,9 @@
     <string-array name="nodagProduct" >
         <item>물통(국산)게이지</item>
     </string-array>
+    <string-array name="orderStatus" >
+        <item>주문접수</item>
+        <item>납품완료</item>
+        <item>판매완료</item>
+    </string-array>
 </resources>

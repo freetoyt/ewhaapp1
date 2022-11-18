@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="300dp"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:textSize="20dp"
+        android:text="주문상품정보"
+        android:background="@color/colorAccent"/>
+    <View style="@style/Divider"/>
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:gravity="left"
+        android:textSize="13dp"
+        android:text="* 파란색은 납품된 상품입니다."
+        />
+    <View style="@style/Divider"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rc_productList"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_weight="1"
+        android:scrollbarFadeDuration="0"
+        android:scrollbarSize="5dp"
+        android:scrollbarThumbVertical="@android:color/darker_gray"
+        android:scrollbars="vertical"
+        android:stackFromBottom="true"
+        android:text="1111" />
+    <View style="@style/Divider"/>
+    <Button
+        android:id="@+id/okButton"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="확인"
+        android:textColor="#000000"
+        android:textSize="16dp"
+        android:background="#ffffff"/>
+
+</LinearLayout>

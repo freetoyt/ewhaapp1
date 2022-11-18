@@ -106,7 +106,7 @@
             android:gravity="left"
             android:paddingRight="10dp"
             android:textColor="#000000"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:hint="0"
             android:textSize="16sp" />
 
@@ -129,7 +129,7 @@
             android:layout_height="40dp"
             android:gravity="left"
             android:textColor="#000000"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:hint="0"
             android:textSize="16sp"/>
     </LinearLayout>

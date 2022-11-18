@@ -12,6 +12,8 @@
     <dimen name="item_width3">40dp</dimen>
     <dimen name="item_width4">140dp</dimen>
     <dimen name="item_width5">150dp</dimen>
+    <dimen name="item_width6">20dp</dimen>
+    <dimen name="item_width7">40dp</dimen>
     <dimen name="bottom_short_tsize">16sp</dimen>
     <dimen name="bottom_long_tsize">10sp</dimen>
     <dimen name="bottom_layout_width">90dp</dimen>
@@ -19,6 +21,4 @@
     <dimen name="bottom_cancel_width">70dp</dimen>
     <dimen name="cash_customerList">120dp</dimen>
     <dimen name="customer_item_text">18sp</dimen>
-    <dimen name="report_p">200dp</dimen>
-    <dimen name="report_c">40dp</dimen>
 </resources>

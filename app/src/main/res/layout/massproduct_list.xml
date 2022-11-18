@@ -28,17 +28,17 @@
             android:layout_width="@dimen/item_width4"
             android:layout_height="match_parent"
             android:text="DHCO200273"
-            android:paddingLeft="10dp"
+            android:paddingLeft="5dp"
             android:textColor="#000000"
             android:gravity="center_vertical"
-            android:textSize="@dimen/item_text_size" />
+            android:textSize="@dimen/item_text_sizeB" />
 
         <TextView
             android:id="@+id/tv_mProductCnt"
-            android:layout_width="@dimen/item_width2"
+            android:layout_width="@dimen/item_width4"
             android:layout_height="match_parent"
             android:textSize="@dimen/item_text_sizeB"
-            android:paddingLeft="10dp"
+            android:paddingLeft="5dp"
             android:textColor="#000000"
             android:gravity="center_vertical"
             android:text="1000일" />
