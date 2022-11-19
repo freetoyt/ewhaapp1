@@ -204,7 +204,6 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
             new HttpAsyncTask().execute(host + getString(R.string.api_customerList));
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -285,8 +284,6 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
         Log.d("MainActivity", "Build.VERSION.SDK_INT =" + Build.VERSION.SDK_INT);
         Log.d("MainActivity", "Build.VERSION_CODES.S =" + Build.VERSION_CODES.S);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            Log.d("MainActivity", "this.checkSelfPermission(Manifest.permission.BLUETOOTH_SCAN) =" + this.checkSelfPermission(Manifest.permission.BLUETOOTH_SCAN));
-            Log.d("MainActivity", "PackageManager.PERMISSION_GRANTED =" + PackageManager.PERMISSION_GRANTED);
             if (this.checkSelfPermission(Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -298,7 +295,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
 
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        requestPermissions(new String[]{Manifest.permission.BLUETOOTH_SCAN}, 2);
+                        requestPermissions(new String[]{Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT}, 2);
                     }
                 });
 
@@ -306,6 +303,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
             }
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            Log.d("MainActivity", "checkSelfPermission BLUETOOTH_CONNECT=" + this.checkSelfPermission(Manifest.permission.BLUETOOTH_CONNECT));
             if (this.checkSelfPermission(Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -317,7 +315,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
 
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        requestPermissions(new String[]{Manifest.permission.BLUETOOTH_CONNECT}, 3);
+                        requestPermissions(new String[]{Manifest.permission.BLUETOOTH_CONNECT, Manifest.permission.BLUETOOTH_SCAN}, 3);
                     }
                 });
                 builder.show();
@@ -737,8 +735,10 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                     builder.setPositiveButton(android.R.string.ok, null);
                     builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
 
+                        @RequiresApi(api = Build.VERSION_CODES.M)
                         @Override
                         public void onDismiss(DialogInterface dialog) {
+                            requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
                         }
 
                     });
@@ -748,7 +748,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
             }
             case 2: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Log.d("디버깅", "coarse location permission granted");
+                    Log.d("디버깅", "BLUETOOTH_SCAN permission granted");
                 } else {
                     final AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setTitle("권한 제한");
@@ -756,8 +756,10 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                     builder.setPositiveButton(android.R.string.ok, null);
                     builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
 
+                        @RequiresApi(api = Build.VERSION_CODES.M)
                         @Override
                         public void onDismiss(DialogInterface dialog) {
+                            requestPermissions(new String[]{Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT}, 2);
                         }
 
                     });
@@ -767,7 +769,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
             }
             case 3: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Log.d("디버깅", "coarse location permission granted");
+                    Log.d("디버깅", "BLUETOOTH_CONNECT permission granted");
                 } else {
                     final AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setTitle("권한 제한");
@@ -775,8 +777,10 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
                     builder.setPositiveButton(android.R.string.ok, null);
                     builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
 
+                        @RequiresApi(api = Build.VERSION_CODES.M)
                         @Override
                         public void onDismiss(DialogInterface dialog) {
+                            requestPermissions(new String[]{Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT}, 3);
                         }
 
                     });

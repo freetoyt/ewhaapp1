@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">이화GMS</string>
     <string name="comp_name"> 이화산업가스(주)</string>
-    <!-- <string name="host_name">http://daehangas.co.kr/</string>-->
-    <string name="host_name">http://192.168.0.12/</string>
+    <string name="host_name">http://3.35.103.50/</string>
+    <!-- <string name="host_name">http://192.168.0.12/</string> -->
 
     <string name="api_login">api/loginEncodeAction.do?</string>
     <string name="VersionCode">1</string>
